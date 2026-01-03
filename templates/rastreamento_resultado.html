@@ -5,8 +5,8 @@
 {% block content %}
 <section class="page-header">
     <div class="container">
-        <h1><i class="fas fa-clipboard-check"></i> Acompanhamento de Serviço</h1>
-        <p>Ordem de Serviço {{ ordem.numero_ordem }}</p>
+        <h1><i class="fas fa-clipboard-check"></i> Seguimiento de Servicio</h1>
+        <p>Orden de Servicio {{ ordem.numero_ordem }}</p>
     </div>
 </section>
 
@@ -16,7 +16,7 @@
             <!-- Status Card -->
             <div class="status-card">
                 <div class="status-header">
-                    <h2><i class="fas fa-info-circle"></i> Status do Reparo</h2>
+                    <h2><i class="fas fa-info-circle"></i> Estado de la Reparación</h2>
                     <span class="status-badge status-{{ ordem.status }}">{{ ordem.status | get_status_label }}</span>
                 </div>
                 <div class="status-timeline">
@@ -25,7 +25,7 @@
                             <i class="fas fa-check"></i>
                         </div>
                         <div class="timeline-content">
-                            <strong>Ordem Criada</strong>
+                            <strong>Orden Creada</strong>
                             <p>{{ ordem.data }}</p>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                             <i class="fas fa-wrench"></i>
                         </div>
                         <div class="timeline-content">
-                            <strong>Em Andamento</strong>
+                            <strong>En Proceso</strong>
                             <p>Reparación en proceso</p>
                         </div>
                     </div>
@@ -43,21 +43,21 @@
                             <i class="fas fa-check-circle"></i>
                         </div>
                         <div class="timeline-content">
-                            <strong>Pronto</strong>
-                            <p>Aguardando retirada</p>
+                            <strong>Listo</strong>
+                            <p>Esperando retiro</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Informações do Serviço -->
+            <!-- Información del Servicio -->
             <div class="info-grid">
                 <div class="info-card">
                     <div class="info-icon">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
                     <div class="info-content">
-                        <h3>Aparelho</h3>
+                        <h3>Aparato</h3>
                         <p><strong>{{ ordem.tipo_aparelho }}</strong></p>
                         <p>{{ ordem.marca }} {{ ordem.modelo }}</p>
                         {% if ordem.numero_serie %}
@@ -71,10 +71,10 @@
                         <i class="fas fa-tools"></i>
                     </div>
                     <div class="info-content">
-                        <h3>Serviço</h3>
+                        <h3>Servicio</h3>
                         <p>{{ ordem.servico }}</p>
                         {% if ordem.defeitos_cliente %}
-                        <p class="text-muted"><small>Defeito relatado: {{ ordem.defeitos_cliente }}</small></p>
+                        <p class="text-muted"><small>Defecto reportado: {{ ordem.defeitos_cliente }}</small></p>
                         {% endif %}
                     </div>
                 </div>
@@ -84,9 +84,9 @@
                         <i class="fas fa-calendar-alt"></i>
                     </div>
                     <div class="info-content">
-                        <h3>Prazo Estimado</h3>
+                        <h3>Plazo Estimado</h3>
                         <p class="prazo-text">{{ prazo_estimado }}</p>
-                        <p class="text-muted"><small>Data da ordem: {{ ordem.data }}</small></p>
+                        <p class="text-muted"><small>Fecha de la orden: {{ ordem.data }}</small></p>
                     </div>
                 </div>
 
@@ -144,10 +144,10 @@
             </div>
             {% endif %}
 
-            <!-- Informações do Cliente -->
+            <!-- Información del Cliente -->
             {% if cliente %}
             <div class="cliente-card">
-                <h2><i class="fas fa-user"></i> Dados do Cliente</h2>
+                <h2><i class="fas fa-user"></i> Datos del Cliente</h2>
                 <div class="cliente-info">
                     <div class="cliente-avatar">
                         <i class="fas fa-user-circle"></i>
@@ -159,13 +159,13 @@
                             <p><i class="fas fa-envelope"></i> <strong>E-mail:</strong> {{ cliente.email }}</p>
                             {% endif %}
                             {% if cliente.telefone %}
-                            <p><i class="fas fa-phone"></i> <strong>Telefone:</strong> {{ cliente.telefone }}</p>
+                            <p><i class="fas fa-phone"></i> <strong>Teléfono:</strong> {{ cliente.telefone }}</p>
                             {% endif %}
                             {% if cliente.cpf %}
-                            <p><i class="fas fa-id-card"></i> <strong>CPF:</strong> {{ cliente.cpf }}</p>
+                            <p><i class="fas fa-id-card"></i> <strong>DNI:</strong> {{ cliente.cpf }}</p>
                             {% endif %}
                             {% if cliente.endereco %}
-                            <p><i class="fas fa-map-marker-alt"></i> <strong>Endereço:</strong> {{ cliente.endereco }}</p>
+                            <p><i class="fas fa-map-marker-alt"></i> <strong>Dirección:</strong> {{ cliente.endereco }}</p>
                             {% endif %}
                         </div>
                     </div>
@@ -173,9 +173,9 @@
             </div>
             {% endif %}
 
-            <!-- Informações do Técnico -->
+            <!-- Información del Técnico -->
             <div class="tecnico-card">
-                <h2><i class="fas fa-user-tie"></i> Informações do Técnico</h2>
+                <h2><i class="fas fa-user-tie"></i> Información del Técnico</h2>
                 <div class="tecnico-info">
                     <div class="tecnico-avatar">
                         <i class="fas fa-user"></i>
@@ -185,36 +185,36 @@
                         <h3>{{ tecnico.nome }}</h3>
                         <div class="tecnico-data">
                             {% if tecnico.especialidade %}
-                            <p><i class="fas fa-wrench"></i> <strong>Especialidade:</strong> {{ tecnico.especialidade }}</p>
+                            <p><i class="fas fa-wrench"></i> <strong>Especialidad:</strong> {{ tecnico.especialidade }}</p>
                             {% endif %}
                             {% if tecnico.telefone %}
-                            <p><i class="fas fa-phone"></i> <strong>Telefone:</strong> {{ tecnico.telefone }}</p>
+                            <p><i class="fas fa-phone"></i> <strong>Teléfono:</strong> {{ tecnico.telefone }}</p>
                             {% endif %}
                             {% if tecnico.email %}
                             <p><i class="fas fa-envelope"></i> <strong>E-mail:</strong> {{ tecnico.email }}</p>
                             {% endif %}
                         </div>
                         {% else %}
-                        <h3>Técnico Responsável</h3>
+                        <h3>Técnico Responsable</h3>
                         <p><strong>Equipo Clínica de Reparación</strong></p>
-                        <p class="text-muted">Técnico especializado em {{ ordem.servico }}</p>
+                        <p class="text-muted">Técnico especializado en {{ ordem.servico }}</p>
                         {% endif %}
                         <div class="tecnico-contact">
                             <a href="{{ url_for('contato') }}" class="btn btn-secondary btn-small">
-                                <i class="fas fa-envelope"></i> Entrar em Contato
+                                <i class="fas fa-envelope"></i> Contactar
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Ações -->
+            <!-- Acciones -->
             <div class="actions-card">
                 <a href="{{ url_for('rastrear') }}" class="btn btn-secondary">
-                    <i class="fas fa-search"></i> Rastrear Outra Ordem
+                    <i class="fas fa-search"></i> Rastrear Otra Orden
                 </a>
                 <a href="{{ url_for('contato') }}" class="btn btn-primary">
-                    <i class="fas fa-phone"></i> Falar com Atendimento
+                    <i class="fas fa-phone"></i> Hablar con Atención
                 </a>
             </div>
         </div>
@@ -224,7 +224,7 @@
 <style>
 .tracking-result-section {
     padding: 4rem 0;
-    background: var(--bg-secondary);
+    background: #000000;
     min-height: 60vh;
 }
 
@@ -237,10 +237,11 @@
 }
 
 .status-card, .info-card, .pecas-card, .diagnostico-card, .tecnico-card, .cliente-card, .actions-card {
-    background: white;
+    background: #111111;
     border-radius: 12px;
     padding: 2rem;
     box-shadow: var(--shadow-md);
+    border: 1px solid #333333;
 }
 
 .status-header {
@@ -254,7 +255,7 @@
 
 .status-header h2 {
     font-size: 1.5rem;
-    color: var(--text-primary);
+    color: #ffffff;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -323,12 +324,12 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: var(--bg-secondary);
+    background: #000000;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    border: 2px solid var(--border-color);
+    border: 2px solid #333333;
 }
 
 .timeline-item.active .timeline-icon {
@@ -345,12 +346,12 @@
 
 .timeline-content strong {
     display: block;
-    color: var(--text-primary);
+    color: #ffffff;
     margin-bottom: 0.3rem;
 }
 
 .timeline-content p {
-    color: var(--text-secondary);
+    color: #cccccc;
     font-size: 0.9rem;
     margin: 0;
 }
@@ -382,7 +383,7 @@
 
 .info-content h3 {
     font-size: 1rem;
-    color: var(--text-secondary);
+    color: #cccccc;
     margin-bottom: 0.5rem;
     text-transform: uppercase;
     font-size: 0.85rem;
@@ -390,7 +391,7 @@
 }
 
 .info-content p {
-    color: var(--text-primary);
+    color: #ffffff;
     margin: 0.3rem 0;
 }
 
@@ -407,13 +408,13 @@
 }
 
 .text-muted {
-    color: var(--text-secondary);
+    color: #cccccc;
     font-size: 0.85rem;
 }
 
 .pecas-card h2, .diagnostico-card h2, .tecnico-card h2, .cliente-card h2 {
     font-size: 1.3rem;
-    color: var(--text-primary);
+    color: #ffffff;
     margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
@@ -441,7 +442,7 @@
 
 .cliente-details h3 {
     font-size: 1.3rem;
-    color: var(--text-primary);
+    color: #ffffff;
     margin-bottom: 1rem;
 }
 
@@ -452,7 +453,7 @@
 }
 
 .cliente-data p {
-    color: var(--text-primary);
+    color: #ffffff;
     margin: 0;
     display: flex;
     align-items: center;
@@ -475,8 +476,9 @@
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background: var(--bg-secondary);
+    background: #000000;
     border-radius: 8px;
+    border: 1px solid #333333;
 }
 
 .peca-icon {
@@ -496,12 +498,12 @@
 
 .peca-info strong {
     display: block;
-    color: var(--text-primary);
+    color: #ffffff;
     margin-bottom: 0.3rem;
 }
 
 .peca-info p {
-    color: var(--text-secondary);
+    color: #cccccc;
     font-size: 0.9rem;
     margin: 0;
 }
@@ -524,14 +526,15 @@
 }
 
 .diagnostico-content {
-    background: var(--bg-secondary);
+    background: #000000;
     padding: 1.5rem;
     border-radius: 8px;
     border-left: 4px solid var(--primary-color);
+    border: 1px solid #333333;
 }
 
 .diagnostico-content p {
-    color: var(--text-primary);
+    color: #ffffff;
     line-height: 1.8;
     margin: 0;
 }
@@ -557,12 +560,12 @@
 
 .tecnico-details h3 {
     font-size: 1.1rem;
-    color: var(--text-primary);
+    color: #ffffff;
     margin-bottom: 0.5rem;
 }
 
 .tecnico-details p {
-    color: var(--text-primary);
+    color: #ffffff;
     margin: 0.3rem 0;
 }
 
@@ -574,7 +577,7 @@
 }
 
 .tecnico-data p {
-    color: var(--text-primary);
+    color: #ffffff;
     margin: 0;
     display: flex;
     align-items: center;

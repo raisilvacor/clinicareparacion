@@ -106,7 +106,7 @@
 <style>
 .tracking-section {
     padding: 4rem 0;
-    background: var(--bg-secondary);
+    background: #000000;
     min-height: 60vh;
 }
 
@@ -120,10 +120,11 @@
 }
 
 .tracking-form-card {
-    background: white;
+    background: #111111;
     border-radius: 12px;
     padding: 2.5rem;
     box-shadow: var(--shadow-lg);
+    border: 1px solid #333333;
 }
 
 .form-header {
@@ -140,12 +141,12 @@
 
 .form-header h2 {
     font-size: 1.8rem;
-    color: var(--text-primary);
+    color: #ffffff;
     margin-bottom: 0.5rem;
 }
 
 .form-header p {
-    color: var(--text-secondary);
+    color: #cccccc;
     font-size: 0.95rem;
 }
 
@@ -162,7 +163,7 @@
     align-items: center;
     gap: 0.5rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: #ffffff;
     margin-bottom: 0.5rem;
 }
 
@@ -173,10 +174,12 @@
 .tracking-form input {
     width: 100%;
     padding: 1rem;
-    border: 2px solid var(--border-color);
+    border: 2px solid #333333;
     border-radius: 8px;
     font-size: 1.1rem;
     transition: all 0.3s ease;
+    background: #000000;
+    color: #ffffff;
 }
 
 .tracking-form input:focus {
@@ -185,25 +188,29 @@
     box-shadow: 0 0 0 3px rgba(33, 95, 151, 0.1);
 }
 
+.tracking-form input::placeholder {
+    color: #888888;
+}
+
 .form-help {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     margin-top: 0.5rem;
-    color: var(--text-secondary);
+    color: #cccccc;
     font-size: 0.85rem;
 }
 
 .tracking-info {
     margin-top: 2rem;
     padding-top: 2rem;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid #333333;
     text-align: center;
 }
 
 .tracking-info h3 {
     font-size: 1.2rem;
-    color: var(--text-primary);
+    color: #ffffff;
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
@@ -212,21 +219,22 @@
 }
 
 .tracking-info p {
-    color: var(--text-secondary);
+    color: #cccccc;
     margin-bottom: 1rem;
     line-height: 1.6;
 }
 
 .tracking-features {
-    background: white;
+    background: #111111;
     border-radius: 12px;
     padding: 2rem;
     box-shadow: var(--shadow-lg);
+    border: 1px solid #333333;
 }
 
 .tracking-features h3 {
     font-size: 1.5rem;
-    color: var(--text-primary);
+    color: #ffffff;
     margin-bottom: 1.5rem;
     text-align: center;
 }
@@ -238,7 +246,7 @@
 
 .features-list li {
     padding: 1.5rem 0;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid #333333;
     display: flex;
     gap: 1rem;
     align-items: start;
@@ -257,13 +265,13 @@
 
 .features-list li strong {
     display: block;
-    color: var(--text-primary);
+    color: #ffffff;
     margin-bottom: 0.3rem;
     font-size: 1.1rem;
 }
 
 .features-list li p {
-    color: var(--text-secondary);
+    color: #cccccc;
     font-size: 0.9rem;
     margin: 0;
 }
