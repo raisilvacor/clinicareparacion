@@ -1,0 +1,1563 @@
+{% extends "base.html" %}
+
+{% block title %}Clínica de Reparación{% endblock %}
+
+{% block og_title %}Clínica de Reparación - Asistencia Técnica en Córdoba{% endblock %}
+
+{% block twitter_title %}Clínica de Reparación - Asistencia Técnica en Córdoba{% endblock %}
+
+{% block description %}Asistencia técnica especializada en Córdoba Capital, Nueva Córdoba y Güemes. Reparación de celulares, notebooks, computadoras, lavadoras, microondas, TVs y videojuegos. Técnico certificado con atención rápida y garantía.{% endblock %}
+
+{% block keywords %}asistencia técnica córdoba, reparación de celular córdoba, reparación de notebook córdoba, asistencia técnica nueva córdoba, asistencia técnica güemes, reparación de lavadora córdoba, reparación de microondas córdoba, reparación de tv córdoba, reparación videogame córdoba, técnico de electrónica córdoba, reparo de placas electrónicas córdoba, mantenimiento de notebook córdoba, formateo de computadora córdoba, cambio de pantalla córdoba, reparación iphone córdoba, reparación samsung córdoba, técnico residencial córdoba, córdoba capital, córdoba argentina{% endblock %}
+
+{% block schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Clínica de Reparación",
+  "description": "Asistencia técnica especializada en Córdoba para electrodomésticos, celulares, computadoras y notebooks",
+  "url": "{{ request.url_root if request else '' }}",
+  "telephone": "{{ footer.contato.telefone if footer and footer.contato and footer.contato.telefone else '(351) 99999-9999' }}",
+  "email": "{{ footer.contato.email if footer and footer.contato and footer.contato.email else 'contato@clinicadoreparo.com.ar' }}",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{ footer.contato.endereco if footer and footer.contato and footer.contato.endereco else 'Córdoba' }}",
+    "addressLocality": "Córdoba",
+    "addressRegion": "Córdoba",
+    "postalCode": "5000",
+    "addressCountry": "AR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -31.4201,
+    "longitude": -64.1888
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Córdoba"
+    },
+    {
+      "@type": "City",
+      "name": "Nueva Córdoba"
+    },
+    {
+      "@type": "City",
+      "name": "Güemes"
+    },
+    {
+      "@type": "City",
+      "name": "Villa Allende"
+    },
+    {
+      "@type": "City",
+      "name": "Villa Carlos Paz"
+    }
+  ],
+  "priceRange": "$$",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "opens": "08:00",
+    "closes": "18:00"
+  },
+  "serviceType": [
+    "Reparación de Celulares",
+    "Reparación de Notebook",
+    "Reparación de Computadora",
+    "Reparación de Videojuegos",
+    "Reparación de Televisor",
+    "Reparación de Microondas",
+    "Reparación de Lavadora",
+    "Reparación de Equipos de Sonido",
+    "Otros Aparatos Electrónicos"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "150"
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Slider -->
+{% if slides %}
+<section class="hero-slider">
+    <div class="slider-container">
+        <div class="slider-wrapper">
+            {% for slide in slides %}
+            <div class="slide {% if loop.first %}active{% endif %}">
+                {% if slide.link %}
+                <a href="{{ slide.link }}" target="{{ slide.link_target or '_self' }}" class="slide-link">
+                    {% if slide.imagem and slide.imagem.startswith('/admin/slides/imagem/') %}
+                    <div class="slide-image" data-bg-image="{{ slide.imagem }}">
+                        <img src="{{ slide.imagem }}" alt="Clínica de Reparación" loading="eager">
+                    </div>
+                    {% else %}
+                    <div class="slide-image" data-bg-image="{{ url_for('static', filename=slide.imagem) }}">
+                        <img src="{{ url_for('static', filename=slide.imagem) }}" alt="Slide {{ loop.index }}" loading="eager">
+                    </div>
+                    {% endif %}
+                </a>
+                {% else %}
+                    {% if slide.imagem and slide.imagem.startswith('/admin/slides/imagem/') %}
+                    <div class="slide-image" data-bg-image="{{ slide.imagem }}">
+                        <img src="{{ slide.imagem }}" alt="Clínica de Reparación" loading="eager">
+                    </div>
+                    {% else %}
+                    <div class="slide-image" data-bg-image="{{ url_for('static', filename=slide.imagem) }}">
+                        <img src="{{ url_for('static', filename=slide.imagem) }}" alt="Slide {{ loop.index }}" loading="eager">
+                    </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Indicadores de navegação (pontos) -->
+        {% if slides|length > 1 %}
+        <div class="slider-indicators">
+            {% for slide in slides %}
+            <button class="indicator {% if loop.first %}active{% endif %}" data-slide="{{ loop.index0 }}" aria-label="Slide {{ loop.index }}"></button>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+
+<section class="hero">
+    <div class="hero-background">
+        <div class="circuit-loader">
+            <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="chipGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#2d2d2d" />
+                        <stop offset="100%" stop-color="#0f0f0f" />
+                    </linearGradient>
+                    <linearGradient id="textGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#eeeeee" />
+                        <stop offset="100%" stop-color="#888888" />
+                    </linearGradient>
+                    <linearGradient id="pinGradient" x1="1" y1="0" x2="0" y2="0">
+                        <stop offset="0%" stop-color="#bbbbbb" />
+                        <stop offset="50%" stop-color="#888888" />
+                        <stop offset="100%" stop-color="#555555" />
+                    </linearGradient>
+                </defs>
+                <g id="traces">
+                    <path d="M100 100 H200 V210 H326" class="trace-bg" />
+                    <path d="M100 100 H200 V210 H326" class="trace-flow purple" />
+                    <path d="M80 180 H180 V230 H326" class="trace-bg" />
+                    <path d="M80 180 H180 V230 H326" class="trace-flow blue" />
+                    <path d="M60 260 H150 V250 H326" class="trace-bg" />
+                    <path d="M60 260 H150 V250 H326" class="trace-flow yellow" />
+                    <path d="M100 350 H200 V270 H326" class="trace-bg" />
+                    <path d="M100 350 H200 V270 H326" class="trace-flow green" />
+                    <path d="M700 90 H560 V210 H474" class="trace-bg" />
+                    <path d="M700 90 H560 V210 H474" class="trace-flow blue" />
+                    <path d="M740 160 H580 V230 H474" class="trace-bg" />
+                    <path d="M740 160 H580 V230 H474" class="trace-flow green" />
+                    <path d="M720 250 H590 V250 H474" class="trace-bg" />
+                    <path d="M720 250 H590 V250 H474" class="trace-flow red" />
+                    <path d="M680 340 H570 V270 H474" class="trace-bg" />
+                    <path d="M680 340 H570 V270 H474" class="trace-flow yellow" />
+                </g>
+                <rect x="330" y="190" width="140" height="100" rx="20" ry="20" fill="url(#chipGradient)" stroke="#ff9800" stroke-width="3" filter="drop-shadow(0 0 6px rgba(255,152,0,0.8))" />
+                <g>
+                    <rect x="322" y="205" width="8" height="10" fill="url(#pinGradient)" rx="2" />
+                    <rect x="322" y="225" width="8" height="10" fill="url(#pinGradient)" rx="2" />
+                    <rect x="322" y="245" width="8" height="10" fill="url(#pinGradient)" rx="2" />
+                    <rect x="322" y="265" width="8" height="10" fill="url(#pinGradient)" rx="2" />
+                </g>
+                <g>
+                    <rect x="470" y="205" width="8" height="10" fill="url(#pinGradient)" rx="2" />
+                    <rect x="470" y="225" width="8" height="10" fill="url(#pinGradient)" rx="2" />
+                    <rect x="470" y="245" width="8" height="10" fill="url(#pinGradient)" rx="2" />
+                    <rect x="470" y="265" width="8" height="10" fill="url(#pinGradient)" rx="2" />
+                </g>
+                <circle cx="100" cy="100" r="5" fill="#ff9800" />
+                <circle cx="80" cy="180" r="5" fill="#ff9800" />
+                <circle cx="60" cy="260" r="5" fill="#ff9800" />
+                <circle cx="100" cy="350" r="5" fill="#ff9800" />
+                <circle cx="700" cy="90" r="5" fill="#ff9800" />
+                <circle cx="740" cy="160" r="5" fill="#ff9800" />
+                <circle cx="720" cy="250" r="5" fill="#ff9800" />
+                <circle cx="680" cy="340" r="5" fill="#ff9800" />
+            </svg>
+        </div>
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-star"></i>
+                <span>Especialistas en Tecnología</span>
+            </div>
+            <h1 class="hero-title">
+                <span class="gradient-text">Asistencia Técnica</span><br>
+                Especializada y Técnico Certificado
+            </h1>
+            <p class="hero-description">
+                Reparación de celulares, notebooks, computadoras y electrodomésticos. 
+                Soluciones rápidas, profesionales y con garantía. ¡Su dispositivo en buenas manos!
+            </p>
+            <div class="hero-buttons">
+                <a href="{{ url_for('agendamento') }}" class="btn btn-primary btn-large">
+                    <i class="fas fa-calendar-check"></i>
+                    Agendar Servicio
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <i class="fas fa-chevron-down"></i>
+    </div>
+</section>
+
+{% if milestones %}
+<section class="milestones-section">
+    <div class="container">
+        <div class="milestones-grid">
+            {% for milestone in milestones %}
+            <div class="milestone-image">
+                {% if milestone.imagem and milestone.imagem.startswith('/admin/milestones/imagem/') %}
+                <img src="{{ milestone.imagem }}" alt="{{ milestone.titulo }}" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                {% else %}
+                <img src="{{ url_for('static', filename=milestone.imagem) }}" alt="{{ milestone.titulo }}" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="services-preview">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">Nuestros Servicios</span>
+            <h2 class="section-title">Asistencia Técnica Completa</h2>
+            <p class="section-description">Ofrecemos reparación especializada de celulares, notebooks, computadoras, lavadoras, microondas, TVs y videojuegos.</p>
+        </div>
+        <div class="services-grid">
+            {% if servicos %}
+                {% for servico in servicos %}
+                <div class="service-card">
+                    <div class="service-image">
+                        {% if servico.imagem and servico.imagem.startswith('/admin/servicos/imagem/') %}
+                            <img src="{{ servico.imagem }}" alt="{{ servico.nome }}" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                        {% else %}
+                            <img src="{{ url_for('static', filename=servico.imagem) }}" alt="{{ servico.nome }}" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                        {% endif %}
+                    </div>
+                    <h3>{{ servico.nome }}</h3>
+                    <a href="{% if servico.pagina_slug %}{{ url_for('pagina_servico', slug=servico.pagina_slug) }}{% elif primeira_pagina_servico_slug %}{{ url_for('pagina_servico', slug=primeira_pagina_servico_slug) }}{% else %}{{ url_for('index') }}{% endif %}" class="btn-saiba-mais">
+                        Saber más
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Fallback para serviços padrão se não houver serviços cadastrados -->
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="{{ url_for('static', filename='img/servico-celular.jpg') }}" alt="Conserto de Celular em Barueri - Assistência Técnica Especializada" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                    </div>
+                    <h3>Reparación de Celulares</h3>
+                    <p>Reparación de celular: cambio de pantalla, batería, conectores y mucho más. Todas las marcas y modelos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="{{ url_for('static', filename='img/servico-eletrodomestico.jpg') }}" alt="Reparación de Electrodomésticos" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                    </div>
+                    <h3>Electrodomésticos</h3>
+                    <p>Reparación de electrodomésticos: heladeras, lavadoras, microondas y todos los electrodomésticos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="{{ url_for('static', filename='img/servico-computador.jpg') }}" alt="Reparación de Notebook y Computadora" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                    </div>
+                    <h3>Computadoras y Notebook</h3>
+                    <p>Reparación de notebook y computadora: reparo y mantenimiento de computadoras, notebooks y componentes.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Reparos Realizados Section -->
+{% if reparos %}
+<section class="reparos-realizados-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">Reparaciones Realizadas</span>
+            <h2 class="section-title">Nuestros Trabajos</h2>
+            <p class="section-description">Conozca algunas de las reparaciones que realizamos con calidad y dedicación</p>
+        </div>
+        <div class="reparos-grid">
+            {% for reparo in reparos[:6] %}
+            <div class="reparo-item" data-reparo-id="{{ reparo.id }}" data-reparo-index="{{ loop.index0 }}">
+                <img src="{{ reparo.imagem_url }}" alt="{{ reparo.titulo or 'Reparo realizado' }}" loading="lazy">
+            </div>
+            {% endfor %}
+        </div>
+        <div class="reparos-actions" style="text-align: center; margin-top: 2rem;">
+            <a href="{{ url_for('todos_reparos') }}" class="btn btn-primary btn-large">
+                <i class="fas fa-images"></i> Ver todas las reparaciones
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Popup para exibir imagem expandida -->
+<div id="reparo-popup" class="reparo-popup" onclick="fecharPopupReparo()">
+    <div class="reparo-popup-content" onclick="event.stopPropagation()">
+        <span class="reparo-popup-close" onclick="fecharPopupReparo()">&times;</span>
+        <img id="reparo-popup-img" src="" alt="Reparación realizada">
+        <div id="reparo-popup-info" class="reparo-popup-info"></div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Vídeos Section -->
+{% if videos %}
+<section class="videos-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">Videos</span>
+            <h2 class="section-title">Nuestros Videos</h2>
+            <p class="section-description">Conozca nuestros videos tutoriales y demostraciones</p>
+        </div>
+        <div class="videos-grid">
+            {% for video in videos[:6] %}
+            <div class="video-item">
+                <div class="video-thumbnail">
+                    {% if video.embed_url %}
+                        <iframe width="100%" height="100%" src="{{ video.embed_url }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+                    {% elif video.thumbnail_url %}
+                        <a href="{{ video.embed_url }}" target="_blank" style="display: block; width: 100%; height: 100%; position: relative;">
+                            <img src="{{ video.thumbnail_url }}" alt="{{ video.titulo }}" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 0, 0, 0.8); border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fab fa-youtube" style="color: white; font-size: 2rem;"></i>
+                            </div>
+                        </a>
+                    {% endif %}
+                </div>
+                <h3>{{ video.titulo }}</h3>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="videos-actions" style="text-align: center; margin-top: 2rem;">
+            <a href="{{ url_for('todos_videos') }}" class="btn btn-primary btn-large">
+                <i class="fas fa-video"></i> Ver todos los videos
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endif %}
+
+<section class="features">
+    <div class="container">
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Atención Rápida</h3>
+                <p>Respuesta inmediata y agendamiento flexible para su conveniencia.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <h3>Profesionales Certificados</h3>
+                <p>Equipo especializado y certificado para garantizar calidad.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <h3>Precios Justos</h3>
+                <p>Presupuesto transparente y sin sorpresas al final.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3>Atención Domiciliaria</h3>
+                <p>Vamos hasta usted cuando sea necesario para mayor comodidad.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h3>Club Clínica de Reparación</h3>
+                <p>Programa de fidelidad con cupones de descuento exclusivos para clientes registrados.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+                <h3>Emitimos Orden de Servicio</h3>
+                <p>Documentación completa y profesional de todos los servicios realizados.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <h3>Emitimos Factura de Servicio</h3>
+                <p>Factura emitida para todos los servicios prestados.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <h3>Aceptamos Tarjetas</h3>
+                <p>Aceptamos tarjetas de débito y crédito para su comodidad.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>¿Listo para Resolver Su Problema?</h2>
+            <p>Contáctenos ahora y agende su atención</p>
+            <a href="{{ url_for('contato') }}" class="btn btn-primary btn-large animated-button">
+                <span class="btn-content">
+                    <i class="fas fa-phone"></i>
+                    <span>Háblenos</span>
+                </span>
+                <span class="btn-shimmer"></span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="why-choose-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">¿Por qué llamar a Clínica de Reparación?</h2>
+        </div>
+        <div class="why-choose-grid">
+            <div class="why-choose-item">
+                <div class="why-choose-icon">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <h3>¡Uso de repuestos de confianza!</h3>
+                <p>Mayor durabilidad y rendimiento, aumentando la vida útil del aparato.</p>
+            </div>
+            <div class="why-choose-item">
+                <div class="why-choose-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h3>¡Seguridad al recibir a nuestros técnicos!</h3>
+                <p>Profesionales identificados por uniforme.</p>
+            </div>
+            <div class="why-choose-item">
+                <div class="why-choose-icon">
+                    <i class="fas fa-hand-sparkles"></i>
+                </div>
+                <h3>Profesionales higiénicos</h3>
+                <p>Que siguen todos los protocolos de salud.</p>
+            </div>
+            <div class="why-choose-item">
+                <div class="why-choose-icon">
+                    <i class="fas fa-broom"></i>
+                </div>
+                <h3>Organización en la prestación de servicio</h3>
+                <p>¡Entregamos el ambiente limpio y organizado!</p>
+            </div>
+            <div class="why-choose-item">
+                <div class="why-choose-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <h3>Atención con horario programado</h3>
+                <p>Agende y uno de nuestros técnicos especializados irá hasta el lugar.</p>
+            </div>
+            <div class="why-choose-item">
+                <div class="why-choose-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Reparaciones el mismo día</h3>
+                <p>La mayoría de las reparaciones pueden hacerse el mismo día.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="brands-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Principales Marcas</h2>
+            <p class="section-description">Trabajamos con las principales marcas del mercado</p>
+        </div>
+        <div class="brands-carousel-wrapper">
+            <div class="brands-carousel">
+                <div class="brands-track">
+                    {% if marcas %}
+                        {% for marca in marcas %}
+                        <div class="brand-item">
+                            {% if marca.imagem and marca.imagem.startswith('/admin/marcas/imagem/') %}
+                            <img src="{{ marca.imagem }}" alt="{{ marca.nome }}" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                            {% else %}
+                            <img src="{{ url_for('static', filename=marca.imagem) }}" alt="{{ marca.nome }}" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                        {% for marca in marcas %}
+                        <div class="brand-item">
+                            {% if marca.imagem and marca.imagem.startswith('/admin/marcas/imagem/') %}
+                            <img src="{{ marca.imagem }}" alt="{{ marca.nome }}" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                            {% else %}
+                            <img src="{{ url_for('static', filename=marca.imagem) }}" alt="{{ marca.nome }}" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                        {% for marca in marcas %}
+                        <div class="brand-item">
+                            {% if marca.imagem and marca.imagem.startswith('/admin/marcas/imagem/') %}
+                            <img src="{{ marca.imagem }}" alt="{{ marca.nome }}" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                            {% else %}
+                            <img src="{{ url_for('static', filename=marca.imagem) }}" alt="{{ marca.nome }}" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <!-- Fallback para marcas padrão se não houver marcas cadastradas -->
+                        {% for i in range(1, 24) %}
+                        <div class="brand-item">
+                            <img src="{{ url_for('static', filename='logos/' ~ i ~ '.png') }}" alt="Marca {{ i }}" loading="lazy">
+                        </div>
+                        {% endfor %}
+                        {% for i in range(1, 24) %}
+                        <div class="brand-item">
+                            <img src="{{ url_for('static', filename='logos/' ~ i ~ '.png') }}" alt="Marca {{ i }}" loading="lazy">
+                        </div>
+                        {% endfor %}
+                        {% for i in range(1, 24) %}
+                        <div class="brand-item">
+                            <img src="{{ url_for('static', filename='logos/' ~ i ~ '.png') }}" alt="Marca {{ i }}" loading="lazy">
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="map-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Nuestra Ubicación</h2>
+            <p class="section-description">Venga a visitarnos o contáctenos - Atendemos Córdoba Capital y toda la provincia</p>
+        </div>
+    </div>
+    <div class="map-container">
+        {% if footer and footer.contato and footer.contato.endereco and footer.contato.endereco.strip() %}
+        <iframe 
+            src="https://www.google.com/maps?q={{ footer.contato.endereco|urlencode }}&output=embed" 
+            width="100%" 
+            height="450" 
+            allowfullscreen 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Clínica de Reparación">
+        </iframe>
+        {% else %}
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.197353576!2d-46.633331!3d-23.55052!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59a00!2sS%C3%A3o%20Paulo%2C%20SP!5e0!3m2!1spt-BR!2sbr!4v1234567890123!5m2!1spt-BR!2sbr" 
+            width="100%" 
+            height="450" 
+            allowfullscreen 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Clínica de Reparación">
+        </iframe>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<style>
+/* Hero Slider Styles */
+.hero-slider {
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    margin-top: 0; /* Será calculado dinamicamente via JavaScript */
+    z-index: 1;
+    transition: height 0.3s ease;
+    display: block;
+    visibility: visible;
+}
+
+/* Garantir que o slider não seja cortado pela navbar */
+body {
+    padding-top: 0;
+}
+
+.hero-slider + section {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+.slider-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+    transform: translateX(100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    z-index: 1;
+}
+
+.slide.prev {
+    transform: translateX(-100%);
+}
+
+.slide-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.slide-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    transition: transform 0.8s ease-in-out;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+}
+
+.slide-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: none; /* Escondido por padrão, JavaScript mostrará no mobile */
+}
+
+.slide-link .slide-image {
+    pointer-events: auto;
+}
+
+.slide.active .slide-image {
+    transform: scale(1);
+}
+
+.slide:not(.active) .slide-image {
+    transform: scale(1.1);
+}
+
+/* Indicadores de navegação (pontos) */
+.slider-indicators {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.indicator:hover {
+    transform: scale(1.2);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.indicator.active {
+    background: white;
+    width: 32px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-slider {
+        min-height: 250px;
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    .slider-indicators {
+        bottom: 15px;
+    }
+    
+    .slide-image {
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    
+    .slide-image img {
+        display: block !important;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-slider {
+        min-height: 200px;
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    .slider-indicators {
+        bottom: 12px;
+    }
+    
+    .slide-image {
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    
+    .slide-image img {
+        display: block !important;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+    }
+}
+
+.animated-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.animated-button .btn-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.animated-button .btn-shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: left 0.5s ease;
+    z-index: 1;
+}
+
+.animated-button:hover .btn-shimmer {
+    left: 100%;
+}
+
+.animated-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.animated-button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.animated-button {
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(33, 95, 151, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(33, 95, 151, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(33, 95, 151, 0);
+    }
+}
+
+.animated-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(33, 95, 151, 0.4);
+}
+
+/* Milestones Section */
+.milestones-section {
+    padding: 4rem 0;
+    background: var(--bg-primary);
+}
+
+.milestones-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.milestone-image {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.milestone-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Responsive Milestones */
+@media (max-width: 968px) {
+    .milestones-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .milestones-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .milestone-image img {
+        height: 250px;
+    }
+}
+
+/* Brands Carousel */
+.brands-section {
+    padding: 4rem 0;
+    background: var(--bg-secondary);
+}
+
+.brands-section .section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.brands-section .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.brands-section .section-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+.brands-carousel-wrapper {
+    overflow: hidden;
+    position: relative;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.brands-carousel {
+    width: 100%;
+    overflow: visible;
+}
+
+.brands-track {
+    display: flex;
+    animation: slide-right-to-left 25s linear infinite;
+    gap: 3rem;
+    will-change: transform;
+    width: max-content;
+    min-width: calc(23 * 150px + 22 * 3rem);
+}
+
+.brand-item {
+    flex-shrink: 0;
+    width: 150px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease;
+}
+
+.brand-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.brand-item img {
+    max-width: 100%;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.brand-item:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+@keyframes slide-right-to-left {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-33.333%);
+    }
+}
+
+/* Pausar animação no hover */
+.brands-carousel-wrapper:hover .brands-track {
+    animation-play-state: paused;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .brands-section {
+        padding: 3rem 0;
+    }
+    
+    .brands-section .section-title {
+        font-size: 2rem;
+    }
+    
+    .brand-item {
+        width: 120px;
+        height: 80px;
+        padding: 0.75rem;
+    }
+    
+    .brand-item img {
+        max-height: 60px;
+    }
+    
+    .brands-track {
+        gap: 2rem;
+        animation: slide-right-to-left 20s linear infinite;
+    }
+}
+
+/* Map Section */
+.map-section {
+    padding-top: 4rem;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    background: var(--bg-primary);
+}
+
+.map-section .section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.map-section .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.map-section .section-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+.map-container {
+    width: 100%;
+    margin-top: 2rem;
+    box-shadow: var(--shadow-lg);
+    border-radius: 0;
+    overflow: hidden;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 450px;
+    border: 0;
+    display: block;
+}
+
+/* Responsive Map */
+@media (max-width: 768px) {
+    .map-section {
+        padding-top: 3rem;
+        padding-bottom: 0;
+    }
+    
+    .map-section .section-title {
+        font-size: 2rem;
+    }
+    
+    .map-container iframe {
+        height: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+    .map-container iframe {
+        height: 300px;
+    }
+}
+
+/* Botão Saiba Mais */
+.btn-saiba-mais {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--primary-dark);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin: 1rem 1.5rem 1.5rem;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-saiba-mais:hover {
+    background: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(33, 95, 151, 0.3);
+}
+
+.btn-saiba-mais i {
+    font-size: 0.875rem;
+}
+
+.services-preview .service-card {
+    display: flex;
+    flex-direction: column;
+    cursor: default;
+}
+
+.services-preview .service-card .service-image {
+    cursor: default;
+}
+
+.services-preview .service-card:hover .service-image img {
+    transform: none;
+}
+
+.services-preview .service-card:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Why Choose Section */
+.why-choose-section {
+    padding: 5rem 0;
+    background: var(--bg-secondary);
+}
+
+.why-choose-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.why-choose-item {
+    background: #000000;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.why-choose-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.why-choose-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #ff9800, #ffb74d);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.why-choose-icon i {
+    font-size: 2rem;
+    color: white;
+}
+
+.why-choose-item h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.why-choose-item p {
+    color: #ffffff;
+    line-height: 1.6;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .why-choose-section {
+        padding: 3rem 0;
+    }
+    
+    .why-choose-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+/* CSS da loja removido - sistema de loja removido */
+
+/* Reparos Realizados Section */
+.reparos-realizados-section {
+    padding: 5rem 0;
+    background: var(--bg-primary);
+}
+
+.reparos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.reparos-actions {
+    margin-top: 2rem;
+}
+
+.reparos-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.reparos-actions .btn i {
+    font-size: 1.2rem;
+}
+
+.reparo-item {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    overflow: hidden;
+    border-radius: 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #f5f5f5;
+    flex-shrink: 0;
+}
+
+.reparo-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.reparo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+    display: block;
+}
+
+.reparo-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Popup de Imagem Expandida */
+.reparo-popup {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    overflow: auto;
+    animation: fadeIn 0.3s ease;
+}
+
+.reparo-popup.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reparo-popup-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    margin: auto;
+    animation: zoomIn 0.3s ease;
+}
+
+.reparo-popup-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 0;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    display: block;
+}
+
+.reparo-popup-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 10000;
+    line-height: 1;
+}
+
+.reparo-popup-close:hover {
+    color: var(--primary-color);
+}
+
+.reparo-popup-info {
+    color: white;
+    text-align: center;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 0;
+}
+
+.reparo-popup-info h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+}
+
+.reparo-popup-info p {
+    margin: 0;
+    color: #ddd;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Responsive Reparos */
+@media (max-width: 968px) {
+    .reparo-item {
+        width: 220px;
+        height: 220px;
+    }
+    
+    .reparos-realizados-section {
+        padding: 3rem 0;
+    }
+    
+    .reparos-grid {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .reparo-item {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .reparos-grid {
+        gap: 0.75rem;
+    }
+    
+    .reparo-popup-content {
+        max-width: 95%;
+    }
+    
+    .reparo-popup-close {
+        top: -30px;
+        font-size: 2.5rem;
+    }
+}
+
+/* Vídeos Section */
+.videos-section {
+    padding: 5rem 0;
+    background: var(--bg-secondary);
+}
+
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.video-item {
+    background: transparent;
+    overflow: hidden;
+    border: 1px solid #ff9800;
+    border-radius: 8px;
+}
+
+.video-thumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: #000000;
+}
+
+
+.video-item h3 {
+    padding: 1.5rem;
+    font-size: 1.2rem;
+    margin: 0;
+    color: #ffffff;
+    font-weight: 600;
+    background: transparent;
+}
+
+.videos-actions {
+    margin-top: 2rem;
+}
+
+.videos-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.videos-actions .btn i {
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .videos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .videos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+<script>
+// Funções de carrinho removidas - sistema de loja removido
+
+// Reparos Realizados - Popup
+/* eslint-disable */
+// @ts-nocheck
+const reparosDataFull = {{ (reparos[:6] if reparos else [])|tojson }};
+/* eslint-enable */
+
+function abrirPopupReparo(index) {
+    if (!reparosDataFull || index < 0 || index >= reparosDataFull.length) return;
+    
+    const reparo = reparosDataFull[index];
+    const popup = document.getElementById('reparo-popup');
+    const popupImg = document.getElementById('reparo-popup-img');
+    const popupInfo = document.getElementById('reparo-popup-info');
+    
+    popupImg.src = reparo.imagem_url || reparo.imagem;
+    popupImg.alt = reparo.titulo || 'Reparación realizada';
+    
+    // Atualizar informações
+    popupInfo.innerHTML = '';
+    if (reparo.titulo) {
+        const h3 = document.createElement('h3');
+        h3.textContent = reparo.titulo;
+        popupInfo.appendChild(h3);
+    }
+    if (reparo.descricao) {
+        const p = document.createElement('p');
+        p.textContent = reparo.descricao;
+        popupInfo.appendChild(p);
+    }
+    
+    popup.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevenir scroll do body
+}
+
+function fecharPopupReparo() {
+    const popup = document.getElementById('reparo-popup');
+    popup.classList.remove('active');
+    document.body.style.overflow = ''; // Restaurar scroll do body
+}
+
+// Event delegation para cliques nos reparos
+function initReparosPopup() {
+    const reparoItems = document.querySelectorAll('.reparo-item');
+    reparoItems.forEach(function(item) {
+        item.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-reparo-index'), 10);
+            if (!isNaN(index)) {
+                abrirPopupReparo(index);
+            }
+        });
+    });
+}
+
+// Inicializar quando o DOM estiver pronto
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initReparosPopup);
+} else {
+    // DOM já está pronto
+    initReparosPopup();
+}
+
+// Fechar popup com ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        fecharPopupReparo();
+        fecharVideoModal();
+    }
+});
+
+// Funções para modal de vídeo
+</script>
+{% endblock %}

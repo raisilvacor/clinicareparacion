@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}Videos - Clínica de Reparación{% endblock %}
+
+{% block description %}Conozca todos los videos tutoriales y demostraciones de la Clínica de Reparación. Aprenda sobre reparaciones y mantenimiento.{% endblock %}
+
+{% block keywords %}videos tutoriales, videos de reparación, demostraciones, clínica de reparación videos{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Nossos Vídeos</h1>
+        <p>Confira todos os nossos vídeos tutoriais e demonstrações</p>
+    </div>
+</section>
+
+{% if videos %}
+<section class="videos-page-section">
+    <div class="container">
+        <div class="videos-page-grid">
+            {% for video in videos %}
+            <div class="video-page-item">
+                <div class="video-page-thumbnail">
+                    {% if video.embed_url %}
+                        <iframe width="100%" height="100%" src="{{ video.embed_url }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+                    {% elif video.thumbnail_url %}
+                        <a href="{{ video.embed_url }}" target="_blank" style="display: block; width: 100%; height: 100%; position: relative;">
+                            <img src="{{ video.thumbnail_url }}" alt="{{ video.titulo }}" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 0, 0, 0.8); border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fab fa-youtube" style="color: white; font-size: 2rem;"></i>
+                            </div>
+                        </a>
+                    {% endif %}
+                </div>
+                <h3>{{ video.titulo }}</h3>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% else %}
+<section class="empty-state-section">
+    <div class="container">
+        <div class="empty-state">
+            <i class="fas fa-video"></i>
+            <h2>Nenhum vídeo cadastrado ainda</h2>
+            <p>Em breve, você poderá ver aqui todos os nossos vídeos tutoriais e demonstrações.</p>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<style>
+/* Page Header */
+.page-header {
+    background: linear-gradient(135deg, #000000 0%, #111111 100%);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.page-header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Videos Page Section */
+.videos-page-section {
+    padding: 4rem 0;
+    background: var(--bg-primary);
+}
+
+.videos-page-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.video-page-item {
+    background: #000000;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid #ff9800;
+}
+
+.video-page-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.video-page-thumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: #000000;
+}
+
+.video-page-item h3 {
+    padding: 1.5rem;
+    font-size: 1.2rem;
+    margin: 0;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+
+/* Empty State */
+.empty-state-section {
+    padding: 5rem 0;
+    text-align: center;
+}
+
+.empty-state {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
+}
+
+.empty-state h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.empty-state p {
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    .page-header p {
+        font-size: 1rem;
+    }
+    
+    .videos-page-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .videos-page-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+{% endblock %}
+

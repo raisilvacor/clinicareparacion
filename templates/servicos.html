@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Servicios{% endblock %}
+
+{% block description %}Servicios completos de asistencia técnica en Córdoba: reparación de celulares, notebooks, computadoras, lavadoras, microondas, TVs y videojuegos. Atención en Córdoba Capital, Nueva Córdoba, Güemes y toda la provincia.{% endblock %}
+
+{% block keywords %}servicios asistencia técnica córdoba, reparación celular córdoba, reparación notebook córdoba, reparación computadora córdoba, reparación lavadora córdoba, reparación microondas córdoba, reparación tv córdoba, reparación videogame córdoba, asistencia técnica nueva córdoba, asistencia técnica güemes, córdoba capital{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Servicios de Asistencia Técnica</h1>
+        <p>Reparación especializada de celulares, notebooks, computadoras y electrodomésticos</p>
+    </div>
+</section>
+
+<section class="services-preview">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">Nuestros Servicios</span>
+            <h2 class="section-title">Asistencia Técnica Completa</h2>
+            <p class="section-description">Ofrecemos reparación especializada de celulares, notebooks, computadoras, lavadoras, microondas, TVs y videojuegos.</p>
+        </div>
+        <div class="services-grid">
+            {% if servicos %}
+                {% for servico in servicos %}
+                <a href="{% if servico.pagina_slug %}{{ url_for('pagina_servico', slug=servico.pagina_slug) }}{% elif primeira_pagina_servico_slug %}{{ url_for('pagina_servico', slug=primeira_pagina_servico_slug) }}{% else %}{{ url_for('index') }}{% endif %}" class="service-card-link">
+                <div class="service-card">
+                    <div class="service-image">
+                        {% if servico.imagem and servico.imagem.startswith('/admin/servicos/imagem/') %}
+                                <img src="{{ servico.imagem }}" alt="{{ servico.nome }}" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                        {% elif servico.imagem %}
+                                <img src="{{ url_for('static', filename=servico.imagem) }}" alt="{{ servico.nome }}" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='img/placeholder.png') }}" alt="{{ servico.nome }}" loading="lazy">
+                        {% endif %}
+                    </div>
+                    <h3>{{ servico.nome }}</h3>
+                </div>
+                </a>
+                {% endfor %}
+            {% else %}
+                <!-- Fallback para serviços padrão se não houver serviços cadastrados -->
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="{{ url_for('static', filename='img/servico-celular.jpg') }}" alt="Reparo de Celulares" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                    </div>
+                    <h3>Reparación de Celulares</h3>
+                    <p>Cambio de pantalla, batería, conectores y mucho más. Todas las marcas y modelos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="{{ url_for('static', filename='img/servico-eletrodomestico.jpg') }}" alt="Electrodomésticos" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                    </div>
+                    <h3>Electrodomésticos</h3>
+                    <p>Heladeras, lavadoras, microondas y todos los electrodomésticos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="{{ url_for('static', filename='img/servico-computador.jpg') }}" alt="Computadoras y Notebook" loading="lazy" data-fallback="{{ url_for('static', filename='img/placeholder.png') }}">
+                    </div>
+                    <h3>Computadoras y Notebook</h3>
+                    <p>Reparo y mantenimiento de computadoras, notebooks y componentes.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<div class="services-cta">
+    <div class="container">
+        <h2>¿Necesita Asistencia Técnica?</h2>
+        <p>Contáctenos y solicite un presupuesto gratuito.</p>
+        <a href="{{ url_for('contato') }}" class="btn btn-primary btn-large">
+            <i class="fas fa-calendar-check"></i>
+            Solicitar Presupuesto
+        </a>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const images = document.querySelectorAll('img[data-fallback]');
+    images.forEach(function(img) {
+        img.addEventListener('error', function() {
+            this.src = this.getAttribute('data-fallback');
+        });
+    });
+});
+</script>
+{% endblock %}

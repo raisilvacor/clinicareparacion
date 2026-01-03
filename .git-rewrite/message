@@ -1,0 +1,1 @@
+Remover lógica de timeout para a criação de tabelas e simplificar o tratamento de exceções durante a inicialização do banco de dados. Garantir que a aplicação continue funcionando mesmo em caso de erros não críticos, mantendo a robustez do sistema.

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block description %}Asistencia técnica especializada en Córdoba para electrodomésticos, celulares, computadoras y notebooks. Reparación rápida y confiable en Córdoba Capital, Nueva Córdoba, Güemes y toda la provincia de Córdoba.{% endblock %}">
+    <meta name="keywords" content="{% block keywords %}asistencia técnica córdoba, reparación de electrónicos córdoba, técnico de electrónica córdoba, mantenimiento de electrodomésticos córdoba, asistencia técnica urgente córdoba, técnico residencial córdoba, reparo de equipos córdoba, asistencia técnica nueva córdoba, asistencia técnica güemes, reparación de celular córdoba, asistencia técnica celular córdoba, cambio de pantalla córdoba, reparación iphone córdoba, reparación samsung córdoba, reparación de notebook córdoba, mantenimiento de notebook córdoba, formateo de computadora córdoba, reparación de lavadora córdoba, asistencia técnica lavadora córdoba, reparación de microondas córdoba, reparación de tv córdoba, asistencia técnica tv córdoba, reparación videogame córdoba, asistencia playstation córdoba, instalación aire acondicionado córdoba, mantenimiento aire acondicionado córdoba, técnico en electrónica córdoba, reparo de placas electrónicas córdoba, córdoba capital, córdoba centro, villa allende córdoba, córdoba argentina{% endblock %}">
+    <meta name="author" content="Clínica de Reparación">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Spanish">
+    <meta name="geo.region" content="AR-C">
+    <meta name="geo.placename" content="Córdoba">
+    <meta name="geo.position" content="-31.4201;-64.1888">
+    <meta name="ICBM" content="-31.4201, -64.1888">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url if request else '' }}">
+    <meta property="og:title" content="{% block og_title %}Clínica de Reparación - Asistencia Técnica en Córdoba{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Asistencia técnica especializada en Córdoba para electrodomésticos, celulares, computadoras y notebooks. Reparación rápida y confiable en Córdoba Capital, Nueva Córdoba, Güemes y toda la provincia.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ url_for('static', filename='img/logo.png', _external=True) }}{% endblock %}">
+    <meta property="og:locale" content="es_AR">
+    <meta property="og:site_name" content="Clínica de Reparación">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ request.url if request else '' }}">
+    <meta name="twitter:title" content="{% block twitter_title %}Clínica de Reparación - Asistencia Técnica en Córdoba{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Asistencia técnica especializada en Córdoba para electrodomésticos, celulares, computadoras y notebooks.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ url_for('static', filename='img/logo.png', _external=True) }}{% endblock %}">
+    
+    <title>{% block title %}Clínica de Reparación{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('favicon') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('favicon') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('favicon') }}">
+    <link rel="canonical" href="{{ request.url if request else '' }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    
+    <!-- Schema.org JSON-LD -->
+    {% block schema %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{{ url_for('index') }}" class="nav-brand" title="Ir a la página principal">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Clínica de Reparación" class="logo-img">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}" class="nav-link">Inicio</a></li>
+                <li><a href="{{ url_for('sobre') }}" class="nav-link">Sobre</a></li>
+                {% if links_menu %}
+                    {% for link in links_menu %}
+                    <li><a href="{{ link.url }}" class="nav-link" {% if link.abrir_nova_aba %}target="_blank" rel="noopener noreferrer"{% endif %}>{{ link.texto }}</a></li>
+                    {% endfor %}
+                {% endif %}
+                <li class="nav-dropdown">
+                    <span class="nav-link dropdown-trigger" style="cursor: pointer;">
+                        Servicios <i class="fas fa-chevron-down"></i>
+                    </span>
+                    <ul class="dropdown-menu">
+                        {% if paginas_servicos_menu %}
+                            {% for pagina in paginas_servicos_menu %}
+                            <li><a href="{{ url_for('pagina_servico', slug=pagina.slug) }}">{{ pagina.titulo }}</a></li>
+                            {% endfor %}
+                        {% else %}
+                            <li><a href="{{ url_for('pagina_servico', slug='maquina-de-lavar') }}">Lavadora</a></li>
+                            <li><a href="{{ url_for('pagina_servico', slug='microondas') }}">Microondas</a></li>
+                            <li><a href="{{ url_for('pagina_servico', slug='celular') }}">Celular</a></li>
+                            <li><a href="{{ url_for('pagina_servico', slug='computador-e-notebook') }}">Computadora y Notebook</a></li>
+                            <li><a href="{{ url_for('pagina_servico', slug='tv') }}">TV</a></li>
+                            <li><a href="{{ url_for('pagina_servico', slug='eletrodomesticos') }}">Electrodomésticos</a></li>
+                            <li><a href="{{ url_for('pagina_servico', slug='video-games') }}">Videojuegos</a></li>
+                            <li><a href="{{ url_for('pagina_servico', slug='eletronica-em-geral') }}">Electrónica en General</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <li><a href="{{ url_for('rastrear') }}" class="nav-link"><i class="fas fa-search"></i> Rastrear</a></li>
+                <li><a href="{{ url_for('client_login') }}" class="nav-link btn-primary">Iniciar Sesión</a></li>
+                <li><a href="{{ url_for('contato') }}" class="nav-link btn-primary">Contacto</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' }}"></i>
+                        <span>{{ message }}</span>
+                        <button class="flash-close">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <a href="{{ url_for('index') }}" title="Ir a la página principal">
+                        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Clínica de Reparación" class="footer-logo" width="150" height="50" loading="lazy">
+                    </a>
+                    </a>
+                    <p>{{ footer.descricao if footer else 'Su asistencia técnica de confianza para electrodomésticos, celulares, computadoras y notebooks.' }}</p>
+                    <div class="social-links">
+                        {% if footer and footer.redes_sociais.facebook %}
+                        <a href="{{ footer.redes_sociais.facebook }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i></a>
+                        {% else %}
+                        <a href="#" class="disabled" aria-disabled="true"><i class="fab fa-facebook"></i></a>
+                        {% endif %}
+                        {% if footer and footer.redes_sociais.instagram %}
+                        <a href="{{ footer.redes_sociais.instagram }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        {% else %}
+                        <a href="#" class="disabled" aria-disabled="true"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                        {% if footer and footer.redes_sociais.whatsapp %}
+                        <a href="{{ footer.redes_sociais.whatsapp }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+                        {% else %}
+                        <a href="#" class="disabled" aria-disabled="true"><i class="fab fa-whatsapp"></i></a>
+                        {% endif %}
+                        {% if footer and footer.redes_sociais.youtube %}
+                        <a href="{{ footer.redes_sociais.youtube }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                        {% else %}
+                        <a href="#" class="disabled" aria-disabled="true"><i class="fab fa-youtube"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                        <li><a href="{{ url_for('sobre') }}">Sobre Nosotros</a></li>
+                        <li><a href="{% if primeira_pagina_servico_slug %}{{ url_for('pagina_servico', slug=primeira_pagina_servico_slug) }}{% else %}{{ url_for('index') }}{% endif %}">Servicios</a></li>
+                        <li><a href="{{ url_for('rastrear') }}">Seguir Reparación</a></li>
+                        <li><a href="{{ url_for('contato') }}">Contacto</a></li>
+                        <li><a href="{{ url_for('client_login') }}">Área del Cliente</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Servicios</h4>
+                    <ul>
+                        {% if paginas_servicos_menu %}
+                            {% for pagina in paginas_servicos_menu[:5] %}
+                            <li><a href="{{ url_for('pagina_servico', slug=pagina.slug) }}">{{ pagina.titulo }}</a></li>
+                            {% endfor %}
+                            {% if paginas_servicos_menu|length > 5 %}
+                            <li><a href="{% if primeira_pagina_servico_slug %}{{ url_for('pagina_servico', slug=primeira_pagina_servico_slug) }}{% else %}{{ url_for('index') }}{% endif %}">Ver todos los servicios...</a></li>
+                            {% endif %}
+                        {% elif servicos_footer %}
+                            {% for servico in servicos_footer[:5] %}
+                            <li><a href="{% if primeira_pagina_servico_slug %}{{ url_for('pagina_servico', slug=primeira_pagina_servico_slug) }}{% else %}{{ url_for('index') }}{% endif %}">{{ servico.nome }}</a></li>
+                            {% endfor %}
+                        {% else %}
+                            <li><a href="{% if primeira_pagina_servico_slug %}{{ url_for('pagina_servico', slug=primeira_pagina_servico_slug) }}{% else %}{{ url_for('index') }}{% endif %}">Reparación de Celulares</a></li>
+                            <li><a href="{% if primeira_pagina_servico_slug %}{{ url_for('pagina_servico', slug=primeira_pagina_servico_slug) }}{% else %}{{ url_for('index') }}{% endif %}">Electrodomésticos</a></li>
+                            <li><a href="{% if primeira_pagina_servico_slug %}{{ url_for('pagina_servico', slug=primeira_pagina_servico_slug) }}{% else %}{{ url_for('index') }}{% endif %}">Computadoras y Notebook</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <ul>
+                        {% if footer and footer.contato.telefone %}
+                        <li><i class="fas fa-phone"></i> {{ footer.contato.telefone }}</li>
+                        {% else %}
+                        <li><i class="fas fa-phone"></i> (11) 99999-9999</li>
+                        {% endif %}
+                        {% if footer and footer.contato.email %}
+                        <li><i class="fas fa-envelope"></i> {{ footer.contato.email }}</li>
+                        {% else %}
+                        <li><i class="fas fa-envelope"></i> contato@techassist.com.br</li>
+                        {% endif %}
+                        {% if footer and footer.contato.endereco %}
+                        <li><i class="fas fa-map-marker-alt"></i> {{ footer.contato.endereco }}</li>
+                        {% else %}
+                        <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP</li>
+                        {% endif %}
+                        {% if footer and footer.redes_sociais.whatsapp %}
+                        <li><a href="{{ footer.redes_sociais.whatsapp }}" target="_blank"><i class="fab fa-whatsapp"></i> Soporte Técnico</a></li>
+                        {% else %}
+                        <li><a href="https://wa.me/5586988959957" target="_blank"><i class="fab fa-whatsapp"></i> Soporte Técnico</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>{% if footer and footer.copyright %}CNPJ: 62.891.287/0001-44 {{ footer.copyright }}{% else %}CNPJ: 62.891.287/0001-44 © 2026 Clínica de Reparación. Todos los derechos reservados.{% endif %}</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón Flotante WhatsApp -->
+    {% if footer and footer.whatsapp_float %}
+    <a href="{{ footer.whatsapp_float }}" target="_blank" class="whatsapp-float" title="Háblanos por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    {% else %}
+    <a href="https://wa.me/5586988959957" target="_blank" class="whatsapp-float" title="Háblanos por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

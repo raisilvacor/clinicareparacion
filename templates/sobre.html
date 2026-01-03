@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Sobre Nosotros{% endblock %}
+
+{% block description %}Conozca la Clínica de Reparación, asistencia técnica especializada en Córdoba con técnico certificado. Atendemos Córdoba Capital, Nueva Córdoba, Güemes y toda la provincia con reparación de celulares, notebooks y electrodomésticos.{% endblock %}
+
+{% block keywords %}sobre clínica de reparación, asistencia técnica córdoba, técnico certificado córdoba, asistencia técnica especializada córdoba, historia clínica de reparación, córdoba capital, nueva córdoba, güemes córdoba{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Sobre la Clínica de Reparación</h1>
+        <p>Asistencia técnica especializada con compromiso con la excelencia</p>
+    </div>
+</section>
+
+<section class="about-section">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-text">
+                <span class="section-badge">Nuestra Historia</span>
+                <h2>Clínica de Reparación - Asistencia Técnica</h2>
+                <p>
+                    La <strong>Clínica de Reparación</strong> nació con la misión de ofrecer <strong>asistencia técnica de calidad</strong> 
+                    para electrodomésticos, celulares, computadoras y notebooks. Con un <strong>profesional especializado y certificado</strong>, 
+                    nos convertimos en referencia en reparaciones y mantenimiento.
+                </p>
+                <p>
+                    Nuestra pasión por la tecnología y compromiso con la satisfacción del cliente nos 
+                    impulsan a buscar constantemente mejoras e innovaciones en nuestros servicios. 
+                    Atendemos con <strong>asistencia técnica urgente</strong> y ofrecemos <strong>atención técnica residencial</strong> cuando sea necesario.
+                </p>
+                <div class="about-features">
+                    <div class="about-feature">
+                        <i class="fas fa-award"></i>
+                        <div>
+                            <h4>Certificaciones</h4>
+                            <p>Profesional certificado por las principales marcas</p>
+                        </div>
+                    </div>
+                    <div class="about-feature">
+                        <i class="fas fa-users"></i>
+                        <div>
+                            <h4>Equipo Especializado</h4>
+                            <p>Técnico especializado en diferentes áreas</p>
+                        </div>
+                    </div>
+                    <div class="about-feature">
+                        <i class="fas fa-heart"></i>
+                        <div>
+                            <h4>Compromiso</h4>
+                            <p>Dedicación total a la satisfacción del cliente</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <div class="image-placeholder">
+                    <video autoplay muted loop playsinline controlslist="nodownload nofullscreen noremoteplayback" disablePictureInPicture disableRemotePlayback>
+                        <source src="{{ url_for('static', filename='img/video-tec.mp4') }}" type="video/mp4">
+                        Su navegador no soporta la etiqueta de video HTML5.
+                      </video>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="values-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">Nuestros Valores</span>
+            <h2 class="section-title">Lo que nos Mueve</h2>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>Confianza</h3>
+                <p>Construimos relaciones duraderas basadas en transparencia y honestidad.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3>Calidad</h3>
+                <p>Nuestro compromiso es entregar siempre el mejor resultado posible.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h3>Innovación</h3>
+                <p>Estamos siempre actualizados con las últimas tecnologías y técnicas.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-smile"></i>
+                </div>
+                <h3>Satisfacción</h3>
+                <p>La felicidad del cliente es nuestra mayor recompensa.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

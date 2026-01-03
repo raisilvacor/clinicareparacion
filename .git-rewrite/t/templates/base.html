@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block description %}Assistência técnica especializada em Barueri para eletrodomésticos, celulares, computadores e notebooks. Conserto rápido e confiável em Alphaville, Tamboré e toda região de Barueri.{% endblock %}">
+    <meta name="keywords" content="{% block keywords %}assistência técnica barueri, conserto de eletrônicos barueri, técnico de eletrônica barueri, manutenção de eletrodomésticos barueri, assistência técnica urgente barueri, técnico residencial barueri, reparo de equipamentos barueri, assistência técnica alphaville, assistência técnica tamboré, conserto de celular barueri, assistência técnica celular barueri, troca de tela barueri, conserto iphone barueri, conserto samsung barueri, conserto de notebook barueri, manutenção de notebook barueri, formatação de computador barueri, conserto de máquina de lavar barueri, assistência técnica lavadora barueri, conserto de microondas barueri, conserto de tv barueri, assistência técnica tv barueri, conserto videogame barueri, assistência playstation barueri, instalação ar condicionado barueri, manutenção ar condicionado barueri, técnico em eletrônica barueri, reparo de placas eletrônicas barueri, barueri centro, jardim paulista barueri, vila boa vista barueri, jardim belval, jardim mutinga{% endblock %}">
+    <meta name="author" content="Clínica do Reparo">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Portuguese">
+    <meta name="geo.region" content="BR-SP">
+    <meta name="geo.placename" content="Barueri">
+    <meta name="geo.position" content="-23.5108;-46.8761">
+    <meta name="ICBM" content="-23.5108, -46.8761">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url if request else '' }}">
+    <meta property="og:title" content="{% block og_title %}Clínica do Reparo - Assistência Técnica em Barueri{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Assistência técnica especializada em Barueri para eletrodomésticos, celulares, computadores e notebooks. Conserto rápido e confiável em Alphaville, Tamboré e toda região.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ url_for('static', filename='img/logo.png', _external=True) }}{% endblock %}">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Clínica do Reparo">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ request.url if request else '' }}">
+    <meta name="twitter:title" content="{% block twitter_title %}Clínica do Reparo - Assistência Técnica em Barueri{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Assistência técnica especializada em Barueri para eletrodomésticos, celulares, computadores e notebooks.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ url_for('static', filename='img/logo.png', _external=True) }}{% endblock %}">
+    
+    <title>{% block title %}Clínica do Reparo - Assistência Técnica em Barueri{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('favicon') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('favicon') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('favicon') }}">
+    <link rel="canonical" href="{{ request.url if request else '' }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    
+    <!-- Schema.org JSON-LD -->
+    {% block schema %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Clínica do Reparo - Assistência Técnica em Barueri" class="logo-img">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
+                <li><a href="{{ url_for('sobre') }}" class="nav-link">Sobre</a></li>
+                <li class="nav-dropdown">
+                    <a href="{{ url_for('servicos') }}" class="nav-link">
+                        Serviços <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% if paginas_servicos_menu %}
+                            {% for pagina in paginas_servicos_menu %}
+                            <li><a href="{{ url_for('pagina_servico', slug=pagina.slug) }}">{{ pagina.titulo }}</a></li>
+                            {% endfor %}
+                        {% else %}
+                            <li><a href="{{ url_for('pagina_servico', slug='maquina-de-lavar') }}">Máquina de Lavar</a></li>
+                            <li><a href="{{ url_for('pagina_servico', slug='microondas') }}">Microondas</a></li>
+                            <li><a href="{{ url_for('pagina_servico', slug='celular') }}">Celular</a></li>
+                            <li><a href="{{ url_for('pagina_servico', slug='computador-e-notebook') }}">Computador e Notebook</a></li>
+                            <li><a href="{{ url_for('pagina_servico', slug='tv') }}">TV</a></li>
+                            <li><a href="{{ url_for('pagina_servico', slug='eletrodomesticos') }}">Eletro Domésticos</a></li>
+                            <li><a href="{{ url_for('pagina_servico', slug='video-games') }}">Video Games</a></li>
+                            <li><a href="{{ url_for('pagina_servico', slug='eletronica-em-geral') }}">Eletrônica em Geral</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <li><a href="{{ url_for('rastrear') }}" class="nav-link"><i class="fas fa-search"></i> Rastrear</a></li>
+                <li><a href="{{ url_for('client_login') }}" class="nav-link btn-primary">Login</a></li>
+                <li><a href="{{ url_for('contato') }}" class="nav-link btn-primary">Contato</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' }}"></i>
+                        <span>{{ message }}</span>
+                        <button class="flash-close">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Clínica do Reparo - Assistência Técnica em Barueri" class="footer-logo" width="150" height="50" loading="lazy">
+                    <p>{{ footer.descricao if footer else 'Sua assistência técnica de confiança para eletrodomésticos, celulares, computadores e notebooks.' }}</p>
+                    <div class="social-links">
+                        {% if footer and footer.redes_sociais.facebook %}
+                        <a href="{{ footer.redes_sociais.facebook }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i></a>
+                        {% else %}
+                        <a href="#" class="disabled" aria-disabled="true"><i class="fab fa-facebook"></i></a>
+                        {% endif %}
+                        {% if footer and footer.redes_sociais.instagram %}
+                        <a href="{{ footer.redes_sociais.instagram }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        {% else %}
+                        <a href="#" class="disabled" aria-disabled="true"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                        {% if footer and footer.redes_sociais.whatsapp %}
+                        <a href="{{ footer.redes_sociais.whatsapp }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+                        {% else %}
+                        <a href="#" class="disabled" aria-disabled="true"><i class="fab fa-whatsapp"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="{{ url_for('index') }}">Home</a></li>
+                        <li><a href="{{ url_for('sobre') }}">Sobre Nós</a></li>
+                        <li><a href="{{ url_for('servicos') }}">Serviços</a></li>
+                        <li><a href="{{ url_for('rastrear') }}">Acompanhar Conserto</a></li>
+                        <li><a href="{{ url_for('contato') }}">Contato</a></li>
+                        <li><a href="{{ url_for('client_login') }}">Área do Cliente</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Serviços</h4>
+                    <ul>
+                        {% if servicos_footer %}
+                            {% for servico in servicos_footer[:5] %}
+                            <li><a href="{{ url_for('servicos') }}">{{ servico.nome }}</a></li>
+                            {% endfor %}
+                            {% if servicos_footer|length > 5 %}
+                            <li><a href="{{ url_for('servicos') }}">Ver todos os serviços...</a></li>
+                            {% endif %}
+                        {% else %}
+                            <li><a href="{{ url_for('servicos') }}">Reparo de Celulares</a></li>
+                            <li><a href="{{ url_for('servicos') }}">Eletrodomésticos</a></li>
+                            <li><a href="{{ url_for('servicos') }}">Computadores e Notebook</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <ul>
+                        {% if footer and footer.contato.telefone %}
+                        <li><i class="fas fa-phone"></i> {{ footer.contato.telefone }}</li>
+                        {% else %}
+                        <li><i class="fas fa-phone"></i> (11) 99999-9999</li>
+                        {% endif %}
+                        {% if footer and footer.contato.email %}
+                        <li><i class="fas fa-envelope"></i> {{ footer.contato.email }}</li>
+                        {% else %}
+                        <li><i class="fas fa-envelope"></i> contato@techassist.com.br</li>
+                        {% endif %}
+                        {% if footer and footer.contato.endereco %}
+                        <li><i class="fas fa-map-marker-alt"></i> {{ footer.contato.endereco }}</li>
+                        {% else %}
+                        <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP</li>
+                        {% endif %}
+                        {% if footer and footer.redes_sociais.whatsapp %}
+                        <li><a href="{{ footer.redes_sociais.whatsapp }}" target="_blank"><i class="fab fa-whatsapp"></i> Suporte Técnico</a></li>
+                        {% else %}
+                        <li><a href="https://wa.me/5586988959957" target="_blank"><i class="fab fa-whatsapp"></i> Suporte Técnico</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>{% if footer and footer.copyright %}CNPJ: 62.891.287/0001-44 {{ footer.copyright }}{% else %}CNPJ: 62.891.287/0001-44 © 2026 Clínica do Reparo. Todos os direitos reservados.{% endif %}</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botão Flutuante WhatsApp -->
+    {% if footer and footer.whatsapp_float %}
+    <a href="{{ footer.whatsapp_float }}" target="_blank" class="whatsapp-float" title="Fale conosco no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    {% else %}
+    <a href="https://wa.me/5586988959957" target="_blank" class="whatsapp-float" title="Fale conosco no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

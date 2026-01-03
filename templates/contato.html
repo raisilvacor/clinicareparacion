@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Contacto{% endblock %}
+
+{% block description %}Contáctese con la Clínica de Reparación para asistencia técnica en Córdoba. Atendemos Córdoba Capital, Nueva Córdoba, Güemes y toda la provincia. ¡Solicite presupuesto gratuito!{% endblock %}
+
+{% block keywords %}contacto asistencia técnica córdoba, presupuesto reparación córdoba, asistencia técnica nueva córdoba, asistencia técnica güemes, teléfono asistencia técnica córdoba, córdoba capital, córdoba argentina{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Contacto - Asistencia Técnica</h1>
+        <p>Contáctenos para asistencia técnica, ¡Estamos listos para ayudarlo!</p>
+    </div>
+</section>
+
+<section class="contact-section">
+    <div class="container">
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h2>Háblenos</h2>
+                <p>Complete el formulario al lado o contáctenos a través de los canales a continuación:</p>
+                
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4>Teléfono</h4>
+                            <p>(86) 988959957</p>
+                            
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div>
+                            <h4>WhatsApp</h4>
+                            <p>(86) 988959957</p>
+                            {% if footer and footer.redes_sociais.whatsapp %}
+                            <a href="{{ footer.redes_sociais.whatsapp }}" target="_blank" class="btn btn-primary btn-small" style="margin-top: 0.5rem;">
+                                <i class="fab fa-whatsapp"></i>
+                                Hablar por WhatsApp
+                            </a>
+                            {% else %}
+                            <a href="https://wa.me/5586988959957" target="_blank" class="btn btn-primary btn-small" style="margin-top: 0.5rem;">
+                                <i class="fab fa-whatsapp"></i>
+                                Hablar por WhatsApp
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>E-mail</h4>
+                            <p>clinicadoreparo.sp@gmail.com</p>
+                            
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Dirección</h4>
+                            <p>Rua Rosely, 79</p>
+                            <p>SBarueri, SP - 064.36-270</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-hours">
+                    <h3><i class="fas fa-clock"></i> Horario de Atención</h3>
+                    <ul>
+                        <li>Lunes a Viernes: 8h a 18h</li>
+                        <li>Sábado: 8h a 13h</li>
+                        <li>Domingo: Cerrado</li>
+                    </ul>
+                </div>
+
+                <div class="whatsapp-contact-button">
+                    <a href="https://wa.me/5586988959957" target="_blank" class="btn btn-primary btn-large btn-block">
+                        <i class="fab fa-whatsapp"></i>
+                        Hablar por WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <div class="contact-form-wrapper">
+                <form class="contact-form" method="POST" action="{{ url_for('contato') }}">
+                    <div class="form-group">
+                        <label for="nome">
+                            <i class="fas fa-user"></i>
+                            Nombre Completo
+                        </label>
+                        <input type="text" id="nome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">
+                            <i class="fas fa-envelope"></i>
+                            E-mail
+                        </label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone">
+                            <i class="fas fa-phone"></i>
+                            Teléfono
+                        </label>
+                        <input type="tel" id="telefone" name="telefone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="servico">
+                            <i class="fas fa-tools"></i>
+                            Tipo de Servicio
+                        </label>
+                        <select id="servico" name="servico" required>
+                            <option value="">Seleccione un servicio</option>
+                            {% for tipo in tipos_servico %}
+                            <option value="{{ tipo }}">{{ tipo }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="mensagem">
+                            <i class="fas fa-comment"></i>
+                            Mensaje
+                        </label>
+                        <textarea id="mensagem" name="mensagem" rows="5" required placeholder="Describa el problema o su necesidad..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-large btn-block">
+                        <i class="fas fa-paper-plane"></i>
+                        Enviar Mensaje
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
