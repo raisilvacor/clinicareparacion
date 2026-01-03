@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="admin-header">
-    <h1><i class="fas fa-file-alt"></i> Editar Página de Serviço</h1>
-    <p>Edite os dados da página de serviço</p>
+    <h1><i class="fas fa-file-alt"></i> Editar Página de Servicio</h1>
+    <p>Edite los datos de la página de servicio</p>
 </div>
 
 <div class="admin-form-card">
@@ -15,8 +15,8 @@
                 <i class="fas fa-link"></i>
                 Slug (URL) <span class="required">*</span>
             </label>
-            <input type="text" id="slug" name="slug" required value="{{ pagina.slug }}" pattern="[a-z0-9-]+" title="Apenas letras minúsculas, números e hífens">
-            <small class="form-help">URL amigável (será convertido automaticamente para minúsculas e hífens)</small>
+            <input type="text" id="slug" name="slug" required value="{{ pagina.slug }}" pattern="[a-z0-9-]+" title="Solo letras minúsculas, números y guiones">
+            <small class="form-help">URL amigable (será convertido automáticamente a minúsculas y guiones)</small>
         </div>
         
         <div class="form-group">
@@ -24,8 +24,8 @@
                 <i class="fas fa-heading"></i>
                 Título <span class="required">*</span>
             </label>
-            <input type="text" id="titulo" name="titulo" required value="{{ pagina.titulo }}" placeholder="Ex: Máquina de Lavar">
-            <small class="form-help">Título que será exibido no menu</small>
+            <input type="text" id="titulo" name="titulo" required value="{{ pagina.titulo }}" placeholder="Ej: Máquina de Lavar">
+            <small class="form-help">Título que será mostrado en el menú</small>
         </div>
         
         <div class="form-group">
@@ -33,27 +33,27 @@
                 <i class="fas fa-align-left"></i>
                 Descrição
             </label>
-            <textarea id="descricao" name="descricao" rows="3" placeholder="Breve descrição da página">{{ pagina.descricao }}</textarea>
-            <small class="form-help">Descrição curta que aparecerá no cabeçalho da página</small>
+            <textarea id="descricao" name="descricao" rows="3" placeholder="Breve descripción de la página">{{ pagina.descricao }}</textarea>
+            <small class="form-help">Descripción corta que aparecerá en el encabezado de la página</small>
         </div>
         
         <div class="form-group">
             <label for="imagem">
                 <i class="fas fa-image"></i>
-                Imagem
+                Imagen
             </label>
             <input type="file" id="imagem_upload" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp" style="display: none;">
             <label for="imagem_upload" class="btn btn-primary" style="cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 10px;">
-                <i class="fas fa-upload"></i> Escolher Nova Imagem
+                <i class="fas fa-upload"></i> Elegir Nueva Imagen
             </label>
-            <input type="text" id="imagem" name="imagem" value="{{ pagina.imagem }}" placeholder="Caminho da imagem será preenchido automaticamente após o upload" readonly>
-            <small class="form-help">O caminho da imagem será preenchido automaticamente após o upload.</small>
+            <input type="text" id="imagem" name="imagem" value="{{ pagina.imagem }}" placeholder="La ruta de la imagen se completará automáticamente después de la carga" readonly>
+            <small class="form-help">La ruta de la imagen se completará automáticamente después de la carga.</small>
             <div id="upload_status" style="margin-top: 5px;"></div>
             <div id="image-preview" style="width: 100%; max-width: 300px; height: 300px; border: 2px dashed #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: #f8f9fa; margin-top: 0.5rem;">
                 {% if pagina.imagem %}
-                <img src="{{ pagina.imagem }}" alt="Preview" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                <img src="{{ pagina.imagem }}" alt="Vista previa" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                 {% else %}
-                <p style="color: #999;">Preview aparecerá aqui</p>
+                <p style="color: #999;">La vista previa aparecerá aquí</p>
                 {% endif %}
             </div>
         </div>
@@ -61,26 +61,26 @@
         <div class="form-group">
             <label for="conteudo">
                 <i class="fas fa-file-alt"></i>
-                Conteúdo da Página
+                Contenido de la Página
             </label>
-            <textarea id="conteudo" name="conteudo" rows="10" placeholder="Conteúdo HTML da página">{{ pagina.conteudo }}</textarea>
-            <small class="form-help">Conteúdo HTML que será exibido na página (pode usar tags HTML)</small>
+            <textarea id="conteudo" name="conteudo" rows="10" placeholder="Contenido HTML de la página">{{ pagina.conteudo }}</textarea>
+            <small class="form-help">Contenido HTML que será mostrado en la página (puede usar etiquetas HTML)</small>
         </div>
         
         <div class="form-row">
             <div class="form-group">
                 <label for="ordem">
                     <i class="fas fa-sort-numeric-down"></i>
-                    Ordem no Menu
+                    Orden en el Menú
                 </label>
                 <input type="number" id="ordem" name="ordem" value="{{ pagina.ordem }}" min="1">
-                <small class="form-help">Ordem de exibição no menu (menor aparece primeiro)</small>
+                <small class="form-help">Orden de visualización en el menú (menor aparece primero)</small>
             </div>
             
             <div class="form-group">
                 <label class="checkbox-label">
                     <input type="checkbox" id="ativo" name="ativo" {% if pagina.ativo %}checked{% endif %}>
-                    <span>Página ativa (aparecerá no menu)</span>
+                    <span>Página activa (aparecerá en el menú)</span>
                 </label>
             </div>
         </div>
@@ -94,7 +94,7 @@
                     Meta Título
                 </label>
                 <input type="text" id="meta_titulo" name="meta_titulo" value="{{ pagina.meta_titulo }}" placeholder="Título para SEO">
-                <small class="form-help">Título que aparecerá nos resultados de busca (se vazio, usa o título da página)</small>
+                <small class="form-help">Título que aparecerá en los resultados de búsqueda (si está vacío, usa el título de la página)</small>
             </div>
             
             <div class="form-group">
@@ -102,8 +102,8 @@
                     <i class="fas fa-align-left"></i>
                     Meta Descrição
                 </label>
-                <textarea id="meta_descricao" name="meta_descricao" rows="3" placeholder="Descrição para SEO">{{ pagina.meta_descricao }}</textarea>
-                <small class="form-help">Descrição que aparecerá nos resultados de busca</small>
+                <textarea id="meta_descricao" name="meta_descricao" rows="3" placeholder="Descripción para SEO">{{ pagina.meta_descricao }}</textarea>
+                <small class="form-help">Descripción que aparecerá en los resultados de búsqueda</small>
             </div>
             
             <div class="form-group">
@@ -111,14 +111,14 @@
                     <i class="fas fa-tags"></i>
                     Meta Keywords
                 </label>
-                <input type="text" id="meta_keywords" name="meta_keywords" value="{{ pagina.meta_keywords }}" placeholder="palavra1, palavra2, palavra3">
-                <small class="form-help">Palavras-chave separadas por vírgula</small>
+                <input type="text" id="meta_keywords" name="meta_keywords" value="{{ pagina.meta_keywords }}" placeholder="palabra1, palabra2, palabra3">
+                <small class="form-help">Palabras clave separadas por coma</small>
             </div>
         </div>
         
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Salvar Alterações
+                <i class="fas fa-save"></i> Guardar Cambios
             </button>
             <a href="{{ url_for('admin_paginas_servicos') }}" class="btn btn-secondary">
                 <i class="fas fa-times"></i> Cancelar
@@ -139,16 +139,16 @@ inputFile.addEventListener('change', function(e) {
     
     const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'];
     if (!allowedTypes.includes(file.type)) {
-        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Tipo de arquivo não permitido. Use: PNG, JPG, JPEG, GIF ou WEBP</span>';
+        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Tipo de archivo no permitido. Use: PNG, JPG, JPEG, GIF o WEBP</span>';
         return;
     }
     
     if (file.size > 5 * 1024 * 1024) {
-        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Arquivo muito grande. Tamanho máximo: 5MB</span>';
+        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Archivo muy grande. Tamaño máximo: 5MB</span>';
         return;
     }
     
-    uploadStatus.innerHTML = '<span style="color: #007bff;"><i class="fas fa-spinner fa-spin"></i> Enviando imagem...</span>';
+    uploadStatus.innerHTML = '<span style="color: #007bff;"><i class="fas fa-spinner fa-spin"></i> Enviando imagen...</span>';
     
     const formData = new FormData();
     formData.append('imagem', file);
@@ -161,7 +161,7 @@ inputFile.addEventListener('change', function(e) {
     .then(data => {
         if (data.success) {
             inputImagem.value = data.path;
-            uploadStatus.innerHTML = '<span style="color: green;"><i class="fas fa-check-circle"></i> Imagem enviada com sucesso!</span>';
+            uploadStatus.innerHTML = '<span style="color: green;"><i class="fas fa-check-circle"></i> ¡Imagen enviada con éxito!</span>';
             
             const img = document.createElement('img');
             if (data.path.startsWith('/')) {
@@ -175,11 +175,11 @@ inputFile.addEventListener('change', function(e) {
             preview.innerHTML = '';
             preview.appendChild(img);
         } else {
-            uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> ' + (data.error || 'Erro ao enviar imagem') + '</span>';
+            uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> ' + (data.error || 'Error al enviar imagen') + '</span>';
         }
     })
     .catch(error => {
-        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Erro ao enviar imagem: ' + error.message + '</span>';
+        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Error al enviar imagen: ' + error.message + '</span>';
     });
 });
 </script>
