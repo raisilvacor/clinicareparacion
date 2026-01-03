@@ -1,15 +1,15 @@
 {% extends "admin/base_admin.html" %}
 
-{% block title %}Serviços - Painel Admin{% endblock %}
+{% block title %}Servicios - Panel Admin{% endblock %}
 
 {% block content %}
 <div class="admin-header">
     <div>
-        <h1><i class="fas fa-tools"></i> Gerenciar Serviços</h1>
-        <p>Adicione, edite ou remova serviços oferecidos</p>
+        <h1><i class="fas fa-tools"></i> Gestionar Servicios</h1>
+        <p>Agregue, edite o elimine servicios ofrecidos</p>
     </div>
     <a href="{{ url_for('add_servico_admin') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Adicionar Serviço
+        <i class="fas fa-plus"></i> Agregar Servicio
     </a>
 </div>
 
@@ -18,12 +18,12 @@
     <table class="admin-table">
         <thead>
             <tr>
-                <th>Imagem</th>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Ordem</th>
-                <th>Status</th>
-                <th>Ações</th>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Orden</th>
+                <th>Estado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -37,17 +37,17 @@
                             <img src="{{ url_for('static', filename=servico.imagem) }}" alt="{{ servico.nome }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;" onerror="this.src='{{ url_for('static', filename='img/placeholder.png') }}'">
                         {% endif %}
                     {% else %}
-                    <span class="text-muted">Sem imagem</span>
+                    <span class="text-muted">Sin imagen</span>
                     {% endif %}
                 </td>
                 <td><strong>{{ servico.nome }}</strong></td>
-                <td>{% if servico.descricao %}{{ servico.descricao[:50] }}{% if servico.descricao|length > 50 %}...{% endif %}{% else %}<span class="text-muted">Sem descrição</span>{% endif %}</td>
+                <td>{% if servico.descricao %}{{ servico.descricao[:50] }}{% if servico.descricao|length > 50 %}...{% endif %}{% else %}<span class="text-muted">Sin descripción</span>{% endif %}</td>
                 <td>{{ servico.ordem or 999 }}</td>
                 <td>
                     {% if servico.ativo %}
-                    <span class="status-badge status-ativo"><i class="fas fa-check-circle"></i> Ativo</span>
+                    <span class="status-badge status-ativo"><i class="fas fa-check-circle"></i> Activo</span>
                     {% else %}
-                    <span class="status-badge status-inativo"><i class="fas fa-times-circle"></i> Inativo</span>
+                    <span class="status-badge status-inativo"><i class="fas fa-times-circle"></i> Inactivo</span>
                     {% endif %}
                 </td>
                 <td>
@@ -55,8 +55,8 @@
                         <a href="{{ url_for('edit_servico', servico_id=servico.id) }}" class="btn-icon" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form method="POST" action="{{ url_for('delete_servico', servico_id=servico.id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir este serviço?');">
-                            <button type="submit" class="btn-icon btn-danger" title="Excluir">
+                        <form method="POST" action="{{ url_for('delete_servico', servico_id=servico.id) }}" style="display: inline;" onsubmit="return confirm('¿Está seguro que desea eliminar este servicio?');">
+                            <button type="submit" class="btn-icon btn-danger" title="Eliminar">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -70,8 +70,8 @@
 {% else %}
 <div class="empty-state">
     <i class="fas fa-tools"></i>
-    <p>Nenhum serviço cadastrado</p>
-    <a href="{{ url_for('add_servico_admin') }}" class="btn btn-primary">Adicionar Primeiro Serviço</a>
+    <p>Ningún servicio registrado</p>
+    <a href="{{ url_for('add_servico_admin') }}" class="btn btn-primary">Agregar Primer Servicio</a>
 </div>
 {% endif %}
 {% endblock %}

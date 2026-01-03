@@ -1,15 +1,15 @@
 {% extends "admin/base_admin.html" %}
 
-{% block title %}Ordens de Serviço - Painel Admin{% endblock %}
+{% block title %}Órdenes de Servicio - Panel Admin{% endblock %}
 
 {% block content %}
 <div class="admin-header">
     <div>
-        <h1><i class="fas fa-file-alt"></i> Ordens de Serviço</h1>
-        <p>Visualize e gerencie todas as ordens de serviço emitidas</p>
+        <h1><i class="fas fa-file-alt"></i> Órdenes de Servicio</h1>
+        <p>Visualice y gestione todas las órdenes de servicio emitidas</p>
     </div>
     <a href="{{ url_for('add_ordem_servico') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Emitir Nova Ordem
+        <i class="fas fa-plus"></i> Emitir Nueva Orden
     </a>
 </div>
 
@@ -20,12 +20,12 @@
             <tr>
                 <th>Número</th>
                 <th>Cliente</th>
-                <th>Serviço</th>
-                <th>Aparelho</th>
-                <th>Status</th>
+                <th>Servicio</th>
+                <th>Aparato</th>
+                <th>Estado</th>
                 <th>Total</th>
-                <th>Data</th>
-                <th>Ações</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
                 <th>PDF</th>
             </tr>
         </thead>
@@ -39,30 +39,30 @@
                 <td>
                     <span class="status-badge status-{{ ordem.status }}">
                         {% if ordem.status == 'pendente' %}
-                            <i class="fas fa-clock"></i> Pendente
+                            <i class="fas fa-clock"></i> Pendiente
                         {% elif ordem.status == 'em_andamento' %}
-                            <i class="fas fa-cog"></i> Em Andamento
+                            <i class="fas fa-cog"></i> En Proceso
                         {% elif ordem.status == 'concluido' %}
-                            <i class="fas fa-check-circle"></i> Concluído
+                            <i class="fas fa-check-circle"></i> Concluido
                         {% elif ordem.status == 'pago' %}
-                            <i class="fas fa-money-bill-wave"></i> Pago
+                            <i class="fas fa-money-bill-wave"></i> Pagado
                         {% elif ordem.status == 'cancelado' %}
                             <i class="fas fa-times-circle"></i> Cancelado
                         {% endif %}
                     </span>
                 </td>
-                <td><strong>R$ {{ "%.2f"|format(ordem.total) }}</strong></td>
+                <td><strong>ARS$ {{ "%.2f"|format(ordem.total) }}</strong></td>
                 <td>{{ ordem.data }}</td>
                 <td>
                     <div class="action-buttons">
-                        <button class="btn-icon" onclick="viewOrder({{ ordem.cliente_id }}, {{ ordem.id }})" title="Ver detalhes">
+                        <button class="btn-icon" onclick="viewOrder({{ ordem.cliente_id }}, {{ ordem.id }})" title="Ver detalles">
                             <i class="fas fa-eye"></i>
                         </button>
                         <a href="{{ url_for('edit_ordem_servico', cliente_id=ordem.cliente_id, ordem_id=ordem.id) }}" class="btn-icon" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form method="POST" action="{{ url_for('delete_ordem_servico', cliente_id=ordem.cliente_id, ordem_id=ordem.id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir esta ordem de serviço?');">
-                            <button type="submit" class="btn-icon btn-danger" title="Excluir">
+                        <form method="POST" action="{{ url_for('delete_ordem_servico', cliente_id=ordem.cliente_id, ordem_id=ordem.id) }}" style="display: inline;" onsubmit="return confirm('¿Está seguro que desea eliminar esta orden de servicio?');">
+                            <button type="submit" class="btn-icon btn-danger" title="Eliminar">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -70,11 +70,11 @@
                 </td>
                 <td>
                     {% if ordem.pdf_id %}
-                    <a href="/media/pdf/{{ ordem.pdf_id }}" class="btn btn-primary btn-small" title="Baixar PDF">
+                    <a href="/media/pdf/{{ ordem.pdf_id }}" class="btn btn-primary btn-small" title="Descargar PDF">
                         <i class="fas fa-file-pdf"></i> PDF
                     </a>
                     {% elif ordem.pdf_filename %}
-                    <a href="{{ url_for('download_pdf', filename=ordem.pdf_filename) }}" class="btn btn-primary btn-small" title="Baixar PDF">
+                    <a href="{{ url_for('download_pdf', filename=ordem.pdf_filename) }}" class="btn btn-primary btn-small" title="Descargar PDF">
                         <i class="fas fa-file-pdf"></i> PDF
                     </a>
                     {% else %}
@@ -89,23 +89,23 @@
 {% else %}
 <div class="empty-state">
     <i class="fas fa-file-alt"></i>
-    <p>Nenhuma ordem de serviço emitida</p>
-    <a href="{{ url_for('add_ordem_servico') }}" class="btn btn-primary">Emitir Primeira Ordem</a>
+    <p>Ninguna orden de servicio emitida</p>
+    <a href="{{ url_for('add_ordem_servico') }}" class="btn btn-primary">Emitir Primera Orden</a>
 </div>
 {% endif %}
 
-<!-- Modal para ver detalhes da ordem -->
+<!-- Modal para ver detalles de la orden -->
 <div id="orderModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeOrderModal()">&times;</span>
-        <h2>Detalhes da Ordem de Serviço</h2>
+        <h2>Detalles de la Orden de Servicio</h2>
         <div id="orderDetails"></div>
     </div>
 </div>
 
 <script>
 function viewOrder(clienteId, ordemId) {
-    // Buscar dados da ordem via AJAX ou usar dados já disponíveis
+    // Buscar datos de la orden vía AJAX o usar datos ya disponibles
     fetch(`/admin/clientes/${clienteId}/ordens/${ordemId}`)
         .then(response => response.json())
         .then(data => {
@@ -113,21 +113,21 @@ function viewOrder(clienteId, ordemId) {
                 <div class="order-details-view">
                     <div class="detail-section">
                         <h3><i class="fas fa-user"></i> Cliente</h3>
-                        <p><strong>Nome:</strong> ${data.cliente_nome}</p>
+                        <p><strong>Nombre:</strong> ${data.cliente_nome}</p>
                     </div>
                     <div class="detail-section">
-                        <h3><i class="fas fa-tools"></i> Serviço</h3>
+                        <h3><i class="fas fa-tools"></i> Servicio</h3>
                         <p><strong>Tipo:</strong> ${data.servico}</p>
                     </div>
                     <div class="detail-section">
-                        <h3><i class="fas fa-box"></i> Aparelho</h3>
+                        <h3><i class="fas fa-box"></i> Aparato</h3>
                         <p><strong>Tipo:</strong> ${data.tipo_aparelho}</p>
                         <p><strong>Marca:</strong> ${data.marca}</p>
                         <p><strong>Modelo:</strong> ${data.modelo}</p>
-                        ${data.numero_serie ? `<p><strong>Nº Série:</strong> ${data.numero_serie}</p>` : ''}
+                        ${data.numero_serie ? `<p><strong>Nº Serie:</strong> ${data.numero_serie}</p>` : ''}
                     </div>
                     <div class="detail-section">
-                        <h3><i class="fas fa-exclamation-triangle"></i> Defeitos Reportados</h3>
+                        <h3><i class="fas fa-exclamation-triangle"></i> Defectos Reportados</h3>
                         <p>${data.defeitos_cliente}</p>
                     </div>
                     <div class="detail-section">
@@ -135,30 +135,30 @@ function viewOrder(clienteId, ordemId) {
                         <p>${data.diagnostico_tecnico}</p>
                     </div>
                     <div class="detail-section">
-                        <h3><i class="fas fa-dollar-sign"></i> Custos</h3>
+                        <h3><i class="fas fa-dollar-sign"></i> Costos</h3>
                         ${data.pecas && data.pecas.length > 0 ? `
-                            <p><strong>Peças:</strong></p>
+                            <p><strong>Repuestos:</strong></p>
                             <ul style="list-style: none; padding: 0; margin: 0.5rem 0;">
-                                ${data.pecas.map(peca => `<li style="padding: 0.5rem; background: rgba(0,0,0,0.05); margin-bottom: 0.25rem; border-radius: 4px;">${peca.nome} - R$ ${peca.custo.toFixed(2)}</li>`).join('')}
+                                ${data.pecas.map(peca => `<li style="padding: 0.5rem; background: rgba(0,0,0,0.05); margin-bottom: 0.25rem; border-radius: 4px;">${peca.nome} - ARS$ ${peca.custo.toFixed(2)}</li>`).join('')}
                             </ul>
-                            <p style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid #e5e7eb; font-weight: 600;"><strong>Subtotal Peças:</strong> R$ ${data.custo_pecas.toFixed(2)}</p>
-                        ` : `<p><strong>Peças:</strong> R$ ${data.custo_pecas ? data.custo_pecas.toFixed(2) : '0.00'}</p>`}
-                        <p><strong>Mão de Obra:</strong> R$ ${data.custo_mao_obra.toFixed(2)}</p>
-                        <p class="total-cost"><strong>Total:</strong> R$ ${data.total.toFixed(2)}</p>
+                            <p style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid #e5e7eb; font-weight: 600;"><strong>Subtotal Repuestos:</strong> ARS$ ${data.custo_pecas.toFixed(2)}</p>
+                        ` : `<p><strong>Repuestos:</strong> ARS$ ${data.custo_pecas ? data.custo_pecas.toFixed(2) : '0.00'}</p>`}
+                        <p><strong>Mano de Obra:</strong> ARS$ ${data.custo_mao_obra.toFixed(2)}</p>
+                        <p class="total-cost"><strong>Total:</strong> ARS$ ${data.total.toFixed(2)}</p>
                     </div>
                     <div class="detail-section">
-                        <h3><i class="fas fa-info-circle"></i> Status</h3>
+                        <h3><i class="fas fa-info-circle"></i> Estado</h3>
                         <span class="status-badge status-${data.status}">
-                            ${data.status === 'pendente' ? '<i class="fas fa-clock"></i> Pendente' : ''}
-                            ${data.status === 'em_andamento' ? '<i class="fas fa-cog"></i> Em Andamento' : ''}
-                            ${data.status === 'concluido' ? '<i class="fas fa-check-circle"></i> Concluído' : ''}
-                            ${data.status === 'pago' ? '<i class="fas fa-money-bill-wave"></i> Pago' : ''}
+                            ${data.status === 'pendente' ? '<i class="fas fa-clock"></i> Pendiente' : ''}
+                            ${data.status === 'em_andamento' ? '<i class="fas fa-cog"></i> En Proceso' : ''}
+                            ${data.status === 'concluido' ? '<i class="fas fa-check-circle"></i> Concluido' : ''}
+                            ${data.status === 'pago' ? '<i class="fas fa-money-bill-wave"></i> Pagado' : ''}
                             ${data.status === 'cancelado' ? '<i class="fas fa-times-circle"></i> Cancelado' : ''}
                             ${!['pendente', 'em_andamento', 'concluido', 'pago', 'cancelado'].includes(data.status) ? data.status : ''}
                         </span>
                     </div>
                     <div class="detail-section">
-                        <h3><i class="fas fa-calendar"></i> Data</h3>
+                        <h3><i class="fas fa-calendar"></i> Fecha</h3>
                         <p>${data.data}</p>
                     </div>
                 </div>
@@ -167,7 +167,7 @@ function viewOrder(clienteId, ordemId) {
             document.getElementById('orderModal').style.display = 'block';
         })
         .catch(error => {
-            alert('Erro ao carregar detalhes da ordem');
+            alert('Error al cargar detalles de la orden');
         });
 }
 

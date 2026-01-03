@@ -1,11 +1,11 @@
 {% extends "admin/base_admin.html" %}
 
-{% block title %}Contatos - Painel Admin{% endblock %}
+{% block title %}Contactos - Panel Admin{% endblock %}
 
 {% block content %}
 <div class="admin-header">
-    <h1><i class="fas fa-envelope"></i> Gerenciar Contatos</h1>
-    <p>Visualize e gerencie todas as mensagens recebidas</p>
+    <h1><i class="fas fa-envelope"></i> Gestionar Contactos</h1>
+    <p>Visualice y gestione todos los mensajes recibidos</p>
 </div>
 
 {% if contatos %}
@@ -14,13 +14,13 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nome</th>
+                <th>Nombre</th>
                 <th>E-mail</th>
-                <th>Telefone</th>
-                <th>Serviço</th>
-                <th>Mensagem</th>
-                <th>Data</th>
-                <th>Ações</th>
+                <th>Teléfono</th>
+                <th>Servicio</th>
+                <th>Mensaje</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -34,11 +34,11 @@
                 <td class="message-cell" data-full-message="{{ contato.mensagem }}">{{ contato.mensagem[:50] }}{% if contato.mensagem|length > 50 %}...{% endif %}</td>
                 <td>{{ contato.data }}</td>
                 <td>
-                    <button class="btn-icon" onclick="viewContact({{ contato.id }})" title="Ver detalhes">
+                    <button class="btn-icon" onclick="viewContact({{ contato.id }})" title="Ver detalles">
                         <i class="fas fa-eye"></i>
                     </button>
-                    <form method="POST" action="{{ url_for('delete_contato', contato_id=contato.id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir este contato?');">
-                        <button type="submit" class="btn-icon btn-danger" title="Excluir">
+                    <form method="POST" action="{{ url_for('delete_contato', contato_id=contato.id) }}" style="display: inline;" onsubmit="return confirm('¿Está seguro que desea eliminar este contacto?');">
+                        <button type="submit" class="btn-icon btn-danger" title="Eliminar">
                             <i class="fas fa-trash"></i>
                         </button>
                     </form>
@@ -51,16 +51,16 @@
 {% else %}
 <div class="empty-state">
     <i class="fas fa-inbox"></i>
-    <p>Nenhum contato ainda</p>
-    <a href="{{ url_for('contato') }}" class="btn btn-primary" target="_blank">Ver página de contato</a>
+    <p>Ningún contacto aún</p>
+    <a href="{{ url_for('contato') }}" class="btn btn-primary" target="_blank">Ver página de contacto</a>
 </div>
 {% endif %}
 
-<!-- Modal para ver detalhes do contato -->
+<!-- Modal para ver detalles del contacto -->
 <div id="contactModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
-        <h2>Detalhes do Contato</h2>
+        <h2>Detalles del Contacto</h2>
         <div id="contactDetails"></div>
     </div>
 </div>
@@ -88,12 +88,12 @@ function viewContact(id) {
     
     const details = `
         <p><strong>ID:</strong> ${cells[0].textContent.trim()}</p>
-        <p><strong>Nome:</strong> ${nome}</p>
+        <p><strong>Nombre:</strong> ${nome}</p>
         <p><strong>E-mail:</strong> ${cells[2].textContent.trim()}</p>
-        <p><strong>Telefone:</strong> ${cells[3].textContent.trim()}</p>
-        <p><strong>Serviço:</strong> ${cells[4].textContent.trim()}</p>
-        <p><strong>Mensagem:</strong><br>${fullMessage}</p>
-        <p><strong>Data:</strong> ${cells[6].textContent.trim()}</p>
+        <p><strong>Teléfono:</strong> ${cells[3].textContent.trim()}</p>
+        <p><strong>Servicio:</strong> ${cells[4].textContent.trim()}</p>
+        <p><strong>Mensaje:</strong><br>${fullMessage}</p>
+        <p><strong>Fecha:</strong> ${cells[6].textContent.trim()}</p>
     `;
     
     document.getElementById('contactDetails').innerHTML = details;

@@ -1,11 +1,11 @@
 {% extends "admin/base_admin.html" %}
 
-{% block title %}Editar Orçamento de Ar-Condicionado #{{ orcamento.id }} - Painel Admin{% endblock %}
+{% block title %}Editar Presupuesto de Aire Acondicionado #{{ orcamento.id }} - Panel Admin{% endblock %}
 
 {% block content %}
 <div class="admin-header">
-    <h1><i class="fas fa-snowflake"></i> Editar Orçamento de Ar-Condicionado #{{ orcamento.id }}</h1>
-    <p>Atualize os dados do orçamento</p>
+    <h1><i class="fas fa-snowflake"></i> Editar Presupuesto de Aire Acondicionado #{{ orcamento.id }}</h1>
+    <p>Actualice los datos del presupuesto</p>
 </div>
 
 <div class="admin-form-card">
@@ -17,7 +17,7 @@
                     Cliente *
                 </label>
                 <select id="cliente_id" name="cliente_id" required>
-                    <option value="">Selecione um cliente</option>
+                    <option value="">Seleccione un cliente</option>
                     {% for cliente in clientes %}
                     <option value="{{ cliente.id }}" {% if cliente.id == orcamento.cliente_id %}selected{% endif %}>{{ cliente.nome }} - {{ cliente.email }}</option>
                     {% endfor %}
@@ -30,7 +30,7 @@
                     Técnico
                 </label>
                 <select id="tecnico_id" name="tecnico_id">
-                    <option value="">Selecione um técnico (opcional)</option>
+                    <option value="">Seleccione un técnico (opcional)</option>
                     {% for tecnico in tecnicos %}
                     <option value="{{ tecnico.id }}" {% if tecnico.id == orcamento.tecnico_id %}selected{% endif %}>{{ tecnico.nome }}</option>
                     {% endfor %}
@@ -39,17 +39,17 @@
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-tools"></i> Dados do Serviço</h3>
+            <h3><i class="fas fa-tools"></i> Datos del Servicio</h3>
         </div>
         
         <div class="form-row">
             <div class="form-group">
                 <label for="tipo_servico">
                     <i class="fas fa-wrench"></i>
-                    Tipo de Serviço *
+                    Tipo de Servicio *
                 </label>
                 <select id="tipo_servico" name="tipo_servico" required onchange="calcularPreco()">
-                    <option value="">Selecione o tipo de serviço</option>
+                    <option value="">Seleccione el tipo de servicio</option>
                     <option value="Instalação de Ar-Condicionado Split" {% if orcamento.tipo_servico == 'Instalação de Ar-Condicionado Split' %}selected{% endif %}>Instalação de Ar-Condicionado Split</option>
                     <option value="Limpeza preventiva da Evaporadora" {% if orcamento.tipo_servico == 'Limpeza preventiva da Evaporadora' %}selected{% endif %}>Limpeza preventiva da Evaporadora</option>
                     <option value="Limpeza preventiva Evaporadora + Condensadora" {% if orcamento.tipo_servico == 'Limpeza preventiva Evaporadora + Condensadora' %}selected{% endif %}>Limpeza preventiva Evaporadora + Condensadora</option>
@@ -262,7 +262,7 @@
                 <i class="fas fa-times"></i> Cancelar
             </a>
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Salvar Alterações
+                <i class="fas fa-save"></i> Guardar Cambios
             </button>
         </div>
     </form>

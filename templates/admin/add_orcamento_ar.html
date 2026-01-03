@@ -1,11 +1,11 @@
 {% extends "admin/base_admin.html" %}
 
-{% block title %}Novo Orçamento de Ar-Condicionado - Painel Admin{% endblock %}
+{% block title %}Nuevo Presupuesto de Aire Acondicionado - Panel Admin{% endblock %}
 
 {% block content %}
 <div class="admin-header">
-    <h1><i class="fas fa-snowflake"></i> Novo Orçamento de Ar-Condicionado</h1>
-    <p>Preencha os dados para gerar o orçamento</p>
+    <h1><i class="fas fa-snowflake"></i> Nuevo Presupuesto de Aire Acondicionado</h1>
+    <p>Complete los datos para generar el presupuesto</p>
 </div>
 
 <div class="admin-form-card">
@@ -17,7 +17,7 @@
                     Cliente *
                 </label>
                 <select id="cliente_id" name="cliente_id" required>
-                    <option value="">Selecione um cliente</option>
+                    <option value="">Seleccione un cliente</option>
                     {% for cliente in clientes %}
                     <option value="{{ cliente.id }}">{{ cliente.nome }} - {{ cliente.email }}</option>
                     {% endfor %}
@@ -30,7 +30,7 @@
                     Técnico
                 </label>
                 <select id="tecnico_id" name="tecnico_id">
-                    <option value="">Selecione um técnico (opcional)</option>
+                    <option value="">Seleccione un técnico (opcional)</option>
                     {% for tecnico in tecnicos %}
                     <option value="{{ tecnico.id }}">{{ tecnico.nome }}</option>
                     {% endfor %}
@@ -39,31 +39,31 @@
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-tools"></i> Dados do Serviço</h3>
+            <h3><i class="fas fa-tools"></i> Datos del Servicio</h3>
         </div>
         
         <div class="form-row">
             <div class="form-group">
                 <label for="tipo_servico">
                     <i class="fas fa-wrench"></i>
-                    Tipo de Serviço *
+                    Tipo de Servicio *
                 </label>
                 <select id="tipo_servico" name="tipo_servico" required onchange="calcularPreco()">
-                    <option value="">Selecione o tipo de serviço</option>
-                    <option value="Instalação de Ar-Condicionado Split">Instalação de Ar-Condicionado Split</option>
-                    <option value="Limpeza preventiva da Evaporadora">Limpeza preventiva da Evaporadora</option>
-                    <option value="Limpeza preventiva Evaporadora + Condensadora">Limpeza preventiva Evaporadora + Condensadora</option>
-                    <option value="Remoção de Ar-Condicionado Split">Remoção de Ar-Condicionado Split</option>
+                    <option value="">Seleccione el tipo de servicio</option>
+                    <option value="Instalação de Ar-Condicionado Split">Instalación de Aire Acondicionado Split</option>
+                    <option value="Limpeza preventiva da Evaporadora">Limpieza preventiva de la Evaporadora</option>
+                    <option value="Limpeza preventiva Evaporadora + Condensadora">Limpieza preventiva Evaporadora + Condensadora</option>
+                    <option value="Remoção de Ar-Condicionado Split">Remoción de Aire Acondicionado Split</option>
                 </select>
             </div>
             
             <div class="form-group">
                 <label for="potencia_btu">
                     <i class="fas fa-bolt"></i>
-                    Potência (BTU) *
+                    Potencia (BTU) *
                 </label>
                 <select id="potencia_btu" name="potencia_btu" required onchange="calcularPreco()">
-                    <option value="">Selecione a potência</option>
+                    <option value="">Seleccione la potencia</option>
                     <option value="9000">9000 BTU</option>
                     <option value="12000">12000 BTU</option>
                     <option value="18000">18000 BTU</option>
@@ -78,18 +78,18 @@
         <div class="form-group">
             <label for="tipo_acesso">
                 <i class="fas fa-ladder"></i>
-                Tipo de Acesso *
+                Tipo de Acceso *
             </label>
             <select id="tipo_acesso" name="tipo_acesso" required onchange="calcularPreco()">
-                <option value="">Selecione o tipo de acesso</option>
-                <option value="Fácil">Acesso Fácil - Acesso direto sem obstáculos, até 3 metros de altura, posição confortável de trabalho.</option>
-                <option value="Moderado">Acesso Moderado - Locais com interferência de mobília, altura entre 3 e 4 metros, posição de trabalho desconfortável.</option>
-                <option value="Difícil">Acesso Difícil - Altura superior a 4 metros, posição inadequada de trabalho, horário fora do comercial.</option>
+                <option value="">Seleccione el tipo de acceso</option>
+                <option value="Fácil">Acceso Fácil - Acceso directo sin obstáculos, hasta 3 metros de altura, posición cómoda de trabajo.</option>
+                <option value="Moderado">Acceso Moderado - Lugares con interferencia de mobiliario, altura entre 3 y 4 metros, posición de trabajo incómoda.</option>
+                <option value="Difícil">Acceso Difícil - Altura superior a 4 metros, posición inadecuada de trabajo, horario fuera del comercial.</option>
             </select>
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-box"></i> Informações do Aparelho</h3>
+            <h3><i class="fas fa-box"></i> Información del Aparato</h3>
         </div>
         
         <div class="form-row">
@@ -120,7 +120,7 @@
                 Material Adicional
             </label>
             <select id="material_adicional" name="material_adicional" onchange="toggleMaterialAdicional()">
-                <option value="">Nenhum material adicional</option>
+                <option value="">Ningún material adicional</option>
                 <option value="Kit Convencional (3m de tubulação)">Kit Convencional (3m de tubulación) + ARS$ 250,00</option>
                 <option value="Tubulação extra acima de 3m">Tubulação extra acima de 3m</option>
             </select>
@@ -157,7 +157,7 @@
                         <input type="number" name="custo_adicional_valor[]" class="custo-valor-input" step="0.01" min="0" placeholder="0.00" onchange="calcularPreco()">
                     </div>
                     <div class="form-group" style="width: auto; margin-left: 1rem;">
-                        <button type="button" class="btn btn-secondary" onclick="adicionarCustoAdicional()" title="Adicionar item">
+                        <button type="button" class="btn btn-secondary" onclick="adicionarCustoAdicional()" title="Agregar item">
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
@@ -227,7 +227,7 @@
                 <i class="fas fa-times"></i> Cancelar
             </a>
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Salvar Orçamento
+                <i class="fas fa-save"></i> Guardar Presupuesto
             </button>
         </div>
     </form>

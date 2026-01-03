@@ -1,15 +1,15 @@
 {% extends "admin/base_admin.html" %}
 
-{% block title %}Orçamentos de Ar-Condicionado - Painel Admin{% endblock %}
+{% block title %}Presupuestos de Aire Acondicionado - Panel Admin{% endblock %}
 
 {% block content %}
 <div class="admin-header">
     <div>
-        <h1><i class="fas fa-snowflake"></i> Orçamentos de Ar-Condicionado</h1>
-        <p>Gerencie orçamentos de instalação e manutenção</p>
+        <h1><i class="fas fa-snowflake"></i> Presupuestos de Aire Acondicionado</h1>
+        <p>Gestionar presupuestos de instalación y mantenimiento</p>
     </div>
     <a href="{{ url_for('add_orcamento_ar') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Novo Orçamento
+        <i class="fas fa-plus"></i> Nuevo Presupuesto
     </a>
 </div>
 
@@ -20,13 +20,13 @@
             <tr>
                 <th>ID</th>
                 <th>Cliente</th>
-                <th>Tipo de Serviço</th>
-                <th>Potência (BTU)</th>
-                <th>Acesso</th>
+                <th>Tipo de Servicio</th>
+                <th>Potencia (BTU)</th>
+                <th>Acceso</th>
                 <th>Valor Total</th>
-                <th>Status</th>
-                <th>Data</th>
-                <th>Ações</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -53,16 +53,16 @@
                             <i class="fas fa-edit"></i>
                         </a>
                         {% if orcamento.pdf_id %}
-                        <a href="{{ url_for('download_orcamento_ar_pdf', orcamento_id=orcamento.id) }}" class="btn-icon" title="Baixar PDF" target="_blank" style="color: #dc3545;">
+                        <a href="{{ url_for('download_orcamento_ar_pdf', orcamento_id=orcamento.id) }}" class="btn-icon" title="Descargar PDF" target="_blank" style="color: #dc3545;">
                             <i class="fas fa-file-pdf"></i>
                         </a>
                         {% else %}
-                        <a href="{{ url_for('view_orcamento_ar', orcamento_id=orcamento.id) }}" class="btn-icon" title="Gerar PDF (acesse a visualização)" style="opacity: 0.5;">
+                        <a href="{{ url_for('view_orcamento_ar', orcamento_id=orcamento.id) }}" class="btn-icon" title="Generar PDF (acceda a la visualización)" style="opacity: 0.5;">
                             <i class="fas fa-file-pdf"></i>
                         </a>
                         {% endif %}
-                        <form method="POST" action="{{ url_for('delete_orcamento_ar', orcamento_id=orcamento.id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir este orçamento?');">
-                            <button type="submit" class="btn-icon btn-danger" title="Excluir">
+                        <form method="POST" action="{{ url_for('delete_orcamento_ar', orcamento_id=orcamento.id) }}" style="display: inline;" onsubmit="return confirm('¿Está seguro que desea eliminar este presupuesto?');">
+                            <button type="submit" class="btn-icon btn-danger" title="Eliminar">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -76,8 +76,8 @@
 {% else %}
 <div class="empty-state">
     <i class="fas fa-snowflake"></i>
-    <p>Nenhum orçamento cadastrado</p>
-    <a href="{{ url_for('add_orcamento_ar') }}" class="btn btn-primary">Criar Primeiro Orçamento</a>
+    <p>Ningún presupuesto registrado</p>
+    <a href="{{ url_for('add_orcamento_ar') }}" class="btn btn-primary">Crear Primer Presupuesto</a>
 </div>
 {% endif %}
 {% endblock %}

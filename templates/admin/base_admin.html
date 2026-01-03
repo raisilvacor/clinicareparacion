@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="es-AR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,35 +19,35 @@
         <div class="container">
             <div class="admin-nav-brand">
                 <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo-img">
-                <span>Painel Admin</span>
+                <span>Panel Admin</span>
             </div>
             <ul class="admin-nav-menu">
                 <li><a href="{{ url_for('admin_dashboard') }}" class="admin-nav-link">
                     <i class="fas fa-home"></i> Dashboard
                 </a></li>
                 <li><a href="{{ url_for('admin_contatos') }}" class="admin-nav-link">
-                    <i class="fas fa-envelope"></i> Contatos
+                    <i class="fas fa-envelope"></i> Contactos
                 </a></li>
                 <li><a href="{{ url_for('admin_servicos') }}" class="admin-nav-link">
-                    <i class="fas fa-tools"></i> Serviços
+                    <i class="fas fa-tools"></i> Servicios
                 </a></li>
                 <li><a href="{{ url_for('admin_paginas_servicos') }}" class="admin-nav-link">
-                    <i class="fas fa-file-alt"></i> Páginas de Serviços
+                    <i class="fas fa-file-alt"></i> Páginas de Servicios
                 </a></li>
                 <li><a href="{{ url_for('admin_links_menu') }}" class="admin-nav-link">
-                    <i class="fas fa-link"></i> Links do Menu
+                    <i class="fas fa-link"></i> Enlaces del Menú
                 </a></li>
                 <li><a href="{{ url_for('admin_clientes') }}" class="admin-nav-link">
                     <i class="fas fa-users"></i> Clientes
                 </a></li>
                 <li><a href="{{ url_for('admin_ordens') }}" class="admin-nav-link">
-                    <i class="fas fa-file-alt"></i> Ordens de Serviço
+                    <i class="fas fa-file-alt"></i> Órdenes de Servicio
                 </a></li>
                 <li><a href="{{ url_for('index') }}" class="admin-nav-link" target="_blank">
-                    <i class="fas fa-external-link-alt"></i> Ver Site
+                    <i class="fas fa-external-link-alt"></i> Ver Sitio
                 </a></li>
                 <li><a href="{{ url_for('admin_logout') }}" class="admin-nav-link logout">
-                    <i class="fas fa-sign-out-alt"></i> Sair
+                    <i class="fas fa-sign-out-alt"></i> Salir
                 </a></li>
             </ul>
             <div class="admin-hamburger">

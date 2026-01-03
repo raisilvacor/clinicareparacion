@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="es-AR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,8 +19,8 @@
         <div class="login-card">
             <div class="login-header">
                 <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="login-logo">
-                <h1>Painel Administrativo</h1>
-                <p>Faça login para acessar o painel</p>
+                <h1>Panel Administrativo</h1>
+                <p>Inicie sesión para acceder al panel</p>
             </div>
             
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -38,14 +38,14 @@
                 <div class="form-group">
                     <label for="username">
                         <i class="fas fa-user"></i>
-                        Usuário
+                        Usuario
                     </label>
                     <input type="text" id="username" name="username" required autofocus>
                 </div>
                 <div class="form-group">
                     <label for="password">
                         <i class="fas fa-lock"></i>
-                        Senha
+                        Contraseña
                     </label>
                     <input type="password" id="password" name="password" required>
                 </div>

@@ -288,7 +288,7 @@ document.getElementById('cliente_id').addEventListener('change', function() {
     const descontoInfo = document.getElementById('desconto_info');
     
     if (!clienteId) {
-        cupomSelect.innerHTML = '<option value="">Nenhum cupom</option>';
+        cupomSelect.innerHTML = '<option value="">Ningún cupón</option>';
         cupomSelect.disabled = true;
         descontoInfo.style.display = 'none';
         calcularTotal();

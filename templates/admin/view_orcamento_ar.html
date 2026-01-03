@@ -1,12 +1,12 @@
 {% extends "admin/base_admin.html" %}
 
-{% block title %}Orçamento #{{ orcamento.id }} - Painel Admin{% endblock %}
+{% block title %}Presupuesto #{{ orcamento.id }} - Panel Admin{% endblock %}
 
 {% block content %}
 <div class="admin-header">
     <div>
-        <h1><i class="fas fa-snowflake"></i> Orçamento de Ar-Condicionado #{{ orcamento.id }}</h1>
-        <p>Detalhes completos do orçamento</p>
+        <h1><i class="fas fa-snowflake"></i> Presupuesto de Aire Acondicionado #{{ orcamento.id }}</h1>
+        <p>Detalles completos del presupuesto</p>
     </div>
     <div>
         <a href="{{ url_for('edit_orcamento_ar', orcamento_id=orcamento.id) }}" class="btn btn-primary">
@@ -14,31 +14,31 @@
         </a>
         {% if orcamento.pdf_id %}
         <a href="{{ url_for('download_orcamento_ar_pdf', orcamento_id=orcamento.id) }}" class="btn btn-secondary" target="_blank">
-            <i class="fas fa-file-pdf"></i> Baixar PDF
+            <i class="fas fa-file-pdf"></i> Descargar PDF
         </a>
         {% endif %}
         <a href="{{ url_for('admin_orcamentos_ar') }}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Voltar
+            <i class="fas fa-arrow-left"></i> Volver
         </a>
     </div>
 </div>
 
 <div class="admin-form-card">
     <div class="section-divider">
-        <h3><i class="fas fa-info-circle"></i> Informações do Orçamento</h3>
+        <h3><i class="fas fa-info-circle"></i> Información del Presupuesto</h3>
     </div>
     
     <div class="info-grid">
         <div class="info-item">
-            <label>Número do Orçamento:</label>
+            <label>Número del Presupuesto:</label>
             <p><strong>#{{ orcamento.id }}</strong></p>
         </div>
         <div class="info-item">
-            <label>Data de Criação:</label>
+            <label>Fecha de Creación:</label>
             <p>{{ orcamento.data_criacao }}</p>
         </div>
         <div class="info-item">
-            <label>Status:</label>
+            <label>Estado:</label>
             <p>
                 <span class="badge {% if orcamento.status == 'aprovado' %}status-concluido{% elif orcamento.status == 'recusado' %}status-cancelado{% else %}status-pendente{% endif %}">
                     {{ orcamento.status }}
@@ -47,7 +47,7 @@
         </div>
         {% if orcamento.prazo_estimado %}
         <div class="info-item">
-            <label>Prazo Estimado:</label>
+            <label>Plazo Estimado:</label>
             <p>{{ orcamento.prazo_estimado }}</p>
         </div>
         {% endif %}
