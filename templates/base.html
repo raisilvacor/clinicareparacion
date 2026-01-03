@@ -201,7 +201,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>{% if footer and footer.copyright %}CNPJ: 62.891.287/0001-44 {{ footer.copyright }}{% else %}CNPJ: 62.891.287/0001-44 © 2026 Clínica de Reparación. Todos los derechos reservados.{% endif %}</p>
+                <p>{% if footer and footer.copyright %}{{ footer.copyright }}{% else %}© 2026 Clínica de Reparación. Todos los derechos reservados.{% endif %}</p>
             </div>
         </div>
     </footer>
