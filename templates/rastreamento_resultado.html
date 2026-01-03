@@ -35,7 +35,7 @@
                         </div>
                         <div class="timeline-content">
                             <strong>Em Andamento</strong>
-                            <p>Reparo sendo realizado</p>
+                            <p>Reparación en proceso</p>
                         </div>
                     </div>
                     <div class="timeline-item {% if ordem.status in ['pago', 'pronto', 'entregue'] %}completed{% endif %}">
@@ -96,12 +96,12 @@
                     </div>
                     <div class="info-content">
                         <h3>Valor Total</h3>
-                        <p class="valor-text">R$ {{ "%.2f"|format(ordem.total) }}</p>
+                        <p class="valor-text">ARS$ {{ "%.2f"|format(ordem.total) }}</p>
                         {% if ordem.custo_pecas > 0 %}
-                        <p class="text-muted"><small>Peças: R$ {{ "%.2f"|format(ordem.custo_pecas) }}</small></p>
+                        <p class="text-muted"><small>Repuestos: ARS$ {{ "%.2f"|format(ordem.custo_pecas) }}</small></p>
                         {% endif %}
                         {% if ordem.custo_mao_obra > 0 %}
-                        <p class="text-muted"><small>Mão de obra: R$ {{ "%.2f"|format(ordem.custo_mao_obra) }}</small></p>
+                        <p class="text-muted"><small>Mano de obra: ARS$ {{ "%.2f"|format(ordem.custo_mao_obra) }}</small></p>
                         {% endif %}
                     </div>
                 </div>
@@ -119,7 +119,7 @@
                         </div>
                         <div class="peca-info">
                             <strong>{{ peca.nome }}</strong>
-                            <p>R$ {{ "%.2f"|format(peca.custo) }}</p>
+                            <p>ARS$ {{ "%.2f"|format(peca.custo) }}</p>
                         </div>
                         <div class="peca-status">
                             {% if ordem.status == 'aguardando_pecas' %}

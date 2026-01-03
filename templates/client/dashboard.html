@@ -137,23 +137,23 @@
                     <h4><i class="fas fa-dollar-sign"></i> Custos</h4>
                     {% if ordem.pecas %}
                     <div class="pecas-detalhadas">
-                        <p><strong>Peças:</strong></p>
+                        <p><strong>Repuestos:</strong></p>
                         <ul class="pecas-list-detail">
                             {% for peca in ordem.pecas %}
-                            <li>{{ peca.nome }} - R$ {{ "%.2f"|format(peca.custo) }}</li>
+                            <li>{{ peca.nome }} - ARS$ {{ "%.2f"|format(peca.custo) }}</li>
                             {% endfor %}
                         </ul>
-                        <p class="subtotal"><strong>Subtotal Peças:</strong> R$ {{ "%.2f"|format(ordem.custo_pecas) if ordem.custo_pecas else "0.00" }}</p>
+                        <p class="subtotal"><strong>Subtotal Repuestos:</strong> ARS$ {{ "%.2f"|format(ordem.custo_pecas) if ordem.custo_pecas else "0.00" }}</p>
                     </div>
                     {% elif ordem.custo_pecas %}
-                    <p><strong>Peças:</strong> R$ {{ "%.2f"|format(ordem.custo_pecas) }}</p>
+                    <p><strong>Repuestos:</strong> ARS$ {{ "%.2f"|format(ordem.custo_pecas) }}</p>
                     {% endif %}
-                    <p><strong>Mão de Obra:</strong> R$ {{ "%.2f"|format(ordem.custo_mao_obra) if ordem.custo_mao_obra else "0.00" }}</p>
+                    <p><strong>Mano de Obra:</strong> ARS$ {{ "%.2f"|format(ordem.custo_mao_obra) if ordem.custo_mao_obra else "0.00" }}</p>
                     {% if ordem.desconto_percentual and ordem.desconto_percentual > 0 %}
-                    <p><strong>Subtotal:</strong> R$ {{ "%.2f"|format((ordem.custo_pecas or 0) + (ordem.custo_mao_obra or 0)) }}</p>
-                    <p class="desconto-applied"><strong>Desconto ({{ "%.2f"|format(ordem.desconto_percentual) }}%):</strong> -R$ {{ "%.2f"|format(ordem.valor_desconto or 0) }}</p>
+                    <p><strong>Subtotal:</strong> ARS$ {{ "%.2f"|format((ordem.custo_pecas or 0) + (ordem.custo_mao_obra or 0)) }}</p>
+                    <p class="desconto-applied"><strong>Descuento ({{ "%.2f"|format(ordem.desconto_percentual) }}%):</strong> -ARS$ {{ "%.2f"|format(ordem.valor_desconto or 0) }}</p>
                     {% endif %}
-                    <p class="total-cost"><strong>Total:</strong> R$ {{ "%.2f"|format(ordem.total) if ordem.total else "0.00" }}</p>
+                    <p class="total-cost"><strong>Total:</strong> ARS$ {{ "%.2f"|format(ordem.total) if ordem.total else "0.00" }}</p>
                 </div>
                 {% endif %}
                 
@@ -206,8 +206,8 @@
                 <div class="order-info-section">
                     <h4><i class="fas fa-file-invoice"></i> Informações</h4>
                     <p><strong>Número da Ordem:</strong> {{ comprovante.numero_ordem }}</p>
-                    <p><strong>Valor Total da Ordem:</strong> R$ {{ "%.2f"|format(comprovante.valor_total) }}</p>
-                    <p><strong>Valor Pago:</strong> R$ {{ "%.2f"|format(comprovante.valor_pago) }}</p>
+                    <p><strong>Valor Total de la Orden:</strong> ARS$ {{ "%.2f"|format(comprovante.valor_total) }}</p>
+                    <p><strong>Valor Pagado:</strong> ARS$ {{ "%.2f"|format(comprovante.valor_pago) }}</p>
                 </div>
                 
                 <div class="order-info-section">
@@ -220,7 +220,7 @@
                         {% elif comprovante.forma_pagamento == 'cartao_credito' %}
                             <i class="fas fa-credit-card"></i> Cartão de Crédito
                             {% if comprovante.parcelas > 1 %}
-                            ({{ comprovante.parcelas }}x de R$ {{ "%.2f"|format(comprovante.valor_pago / comprovante.parcelas) }})
+                            ({{ comprovante.parcelas }}x de ARS$ {{ "%.2f"|format(comprovante.valor_pago / comprovante.parcelas) }})
                             {% endif %}
                         {% elif comprovante.forma_pagamento == 'pix' %}
                             <i class="fas fa-qrcode"></i> PIX

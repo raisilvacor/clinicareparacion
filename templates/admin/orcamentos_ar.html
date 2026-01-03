@@ -37,7 +37,7 @@
                 <td>{{ orcamento.tipo_servico }}</td>
                 <td>{{ orcamento.potencia_btu }} BTU</td>
                 <td><span class="badge">{{ orcamento.tipo_acesso }}</span></td>
-                <td><strong>R$ {{ "%.2f"|format(orcamento.valor_total) }}</strong></td>
+                <td><strong>ARS$ {{ "%.2f"|format(orcamento.valor_total) }}</strong></td>
                 <td>
                     <span class="badge {% if orcamento.status == 'aprovado' %}status-concluido{% elif orcamento.status == 'recusado' %}status-cancelado{% else %}status-pendente{% endif %}">
                         {{ orcamento.status }}

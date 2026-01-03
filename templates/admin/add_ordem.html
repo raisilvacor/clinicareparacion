@@ -1,11 +1,11 @@
 {% extends "admin/base_admin.html" %}
 
-{% block title %}Emitir Ordem de Serviço - Painel Admin{% endblock %}
+{% block title %}Emitir Orden de Servicio - Panel Admin{% endblock %}
 
 {% block content %}
 <div class="admin-header">
-    <h1><i class="fas fa-file-invoice"></i> Emitir Ordem de Serviço</h1>
-    <p>Preencha todos os dados da ordem de serviço</p>
+    <h1><i class="fas fa-file-invoice"></i> Emitir Orden de Servicio</h1>
+    <p>Complete todos los datos de la orden de servicio</p>
 </div>
 
 <div class="admin-form-card">
@@ -16,7 +16,7 @@
                 Cliente *
             </label>
             <select id="cliente_id" name="cliente_id" required>
-                <option value="">Selecione um cliente</option>
+                <option value="">Seleccione un cliente</option>
                 {% for cliente in clientes %}
                 <option value="{{ cliente.id }}">{{ cliente.nome }} - {{ cliente.email }}</option>
                 {% endfor %}
@@ -26,10 +26,10 @@
         <div class="form-group">
             <label for="servico">
                 <i class="fas fa-tools"></i>
-                Tipo de Serviço *
+                Tipo de Servicio *
             </label>
             <select id="servico" name="servico" required>
-                <option value="">Selecione um serviço</option>
+                <option value="">Seleccione un servicio</option>
                 {% for tipo in tipos_servico %}
                 <option value="{{ tipo }}">{{ tipo }}</option>
                 {% endfor %}
@@ -39,38 +39,38 @@
         <div class="form-group">
             <label for="tecnico_id">
                 <i class="fas fa-user-cog"></i>
-                Técnico Responsável
+                Técnico Responsable
             </label>
             <select id="tecnico_id" name="tecnico_id">
-                <option value="">Selecione um técnico (opcional)</option>
+                <option value="">Seleccione un técnico (opcional)</option>
                 {% for tecnico in tecnicos %}
                 <option value="{{ tecnico.id }}">{{ tecnico.nome }} - {{ tecnico.especialidade }}</option>
                 {% endfor %}
             </select>
-            <small class="form-help">Selecione o técnico que será responsável por esta ordem de serviço</small>
+            <small class="form-help">Seleccione el técnico que será responsable de esta orden de servicio</small>
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-box"></i> Características do Aparelho</h3>
+            <h3><i class="fas fa-box"></i> Características del Aparato</h3>
         </div>
         
         <div class="form-row">
             <div class="form-group">
                 <label for="tipo_aparelho">
                     <i class="fas fa-mobile-alt"></i>
-                    Tipo de Aparelho *
+                    Tipo de Aparato *
                 </label>
                 <select id="tipo_aparelho" name="tipo_aparelho" required>
-                    <option value="">Selecione o tipo</option>
+                    <option value="">Seleccione el tipo</option>
                     <option value="Celular">Celular</option>
                     <option value="Notebook">Notebook</option>
-                    <option value="Computador">Computador</option>
-                    <option value="Geladeira">Geladeira</option>
-                    <option value="Máquina de Lavar">Máquina de Lavar</option>
-                    <option value="Micro-ondas">Micro-ondas</option>
-                    <option value="Fogão">Fogão</option>
-                    <option value="Ar Condicionado">Ar Condicionado</option>
-                    <option value="Outro">Outro</option>
+                    <option value="Computadora">Computadora</option>
+                    <option value="Heladera">Heladera</option>
+                    <option value="Lavadora">Lavadora</option>
+                    <option value="Microondas">Microondas</option>
+                    <option value="Cocina">Cocina</option>
+                    <option value="Aire Acondicionado">Aire Acondicionado</option>
+                    <option value="Otro">Otro</option>
                 </select>
             </div>
             
@@ -79,7 +79,7 @@
                     <i class="fas fa-tag"></i>
                     Marca *
                 </label>
-                <input type="text" id="marca" name="marca" required placeholder="Ex: Samsung, LG, Brastemp">
+                <input type="text" id="marca" name="marca" required placeholder="Ej: Samsung, LG, Brastemp">
             </div>
         </div>
         
@@ -89,28 +89,28 @@
                     <i class="fas fa-cube"></i>
                     Modelo *
                 </label>
-                <input type="text" id="modelo" name="modelo" required placeholder="Ex: Galaxy S21, ABC123">
+                <input type="text" id="modelo" name="modelo" required placeholder="Ej: Galaxy S21, ABC123">
             </div>
             
             <div class="form-group">
                 <label for="numero_serie">
                     <i class="fas fa-barcode"></i>
-                    Número de Série
+                    Número de Serie
                 </label>
-                <input type="text" id="numero_serie" name="numero_serie" placeholder="Número de série do aparelho">
+                <input type="text" id="numero_serie" name="numero_serie" placeholder="Número de serie del aparato">
             </div>
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-exclamation-triangle"></i> Defeitos e Diagnóstico</h3>
+            <h3><i class="fas fa-exclamation-triangle"></i> Defectos y Diagnóstico</h3>
         </div>
         
         <div class="form-group">
             <label for="defeitos_cliente">
                 <i class="fas fa-comment-dots"></i>
-                Defeitos Reportados pelo Cliente *
+                Defectos Reportados por el Cliente *
             </label>
-            <textarea id="defeitos_cliente" name="defeitos_cliente" rows="4" required placeholder="Descreva os defeitos relatados pelo cliente..."></textarea>
+            <textarea id="defeitos_cliente" name="defeitos_cliente" rows="4" required placeholder="Describa los defectos reportados por el cliente..."></textarea>
         </div>
         
         <div class="form-group">
@@ -118,52 +118,52 @@
                 <i class="fas fa-stethoscope"></i>
                 Diagnóstico Técnico *
             </label>
-            <textarea id="diagnostico_tecnico" name="diagnostico_tecnico" rows="4" required placeholder="Descreva o diagnóstico técnico realizado..."></textarea>
+            <textarea id="diagnostico_tecnico" name="diagnostico_tecnico" rows="4" required placeholder="Describa el diagnóstico técnico realizado..."></textarea>
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-dollar-sign"></i> Custos</h3>
+            <h3><i class="fas fa-dollar-sign"></i> Costos</h3>
         </div>
         
         <div class="form-group">
             <label>
                 <i class="fas fa-cog"></i>
-                Peças a Serem Trocadas
+                Repuestos a Ser Cambiados
             </label>
             <div class="pecas-list" id="pecas-list">
                 {% for i in range(10) %}
                 <div class="peca-item">
-                    <input type="text" name="peca_nome_{{ i }}" class="peca-nome" placeholder="Nome da peça (ex: Tela, Bateria, Conector)" data-index="{{ i }}">
+                    <input type="text" name="peca_nome_{{ i }}" class="peca-nome" placeholder="Nombre del repuesto (ej: Pantalla, Batería, Conector)" data-index="{{ i }}">
                     <input type="number" name="peca_custo_{{ i }}" class="peca-custo" step="0.01" min="0" value="0.00" placeholder="0.00" data-index="{{ i }}">
-                    <span class="peca-currency">R$</span>
+                    <span class="peca-currency">ARS$</span>
                 </div>
                 {% endfor %}
             </div>
             <div class="pecas-total">
-                <strong>Total de Peças: <span id="total_pecas">R$ 0.00</span></strong>
+                <strong>Total de Repuestos: <span id="total_pecas">ARS$ 0.00</span></strong>
             </div>
         </div>
         
         <div class="form-group">
             <label for="custo_mao_obra">
                 <i class="fas fa-wrench"></i>
-                Custo de Mão de Obra (R$)
+                Costo de Mano de Obra (ARS$)
             </label>
             <input type="number" id="custo_mao_obra" name="custo_mao_obra" step="0.01" min="0" value="0.00" placeholder="0.00">
         </div>
         
         <div class="cost-summary">
             <div class="summary-item">
-                <span>Peças:</span>
-                <span id="display_pecas">R$ 0.00</span>
+                <span>Repuestos:</span>
+                <span id="display_pecas">ARS$ 0.00</span>
             </div>
             <div class="summary-item">
-                <span>Mão de Obra:</span>
-                <span id="display_mao_obra">R$ 0.00</span>
+                <span>Mano de Obra:</span>
+                <span id="display_mao_obra">ARS$ 0.00</span>
             </div>
             <div class="summary-item total">
                 <span><strong>Total:</strong></span>
-                <span id="display_total"><strong>R$ 0.00</strong></span>
+                <span id="display_total"><strong>ARS$ 0.00</strong></span>
             </div>
         </div>
         
@@ -173,34 +173,34 @@
                 Cupón de Descuento (Club Clínica de Reparación)
             </label>
             <select id="cupom_id" name="cupom_id">
-                <option value="">Nenhum cupom</option>
+                <option value="">Ningún cupón</option>
             </select>
-            <small class="form-help">Selecione um cliente primeiro para ver cupons disponíveis</small>
+            <small class="form-help">Seleccione un cliente primero para ver cupones disponibles</small>
         </div>
         
         <div class="form-group" id="desconto_info" style="display: none;">
             <label>
                 <i class="fas fa-percent"></i>
-                Desconto Aplicado
+                Descuento Aplicado
             </label>
             <div class="desconto-display">
-                <p><strong>Desconto:</strong> <span id="desconto_percent">0%</span></p>
-                <p><strong>Valor do Desconto:</strong> <span id="valor_desconto">R$ 0.00</span></p>
-                <p><strong>Subtotal:</strong> <span id="subtotal_display">R$ 0.00</span></p>
-                <p class="total-final"><strong>Total com Desconto:</strong> <span id="total_com_desconto">R$ 0.00</span></p>
+                <p><strong>Descuento:</strong> <span id="desconto_percent">0%</span></p>
+                <p><strong>Valor del Descuento:</strong> <span id="valor_desconto">ARS$ 0.00</span></p>
+                <p><strong>Subtotal:</strong> <span id="subtotal_display">ARS$ 0.00</span></p>
+                <p class="total-final"><strong>Total con Descuento:</strong> <span id="total_com_desconto">ARS$ 0.00</span></p>
             </div>
         </div>
         
         <div class="form-group">
             <label for="status">
                 <i class="fas fa-info-circle"></i>
-                Status da Ordem
+                Estado de la Orden
             </label>
             <select id="status" name="status">
-                <option value="pendente">Pendente</option>
-                <option value="em_andamento">Em Andamento</option>
-                <option value="concluido">Concluído</option>
-                <option value="pago">Pago</option>
+                <option value="pendente">Pendiente</option>
+                <option value="em_andamento">En Proceso</option>
+                <option value="concluido">Concluido</option>
+                <option value="pago">Pagado</option>
                 <option value="cancelado">Cancelado</option>
             </select>
         </div>
@@ -208,10 +208,10 @@
         <div class="form-group">
             <label for="prazo_estimado">
                 <i class="fas fa-calendar-alt"></i>
-                Prazo Estimado
+                Plazo Estimado
             </label>
-            <input type="text" id="prazo_estimado" name="prazo_estimado" placeholder="Ex: 5 dias úteis, 1 semana, 15 dias">
-            <small class="form-help">Informe o prazo estimado para conclusão do serviço</small>
+            <input type="text" id="prazo_estimado" name="prazo_estimado" placeholder="Ej: 5 días hábiles, 1 semana, 15 días">
+            <small class="form-help">Informe el plazo estimado para conclusión del servicio</small>
         </div>
         
         <div class="form-actions">
@@ -219,14 +219,14 @@
                 <i class="fas fa-times"></i> Cancelar
             </a>
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Emitir Ordem de Serviço
+                <i class="fas fa-save"></i> Emitir Orden de Servicio
             </button>
         </div>
     </form>
 </div>
 
 <script>
-// Calcular total de peças
+// Calcular total de repuestos
 function calcularTotalPecas() {
     const pecasInputs = document.querySelectorAll('.peca-custo');
     let totalPecas = 0;
@@ -236,13 +236,13 @@ function calcularTotalPecas() {
         totalPecas += valor;
     });
     
-    document.getElementById('total_pecas').textContent = 'R$ ' + totalPecas.toFixed(2);
-    document.getElementById('display_pecas').textContent = 'R$ ' + totalPecas.toFixed(2);
+    document.getElementById('total_pecas').textContent = 'ARS$ ' + totalPecas.toFixed(2);
+    document.getElementById('display_pecas').textContent = 'ARS$ ' + totalPecas.toFixed(2);
     
     calcularTotal();
 }
 
-// Calcular total geral
+// Calcular total general
 function calcularTotal() {
     const pecasInputs = document.querySelectorAll('.peca-custo');
     let totalPecas = 0;
@@ -255,7 +255,7 @@ function calcularTotal() {
     const custoMaoObra = parseFloat(document.getElementById('custo_mao_obra').value) || 0;
     const subtotal = totalPecas + custoMaoObra;
     
-    // Aplicar desconto se houver cupom selecionado
+    // Aplicar descuento si hay cupón seleccionado
     const cupomSelect = document.getElementById('cupom_id');
     const cupomSelecionado = cupomSelect.options[cupomSelect.selectedIndex];
     let total = subtotal;
@@ -267,18 +267,18 @@ function calcularTotal() {
         valorDesconto = subtotal * (descontoPercent / 100);
         total = subtotal - valorDesconto;
         
-        // Mostrar informações de desconto
+        // Mostrar información de descuento
         document.getElementById('desconto_info').style.display = 'block';
         document.getElementById('desconto_percent').textContent = descontoPercent.toFixed(2) + '%';
-        document.getElementById('valor_desconto').textContent = 'R$ ' + valorDesconto.toFixed(2);
-        document.getElementById('subtotal_display').textContent = 'R$ ' + subtotal.toFixed(2);
-        document.getElementById('total_com_desconto').textContent = 'R$ ' + total.toFixed(2);
+        document.getElementById('valor_desconto').textContent = 'ARS$ ' + valorDesconto.toFixed(2);
+        document.getElementById('subtotal_display').textContent = 'ARS$ ' + subtotal.toFixed(2);
+        document.getElementById('total_com_desconto').textContent = 'ARS$ ' + total.toFixed(2);
     } else {
         document.getElementById('desconto_info').style.display = 'none';
     }
     
-    document.getElementById('display_mao_obra').textContent = 'R$ ' + custoMaoObra.toFixed(2);
-    document.getElementById('display_total').innerHTML = '<strong>R$ ' + total.toFixed(2) + '</strong>';
+    document.getElementById('display_mao_obra').textContent = 'ARS$ ' + custoMaoObra.toFixed(2);
+    document.getElementById('display_total').innerHTML = '<strong>ARS$ ' + total.toFixed(2) + '</strong>';
 }
 
 // Carregar cupons quando cliente é selecionado
@@ -299,38 +299,38 @@ document.getElementById('cliente_id').addEventListener('change', function() {
     fetch(`/admin/fidelidade/${clienteId}/cupons`)
         .then(response => response.json())
         .then(data => {
-            cupomSelect.innerHTML = '<option value="">Nenhum cupom</option>';
+            cupomSelect.innerHTML = '<option value="">Ningún cupón</option>';
             
             if (data.cupons && data.cupons.length > 0) {
                 data.cupons.forEach(cupom => {
                     const option = document.createElement('option');
                     option.value = cupom.id;
-                    option.textContent = `${cupom.desconto_percentual}% de desconto`;
+                    option.textContent = `${cupom.desconto_percentual}% de descuento`;
                     option.dataset.desconto = cupom.desconto_percentual;
                     cupomSelect.appendChild(option);
                 });
                 cupomSelect.disabled = false;
             } else {
-                cupomSelect.innerHTML = '<option value="">Nenhum cupom disponível</option>';
+                cupomSelect.innerHTML = '<option value="">Ningún cupón disponible</option>';
                 cupomSelect.disabled = true;
             }
             calcularTotal();
         })
         .catch(error => {
-            console.error('Erro ao buscar cupons:', error);
-            cupomSelect.innerHTML = '<option value="">Erro ao carregar cupons</option>';
+            console.error('Error al buscar cupones:', error);
+            cupomSelect.innerHTML = '<option value="">Error al cargar cupones</option>';
         });
 });
 
-// Recalcular quando cupom é selecionado
+// Recalcular cuando cupón es seleccionado
 document.getElementById('cupom_id').addEventListener('change', calcularTotal);
 
-// Adicionar event listeners para todos os campos de custo de peças
+// Agregar event listeners para todos los campos de costo de repuestos
 document.querySelectorAll('.peca-custo').forEach(input => {
     input.addEventListener('input', calcularTotalPecas);
 });
 
-// Adicionar event listener para mão de obra
+// Agregar event listener para mano de obra
 document.getElementById('custo_mao_obra').addEventListener('input', calcularTotal);
 
 // Inicializar valores

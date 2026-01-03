@@ -3844,7 +3844,7 @@ def gerar_pdf_ordem(cliente, ordem):
         alignment=TA_CENTER,
         fontName='Helvetica-Bold'
     )
-    story.append(Paragraph("ORDEM DE SERVIÇO", title_style))
+    story.append(Paragraph("ORDEN DE SERVICIO", title_style))
     
     # Subtítulo
     subtitle_style = ParagraphStyle(
@@ -3858,16 +3858,16 @@ def gerar_pdf_ordem(cliente, ordem):
     story.append(Paragraph("Clínica de Reparación - Asistencia Técnica Especializada", subtitle_style))
     story.append(Spacer(1, 0.4*cm))
     
-    # Informações da Ordem (Nº da OS, Data, Status)
+    # Información de la Orden (Nº de OS, Fecha, Estado)
     numero_ordem = ordem.get('numero_ordem', ordem.get('id', 100000))
     try:
-        # Formatar sem zeros à esquerda e sem #
+        # Formatear sin ceros a la izquierda y sin #
         numero_formatado = str(int(numero_ordem))
     except:
-        # Se não conseguir converter, usar o valor original sem #
+        # Si no se puede convertir, usar el valor original sin #
         numero_formatado = str(numero_ordem).replace('#', '').strip()
     
-    # Formatar data
+    # Formatear fecha
     try:
         data_obj = datetime.strptime(ordem['data'], '%Y-%m-%d %H:%M:%S')
         data_formatada = data_obj.strftime('%d/%m/%Y')
@@ -3876,7 +3876,7 @@ def gerar_pdf_ordem(cliente, ordem):
     
     status_text = ordem['status'].upper().replace('_', ' ')
     ordem_info_data = [
-        ['Nº da OS:', numero_formatado, 'Data:', data_formatada, 'Status:', status_text]
+        ['Nº de OS:', numero_formatado, 'Fecha:', data_formatada, 'Estado:', status_text]
     ]
     ordem_info_table = Table(ordem_info_data, colWidths=[2.8*cm, 3.2*cm, 2.5*cm, 3.2*cm, 2.5*cm, 3.2*cm])
     ordem_info_table.setStyle(TableStyle([
@@ -3907,16 +3907,16 @@ def gerar_pdf_ordem(cliente, ordem):
         fontName='Helvetica-Bold'
     )
     
-    story.append(Paragraph("DADOS DO CLIENTE", heading_style))
+    story.append(Paragraph("DATOS DEL CLIENTE", heading_style))
     
-    # Formatar telefone
+    # Formatear teléfono
     telefone = cliente.get('telefone', '')
     if telefone and len(telefone) >= 10:
         telefone_formatado = f"({telefone[:2]}) {telefone[2:7]}-{telefone[7:]}" if len(telefone) == 11 else f"({telefone[:2]}) {telefone[2:6]}-{telefone[6:]}" if len(telefone) == 10 else telefone
     else:
         telefone_formatado = telefone
     
-    # Formatar CPF
+    # Formatear DNI/CPF
     cpf = cliente.get('cpf', '')
     if cpf and len(cpf) == 11:
         cpf_formatado = f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
@@ -3924,11 +3924,11 @@ def gerar_pdf_ordem(cliente, ordem):
         cpf_formatado = cpf
     
     cliente_data = [
-        ['Nome:', cliente['nome']],
+        ['Nombre:', cliente['nome']],
         ['E-mail:', cliente.get('email', '')],
-        ['Telefone:', telefone_formatado],
-        ['CPF:', cpf_formatado],
-        ['Endereço:', cliente.get('endereco', '')],
+        ['Teléfono:', telefone_formatado],
+        ['DNI:', cpf_formatado],
+        ['Dirección:', cliente.get('endereco', '')],
     ]
     cliente_table = Table(cliente_data, colWidths=[4.5*cm, 12.5*cm])
     cliente_table.setStyle(TableStyle([
@@ -3945,17 +3945,17 @@ def gerar_pdf_ordem(cliente, ordem):
     story.append(cliente_table)
     story.append(Spacer(1, 0.8*cm))
     
-    # Dados do Equipamento
-    story.append(Paragraph("DADOS DO EQUIPAMENTO", heading_style))
+    # Datos del Equipo
+    story.append(Paragraph("DATOS DEL EQUIPO", heading_style))
     
-    # Montar aparelho completo
+    # Montar aparato completo
     aparelho_completo = f"{ordem.get('marca', '')} {ordem.get('modelo', '')}".strip()
     
     aparelho_data = [
-        ['Tipo de Serviço:', ordem.get('servico', '')],
-        ['Aparelho:', aparelho_completo],
-        ['Número de Série:', ordem.get('numero_serie', 'N/A')],
-        ['Defeito Informado:', ordem.get('defeitos_cliente', '')],
+        ['Tipo de Servicio:', ordem.get('servico', '')],
+        ['Aparato:', aparelho_completo],
+        ['Número de Serie:', ordem.get('numero_serie', 'N/A')],
+        ['Defecto Informado:', ordem.get('defeitos_cliente', '')],
         ['Diagnóstico Técnico:', ordem.get('diagnostico_tecnico', '')],
     ]
     aparelho_table = Table(aparelho_data, colWidths=[4.5*cm, 12.5*cm])
@@ -3973,28 +3973,28 @@ def gerar_pdf_ordem(cliente, ordem):
     story.append(aparelho_table)
     story.append(Spacer(1, 0.8*cm))
     
-    # Custos
-    story.append(Paragraph("CUSTOS", heading_style))
+    # Costos
+    story.append(Paragraph("COSTOS", heading_style))
     
-    # Tabela de custos
-    custos_header = [['Descrição', 'Valor (R$)']]
+    # Tabla de costos
+    custos_header = [['Descripción', 'Valor (ARS$)']]
     
-    # Adicionar peças se existirem
+    # Agregar repuestos si existen
     custos_rows = []
     if ordem.get('pecas') and len(ordem['pecas']) > 0:
         for peca in ordem['pecas']:
-            custos_rows.append([peca['nome'], f"{peca['custo']:.2f}".replace('.', ',')])
-        custos_rows.append(['Subtotal Peças', f"{ordem.get('custo_pecas', 0):.2f}".replace('.', ',')])
+            custos_rows.append([peca['nome'], f"ARS$ {peca['custo']:.2f}".replace('.', ',')])
+        custos_rows.append(['Subtotal Repuestos', f"ARS$ {ordem.get('custo_pecas', 0):.2f}".replace('.', ',')])
     
-    custos_rows.append(['Mão de Obra', f"{ordem.get('custo_mao_obra', 0):.2f}".replace('.', ',')])
+    custos_rows.append(['Mano de Obra', f"ARS$ {ordem.get('custo_mao_obra', 0):.2f}".replace('.', ',')])
     
-    # Adicionar desconto se houver
+    # Agregar descuento si hay
     subtotal = ordem.get('custo_pecas', 0) + ordem.get('custo_mao_obra', 0)
     if ordem.get('desconto_percentual', 0) > 0:
-        custos_rows.append(['Subtotal', f"{subtotal:.2f}".replace('.', ',')])
-        custos_rows.append([f'Desconto ({ordem.get("desconto_percentual", 0):.2f}%)', f"-{ordem.get('valor_desconto', 0):.2f}".replace('.', ',')])
+        custos_rows.append(['Subtotal', f"ARS$ {subtotal:.2f}".replace('.', ',')])
+        custos_rows.append([f'Descuento ({ordem.get("desconto_percentual", 0):.2f}%)', f"-ARS$ {ordem.get('valor_desconto', 0):.2f}".replace('.', ',')])
     
-    custos_rows.append(['TOTAL', f"{ordem.get('total', 0):.2f}".replace('.', ',')])
+    custos_rows.append(['TOTAL', f"ARS$ {ordem.get('total', 0):.2f}".replace('.', ',')])
     
     custos_data = custos_header + custos_rows
     custos_table = Table(custos_data, colWidths=[13*cm, 4*cm])
@@ -4016,18 +4016,18 @@ def gerar_pdf_ordem(cliente, ordem):
     story.append(custos_table)
     story.append(Spacer(1, 0.8*cm))
     
-    # Condições Gerais de Serviço
-    story.append(Paragraph("CONDIÇÕES GERAIS DE SERVIÇO", heading_style))
+    # Condiciones Generales de Servicio
+    story.append(Paragraph("CONDICIONES GENERALES DE SERVICIO", heading_style))
     
-    condicoes_texto = """1. O prazo de execução do serviço será informado ao cliente no momento da avaliação.
-2. O cliente será notificado quando o serviço estiver concluído.
-3. A garantia do serviço é de 30 dias para peças e mão de obra.
-4. Em caso de não retirada do aparelho em até 30 dias após a conclusão, serão cobradas taxas de armazenamento.
-5. Peças substituídas tornam-se propriedade da oficina, exceto se solicitado pelo cliente no ato do orçamento.
-6. O cliente deve comparecer pessoalmente para retirada do aparelho ou autorizar por escrito outra pessoa.
-7. A oficina não se responsabiliza por dados perdidos durante o reparo.
-8. Em caso de reparo não autorizado, será cobrado apenas o valor da avaliação.
-9. Em caso de não retirada do aparelho em até 60 dias após a conclusão, o cliente perderá o aparelho e passa a ser de propriedade da nossa Assistência Técnica."""
+    condicoes_texto = """1. El plazo de ejecución del servicio será informado al cliente en el momento de la evaluación.
+2. El cliente será notificado cuando el servicio esté concluido.
+3. La garantía del servicio es de 30 días para repuestos y mano de obra.
+4. En caso de no retirar el aparato en hasta 30 días después de la conclusión, se cobrarán tasas de almacenamiento.
+5. Los repuestos sustituidos pasan a ser propiedad del taller, excepto si es solicitado por el cliente al momento del presupuesto.
+6. El cliente debe comparecer personalmente para retirar el aparato o autorizar por escrito a otra persona.
+7. El taller no se responsabiliza por datos perdidos durante la reparación.
+8. En caso de reparación no autorizada, se cobrará únicamente el valor de la evaluación.
+9. En caso de no retirar el aparato en hasta 60 días después de la conclusión, el cliente perderá el aparato y pasará a ser propiedad de nuestra Asistencia Técnica."""
     
     condicoes_style = ParagraphStyle(
         'Condicoes',
@@ -4042,13 +4042,13 @@ def gerar_pdf_ordem(cliente, ordem):
     story.append(Paragraph(condicoes_texto, condicoes_style))
     story.append(Spacer(1, 1*cm))
     
-    # Assinaturas
-    story.append(Paragraph("ASSINATURAS", heading_style))
+    # Firmas
+    story.append(Paragraph("FIRMAS", heading_style))
     story.append(Spacer(1, 0.3*cm))
     
     assinaturas_data = [
-        ['Assinatura do Cliente:', '___________________________', 'Assinatura do Técnico:', '___________________________'],
-        ['Data da Retirada:', '__ / __ / __', '', ''],
+        ['Firma del Cliente:', '___________________________', 'Firma del Técnico:', '___________________________'],
+        ['Fecha de Retiro:', '__ / __ / __', '', ''],
     ]
     assinaturas_table = Table(assinaturas_data, colWidths=[4*cm, 6*cm, 4*cm, 6*cm])
     assinaturas_table.setStyle(TableStyle([
@@ -4776,16 +4776,16 @@ def gerar_pdf_comprovante(cliente, ordem, comprovante):
         alignment=TA_CENTER,
         fontName='Helvetica-Bold'
     )
-    story.append(Paragraph("COMPROVANTE DE PAGAMENTO", title_style))
+    story.append(Paragraph("COMPROBANTE DE PAGO", title_style))
     story.append(Spacer(1, 0.5*cm))
     
-    # Informações do Comprovante
+    # Información del Comprobante
     data_formatada = datetime.strptime(comprovante['data'], '%Y-%m-%d %H:%M:%S').strftime('%d/%m/%Y %H:%M')
     
     info_data = [
-        ['Número do Comprovante:', f"#{comprovante['id']:04d}"],
-        ['Data:', data_formatada],
-        ['Número da Ordem:', str(comprovante['numero_ordem'])],
+        ['Número del Comprobante:', f"#{comprovante['id']:04d}"],
+        ['Fecha:', data_formatada],
+        ['Número de Orden:', str(comprovante['numero_ordem'])],
     ]
     info_table = Table(info_data, colWidths=[5*cm, 12*cm])
     info_table.setStyle(TableStyle([
@@ -4812,9 +4812,9 @@ def gerar_pdf_comprovante(cliente, ordem, comprovante):
         fontName='Helvetica-Bold'
     )
     
-    story.append(Paragraph("DADOS DO CLIENTE", heading_style))
+    story.append(Paragraph("DATOS DEL CLIENTE", heading_style))
     
-    # Formatar telefone e CPF
+    # Formatear teléfono y DNI
     telefone = cliente.get('telefone', '')
     if telefone and len(telefone) == 11:
         telefone_formatado = f"({telefone[:2]}) {telefone[2:7]}-{telefone[7:]}"
@@ -4830,10 +4830,10 @@ def gerar_pdf_comprovante(cliente, ordem, comprovante):
         cpf_formatado = cpf
     
     cliente_data = [
-        ['Nome:', cliente['nome']],
+        ['Nombre:', cliente['nome']],
         ['E-mail:', cliente.get('email', '')],
-        ['Telefone:', telefone_formatado],
-        ['CPF:', cpf_formatado],
+        ['Teléfono:', telefone_formatado],
+        ['DNI:', cpf_formatado],
     ]
     cliente_table = Table(cliente_data, colWidths=[4.5*cm, 12.5*cm])
     cliente_table.setStyle(TableStyle([
@@ -4849,14 +4849,14 @@ def gerar_pdf_comprovante(cliente, ordem, comprovante):
     story.append(cliente_table)
     story.append(Spacer(1, 0.8*cm))
     
-    # Informações de Pagamento
-    story.append(Paragraph("INFORMAÇÕES DE PAGAMENTO", heading_style))
+    # Información de Pago
+    story.append(Paragraph("INFORMACIÓN DE PAGO", heading_style))
     
     formas_pagamento = {
-        'dinheiro': 'Dinheiro',
-        'cartao_debito': 'Cartão de Débito',
-        'cartao_credito': 'Cartão de Crédito',
-        'pix': 'PIX'
+        'dinheiro': 'Efectivo',
+        'cartao_debito': 'Tarjeta de Débito',
+        'cartao_credito': 'Tarjeta de Crédito',
+        'pix': 'Transferencia'
     }
     
     forma_pagamento_texto = formas_pagamento.get(comprovante['forma_pagamento'], comprovante['forma_pagamento'])
@@ -4864,14 +4864,14 @@ def gerar_pdf_comprovante(cliente, ordem, comprovante):
         forma_pagamento_texto += f" ({comprovante['parcelas']}x)"
     
     pagamento_data = [
-        ['Valor Total da Ordem:', f"R$ {comprovante['valor_total']:.2f}".replace('.', ',')],
-        ['Valor Pago:', f"R$ {comprovante['valor_pago']:.2f}".replace('.', ',')],
-        ['Forma de Pagamento:', forma_pagamento_texto],
+        ['Valor Total de la Orden:', f"ARS$ {comprovante['valor_total']:.2f}".replace('.', ',')],
+        ['Valor Pagado:', f"ARS$ {comprovante['valor_pago']:.2f}".replace('.', ',')],
+        ['Forma de Pago:', forma_pagamento_texto],
     ]
     
     if comprovante['forma_pagamento'] == 'cartao_credito' and comprovante['parcelas'] > 1:
         valor_parcela = comprovante['valor_pago'] / comprovante['parcelas']
-        pagamento_data.append(['Valor por Parcela:', f"R$ {valor_parcela:.2f}".replace('.', ',')])
+        pagamento_data.append(['Valor por Cuota:', f"ARS$ {valor_parcela:.2f}".replace('.', ',')])
     
     pagamento_table = Table(pagamento_data, colWidths=[5*cm, 12*cm])
     pagamento_table.setStyle(TableStyle([
@@ -4887,12 +4887,12 @@ def gerar_pdf_comprovante(cliente, ordem, comprovante):
     story.append(pagamento_table)
     story.append(Spacer(1, 1*cm))
     
-    # Assinatura
-    story.append(Paragraph("ASSINATURA", heading_style))
+    # Firma
+    story.append(Paragraph("FIRMA", heading_style))
     story.append(Spacer(1, 0.3*cm))
     
     assinatura_data = [
-        ['Assinatura:', '___________________________'],
+        ['Firma:', '___________________________'],
     ]
     assinatura_table = Table(assinatura_data, colWidths=[4*cm, 13*cm])
     assinatura_table.setStyle(TableStyle([
@@ -9090,17 +9090,17 @@ def gerar_pdf_orcamento_ar(orçamento):
         alignment=TA_CENTER,
         fontName='Helvetica-Bold'
     )
-    story.append(Paragraph("ORÇAMENTO DE AR-CONDICIONADO", title_style))
+    story.append(Paragraph("PRESUPUESTO DE AIRE ACONDICIONADO", title_style))
     story.append(Spacer(1, 0.5*cm))
     
-    # Informações do Orçamento
+    # Información del Presupuesto
     data_formatada = orçamento.data_criacao.strftime('%d/%m/%Y %H:%M') if orçamento.data_criacao else datetime.now().strftime('%d/%m/%Y %H:%M')
     
     info_data = [
-        ['Número do Orçamento:', f"#{orçamento.id:04d}"],
-        ['Data:', data_formatada],
+        ['Número del Presupuesto:', f"#{orçamento.id:04d}"],
+        ['Fecha:', data_formatada],
         ['Cliente:', orçamento.cliente.nome if orçamento.cliente else 'N/A'],
-        ['Técnico:', orçamento.tecnico.nome if orçamento.tecnico else 'Não atribuído'],
+        ['Técnico:', orçamento.tecnico.nome if orçamento.tecnico else 'No asignado'],
     ]
     
     info_table = Table(info_data, colWidths=[5*cm, 12*cm])
@@ -9128,12 +9128,12 @@ def gerar_pdf_orcamento_ar(orçamento):
         fontName='Helvetica-Bold'
     )
     
-    story.append(Paragraph("Detalhes do Serviço", heading_style))
+    story.append(Paragraph("Detalles del Servicio", heading_style))
     
     detalhes_data = [
-        ['Tipo de Serviço:', orçamento.tipo_servico],
-        ['Potência (BTU):', f"{orçamento.potencia_btu} BTU"],
-        ['Tipo de Acesso:', orçamento.tipo_acesso],
+        ['Tipo de Servicio:', orçamento.tipo_servico],
+        ['Potencia (BTU):', f"{orçamento.potencia_btu} BTU"],
+        ['Tipo de Acceso:', orçamento.tipo_acesso],
         ['Marca:', orçamento.marca_aparelho or 'N/A'],
         ['Modelo:', orçamento.modelo_aparelho or 'N/A'],
     ]
@@ -9142,7 +9142,7 @@ def gerar_pdf_orcamento_ar(orçamento):
         detalhes_data.append(['Material Adicional:', orçamento.material_adicional])
     
     if orçamento.prazo_estimado:
-        detalhes_data.append(['Prazo Estimado:', orçamento.prazo_estimado])
+        detalhes_data.append(['Plazo Estimado:', orçamento.prazo_estimado])
     
     detalhes_table = Table(detalhes_data, colWidths=[5*cm, 12*cm])
     detalhes_table.setStyle(TableStyle([
@@ -9162,36 +9162,36 @@ def gerar_pdf_orcamento_ar(orçamento):
     story.append(Paragraph("Valores", heading_style))
     
     valores_data = [
-        ['Descrição', 'Valor'],
-        ['Valor Base', f"R$ {orçamento.valor_base:.2f}"],
-        ['Acréscimo por Acesso', f"R$ {orçamento.valor_acesso:.2f}"],
+        ['Descripción', 'Valor'],
+        ['Valor Base', f"ARS$ {orçamento.valor_base:.2f}"],
+        ['Incremento por Acceso', f"ARS$ {orçamento.valor_acesso:.2f}"],
     ]
     
-    # Adicionar material adicional se houver
+    # Agregar material adicional si hay
     if orçamento.material_adicional:
         descricao_material = orçamento.material_adicional
         valor_material_exibir = 0.00
         
-        # Calcular o valor correto do material adicional
-        if descricao_material == 'Kit Convencional (3m de tubulação)':
+        # Calcular el valor correcto del material adicional
+        if descricao_material == 'Kit Convencional (3m de tubulación)':
             valor_material_exibir = 250.00
-            descricao_material = 'Kit Convencional (3m de tubulação)'
-        elif descricao_material == 'Tubulação extra acima de 3m':
-            # Usar o valor salvo no banco, ou 0 se não houver
+            descricao_material = 'Kit Convencional (3m de tubulación)'
+        elif descricao_material == 'Tubulación extra por encima de 3m':
+            # Usar el valor guardado en la base, o 0 si no hay
             valor_material_exibir = float(orçamento.valor_material_adicional) if orçamento.valor_material_adicional else 0.00
-            descricao_material = 'Tubulação extra acima de 3m'
+            descricao_material = 'Tubulación extra por encima de 3m'
         
-        # Só adicionar na tabela se o valor for maior que zero
+        # Solo agregar en la tabla si el valor es mayor que cero
         if valor_material_exibir > 0:
-            valores_data.append([descricao_material, f"R$ {valor_material_exibir:.2f}"])
+            valores_data.append([descricao_material, f"ARS$ {valor_material_exibir:.2f}"])
     
-    # Adicionar custos adicionais se houver
+    # Agregar costos adicionales si hay
     if orçamento.custos_adicionais:
         for custo in orçamento.custos_adicionais:
             if isinstance(custo, dict) and custo.get('item') and custo.get('valor'):
-                valores_data.append([custo['item'], f"R$ {float(custo['valor']):.2f}"])
+                valores_data.append([custo['item'], f"ARS$ {float(custo['valor']):.2f}"])
     
-    valores_data.append(['TOTAL', f"R$ {orçamento.valor_total:.2f}"])
+    valores_data.append(['TOTAL', f"ARS$ {orçamento.valor_total:.2f}"])
     
     valores_table = Table(valores_data, colWidths=[12*cm, 5*cm])
     valores_table.setStyle(TableStyle([

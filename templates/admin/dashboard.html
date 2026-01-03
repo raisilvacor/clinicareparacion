@@ -1,11 +1,11 @@
 {% extends "admin/base_admin.html" %}
 
-{% block title %}Dashboard - Painel Admin{% endblock %}
+{% block title %}Dashboard - Panel Admin{% endblock %}
 
 {% block content %}
 <div class="admin-header">
     <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
-    <p>Bem-vindo ao painel administrativo</p>
+    <p>Bienvenido al panel administrativo</p>
 </div>
 
 <div class="stats-grid">
@@ -15,7 +15,7 @@
         </div>
         <div class="stat-content">
             <h3>{{ stats.total_contatos }}</h3>
-            <p>Total de Contatos</p>
+            <p>Total de Contactos</p>
         </div>
     </div>
     <div class="stat-card">
@@ -24,7 +24,7 @@
         </div>
         <div class="stat-content">
             <h3>{{ stats.total_servicos }}</h3>
-            <p>Serviços Cadastrados</p>
+            <p>Servicios Registrados</p>
         </div>
     </div>
     <div class="stat-card">
@@ -33,7 +33,7 @@
         </div>
         <div class="stat-content">
             <h3>{{ stats.contatos_recentes|length }}</h3>
-            <p>Contatos Recentes</p>
+            <p>Contactos Recientes</p>
         </div>
     </div>
     <div class="stat-card">
@@ -41,7 +41,7 @@
             <i class="fas fa-check-circle"></i>
         </div>
         <div class="stat-content">
-            <h3>Ativo</h3>
+            <h3>Activo</h3>
             <p>Sistema Funcionando</p>
         </div>
     </div>
@@ -49,7 +49,7 @@
 
 <div class="admin-section">
     <div class="section-header">
-        <h2><i class="fas fa-envelope"></i> Contatos Recentes</h2>
+        <h2><i class="fas fa-envelope"></i> Contactos Recientes</h2>
         <a href="{{ url_for('admin_contatos') }}" class="btn btn-secondary">
             Ver Todos
         </a>
@@ -60,11 +60,11 @@
         <table class="admin-table">
             <thead>
                 <tr>
-                    <th>Nome</th>
+                    <th>Nombre</th>
                     <th>E-mail</th>
-                    <th>Telefone</th>
-                    <th>Serviço</th>
-                    <th>Data</th>
+                    <th>Teléfono</th>
+                    <th>Servicio</th>
+                    <th>Fecha</th>
                 </tr>
             </thead>
             <tbody>
@@ -83,14 +83,14 @@
     {% else %}
     <div class="empty-state">
         <i class="fas fa-inbox"></i>
-        <p>Nenhum contato ainda</p>
+        <p>Ningún contacto aún</p>
     </div>
     {% endif %}
 </div>
 
 <div class="admin-section">
     <div class="section-header">
-        <h2><i class="fas fa-calendar-check"></i> Notificações de Agendamentos</h2>
+        <h2><i class="fas fa-calendar-check"></i> Notificaciones de Agendamientos</h2>
         <a href="{{ url_for('admin_agendamentos') }}" class="btn btn-secondary">
             Ver Todos
         </a>
@@ -101,12 +101,12 @@
         <table class="admin-table">
             <thead>
                 <tr>
-                    <th>Nome</th>
-                    <th>Telefone</th>
-                    <th>Data do Agendamento</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Fecha del Agendamiento</th>
                     <th>Hora</th>
-                    <th>Serviço</th>
-                    <th>Status</th>
+                    <th>Servicio</th>
+                    <th>Estado</th>
                 </tr>
             </thead>
             <tbody>
@@ -120,11 +120,11 @@
                     <td>
                         <span class="badge badge-{{ agendamento.status }}">
                             {% if agendamento.status == 'pendente' %}
-                                Pendente
+                                Pendiente
                             {% elif agendamento.status == 'confirmado' %}
                                 Confirmado
                             {% elif agendamento.status == 'concluido' %}
-                                Concluído
+                                Concluido
                             {% elif agendamento.status == 'cancelado' %}
                                 Cancelado
                             {% else %}
@@ -140,130 +140,130 @@
     {% else %}
     <div class="empty-state">
         <i class="fas fa-calendar-times"></i>
-        <p>Nenhum agendamento ainda</p>
+        <p>Ningún agendamiento aún</p>
     </div>
     {% endif %}
 </div>
 
 <div class="admin-section">
     <div class="section-header">
-        <h2><i class="fas fa-bolt"></i> Ações Rápidas</h2>
+        <h2><i class="fas fa-bolt"></i> Acciones Rápidas</h2>
     </div>
     <div class="quick-actions">
         <a href="{{ url_for('admin_contatos') }}" class="action-card">
             <i class="fas fa-envelope"></i>
-            <h3>Gerenciar Contatos</h3>
-            <p>Visualizar e gerenciar mensagens recebidas</p>
+            <h3>Gestionar Contactos</h3>
+            <p>Visualizar y gestionar mensajes recibidos</p>
         </a>
         <a href="{{ url_for('admin_servicos') }}" class="action-card">
             <i class="fas fa-tools"></i>
-            <h3>Gerenciar Serviços</h3>
-            <p>Adicionar, editar ou remover serviços</p>
+            <h3>Gestionar Servicios</h3>
+            <p>Agregar, editar o eliminar servicios</p>
         </a>
     <a href="{{ url_for('admin_usuarios') }}" class="action-card">
         <i class="fas fa-users-cog"></i>
-        <h3>Usuários</h3>
-        <p>Gerenciar usuários do painel administrativo</p>
+        <h3>Usuarios</h3>
+        <p>Gestionar usuarios del panel administrativo</p>
     </a>
         <a href="{{ url_for('admin_clientes') }}" class="action-card">
             <i class="fas fa-users"></i>
-            <h3>Gerenciar Clientes</h3>
-            <p>Cadastrar e gerenciar clientes</p>
+            <h3>Gestionar Clientes</h3>
+            <p>Registrar y gestionar clientes</p>
         </a>
         <a href="{{ url_for('add_ordem_servico') }}" class="action-card">
             <i class="fas fa-file-invoice"></i>
-            <h3>Emitir Ordem de Serviço</h3>
-            <p>Registrar nova ordem de serviço</p>
+            <h3>Emitir Orden de Servicio</h3>
+            <p>Registrar nueva orden de servicio</p>
         </a>
         <a href="{{ url_for('admin_ordens') }}" class="action-card">
             <i class="fas fa-list"></i>
-            <h3>Ver Ordens de Serviço</h3>
-            <p>Visualizar todas as ordens emitidas</p>
+            <h3>Ver Órdenes de Servicio</h3>
+            <p>Visualizar todas las órdenes emitidas</p>
         </a>
         <a href="{{ url_for('admin_financeiro') }}" class="action-card">
             <i class="fas fa-dollar-sign"></i>
-            <h3>Financeiro</h3>
-            <p>Saldo e valores a receber</p>
+            <h3>Financiero</h3>
+            <p>Saldo y valores a recibir</p>
         </a>
         <a href="{{ url_for('emitir_comprovante') }}" class="action-card">
             <i class="fas fa-receipt"></i>
-            <h3>Emitir Comprovante</h3>
-            <p>Gerar comprovante de pagamento</p>
+            <h3>Emitir Comprobante</h3>
+            <p>Generar comprobante de pago</p>
         </a>
         <a href="{{ url_for('admin_comprovantes') }}" class="action-card">
             <i class="fas fa-file-invoice"></i>
-            <h3>Comprovantes Emitidos</h3>
-            <p>Visualizar comprovantes</p>
+            <h3>Comprobantes Emitidos</h3>
+            <p>Visualizar comprobantes</p>
         </a>
         <a href="{{ url_for('admin_fidelidade') }}" class="action-card">
             <i class="fas fa-gift"></i>
             <h3>Club Clínica de Reparación</h3>
-            <p>Emitir cupons de desconto</p>
+            <p>Emitir cupones de descuento</p>
         </a>
         <a href="{{ url_for('admin_tecnicos') }}" class="action-card">
             <i class="fas fa-user-cog"></i>
-            <h3>Cadastro de Técnicos</h3>
-            <p>Gerenciar técnicos da equipe</p>
+            <h3>Registro de Técnicos</h3>
+            <p>Gestionar técnicos del equipo</p>
         </a>
         <a href="{{ url_for('admin_manuais') }}" class="action-card">
             <i class="fas fa-book"></i>
-            <h3>Manuais</h3>
-            <p>Gerenciar manuais em PDF</p>
+            <h3>Manuales</h3>
+            <p>Gestionar manuales en PDF</p>
         </a>
         <a href="{{ url_for('admin_orcamentos_ar') }}" class="action-card">
             <i class="fas fa-snowflake"></i>
-            <h3>Orçamento de Ar-condicionado</h3>
-            <p>Gerar orçamentos para instalação e manutenção</p>
+            <h3>Presupuesto de Aire Acondicionado</h3>
+            <p>Generar presupuestos para instalación y mantenimiento</p>
         </a>
         <a href="{{ url_for('admin_agendamentos') }}" class="action-card">
             <i class="fas fa-calendar-check"></i>
-            <h3>Agendamentos</h3>
-            <p>Visualizar e gerenciar agendamentos</p>
+            <h3>Agendamientos</h3>
+            <p>Visualizar y gestionar agendamientos</p>
         </a>
         <a href="{{ url_for('admin_slides') }}" class="action-card">
             <i class="fas fa-images"></i>
-            <h3>Gerenciar Slides</h3>
-            <p>Gerenciar slides da página inicial</p>
+            <h3>Gestionar Slides</h3>
+            <p>Gestionar slides de la página principal</p>
         </a>
         <a href="{{ url_for('admin_footer') }}" class="action-card">
             <i class="fas fa-edit"></i>
-            <h3>Gerenciar Rodapé</h3>
-            <p>Editar informações do rodapé do site</p>
+            <h3>Gestionar Pie de Página</h3>
+            <p>Editar información del pie de página del sitio</p>
         </a>
         <a href="{{ url_for('admin_marcas') }}" class="action-card">
             <i class="fas fa-tags"></i>
-            <h3>Gerenciar Marcas</h3>
-            <p>Gerenciar principais marcas exibidas</p>
+            <h3>Gestionar Marcas</h3>
+            <p>Gestionar principales marcas mostradas</p>
         </a>
         <a href="{{ url_for('admin_milestones') }}" class="action-card">
             <i class="fas fa-trophy"></i>
-            <h3>Gerenciar Marcos</h3>
-            <p>Gerenciar marcos/milestones exibidos</p>
+            <h3>Gestionar Hitos</h3>
+            <p>Gestionar hitos/milestones mostrados</p>
         </a>
         <a href="{{ url_for('admin_reparos') }}" class="action-card">
             <i class="fas fa-tools"></i>
-            <h3>Reparos Realizados</h3>
-            <p>Gerenciar galeria de reparos realizados</p>
+            <h3>Reparaciones Realizadas</h3>
+            <p>Gestionar galería de reparaciones realizadas</p>
         </a>
         <a href="{{ url_for('admin_videos') }}" class="action-card">
             <i class="fas fa-video"></i>
-            <h3>Vídeos</h3>
-            <p>Gerenciar vídeos do YouTube</p>
+            <h3>Videos</h3>
+            <p>Gestionar videos de YouTube</p>
         </a>
         <a href="{{ url_for('admin_paginas_servicos') }}" class="action-card">
             <i class="fas fa-file-alt"></i>
-            <h3>Páginas de Serviços</h3>
-            <p>Gerenciar páginas individuais de serviços</p>
+            <h3>Páginas de Servicios</h3>
+            <p>Gestionar páginas individuales de servicios</p>
         </a>
         <a href="{{ url_for('admin_fornecedores') }}" class="action-card">
             <i class="fas fa-truck"></i>
-            <h3>Fornecedores</h3>
-            <p>Gerenciar fornecedores cadastrados</p>
+            <h3>Proveedores</h3>
+            <p>Gestionar proveedores registrados</p>
         </a>
         <a href="{{ url_for('index') }}" class="action-card" target="_blank">
             <i class="fas fa-external-link-alt"></i>
-            <h3>Ver Site</h3>
-            <p>Abrir o site em nova aba</p>
+            <h3>Ver Sitio</h3>
+            <p>Abrir el sitio en nueva pestaña</p>
         </a>
     </div>
 </div>
@@ -271,16 +271,16 @@
 
 {% block scripts %}
 <script>
-    // Auto-refresh apenas na página do dashboard a cada 1 minuto (60000ms)
-    if (window.location.pathname === '/admin' || window.location.pathname === '/admin/') {
-        setInterval(function() {
-            // Recarregar a página suavemente
-            window.location.reload();
-        }, 60000); // 1 minuto = 60000 milissegundos
-        
-        // Mostrar indicador de atualização automática
-        console.log('Dashboard configurado para atualizar automaticamente a cada 1 minuto');
-    }
+        // Auto-refresh solo en la página del dashboard cada 1 minuto (60000ms)
+        if (window.location.pathname === '/admin' || window.location.pathname === '/admin/') {
+            setInterval(function() {
+                // Recargar la página suavemente
+                window.location.reload();
+            }, 60000); // 1 minuto = 60000 milisegundos
+            
+            // Mostrar indicador de actualización automática
+            console.log('Dashboard configurado para actualizar automáticamente cada 1 minuto');
+        }
 </script>
 {% endblock %}
 

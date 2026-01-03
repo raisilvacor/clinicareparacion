@@ -121,7 +121,7 @@
             </label>
             <select id="material_adicional" name="material_adicional" onchange="toggleMaterialAdicional()">
                 <option value="">Nenhum material adicional</option>
-                <option value="Kit Convencional (3m de tubulação)" {% if orcamento.material_adicional == 'Kit Convencional (3m de tubulação)' %}selected{% endif %}>Kit Convencional (3m de tubulação) + R$ 250,00</option>
+                <option value="Kit Convencional (3m de tubulação)" {% if orcamento.material_adicional == 'Kit Convencional (3m de tubulação)' %}selected{% endif %}>Kit Convencional (3m de tubulación) + ARS$ 250,00</option>
                 <option value="Tubulação extra acima de 3m" {% if orcamento.material_adicional == 'Tubulação extra acima de 3m' %}selected{% endif %}>Tubulação extra acima de 3m</option>
             </select>
         </div>
@@ -129,7 +129,7 @@
         <div class="form-group" id="campo_valor_material" style="display: {% if orcamento.material_adicional == 'Tubulação extra acima de 3m' %}block{% else %}none{% endif %};">
             <label for="valor_material_adicional">
                 <i class="fas fa-dollar-sign"></i>
-                Valor da Tubulação Extra (R$)
+                Valor de la Tubulación Extra (ARS$)
             </label>
             <input type="number" id="valor_material_adicional" name="valor_material_adicional" step="0.01" min="0" value="{{ "%.2f"|format(orcamento.valor_material_adicional) }}" placeholder="0.00" onchange="calcularPreco()">
             <small class="form-help">Digite o valor manualmente para tubulação extra acima de 3m</small>
@@ -154,7 +154,7 @@
                         <div class="form-group" style="flex: 1;">
                             <label>
                                 <i class="fas fa-dollar-sign"></i>
-                                Valor (R$)
+                                Valor (ARS$)
                             </label>
                             <input type="number" name="custo_adicional_valor[]" class="custo-valor-input" step="0.01" min="0" value="{{ "%.2f"|format(custo.valor) }}" placeholder="0.00" onchange="calcularPreco()">
                         </div>
@@ -186,7 +186,7 @@
                         <div class="form-group" style="flex: 1;">
                             <label>
                                 <i class="fas fa-dollar-sign"></i>
-                                Valor (R$)
+                                Valor (ARS$)
                             </label>
                             <input type="number" name="custo_adicional_valor[]" class="custo-valor-input" step="0.01" min="0" placeholder="0.00" onchange="calcularPreco()">
                         </div>
@@ -460,7 +460,7 @@ function atualizarResumo(valorBase, valorAcesso, valorMaterial, valorTotal, cust
 }
 
 function formatarMoeda(valor) {
-    return 'R$ ' + valor.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return 'ARS$ ' + valor.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
 // Calcular ao carregar a página
