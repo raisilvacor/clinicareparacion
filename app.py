@@ -1029,7 +1029,7 @@ def index():
         footer_data = {
             'descricao': 'Sua assistência técnica de confiança para eletrodomésticos, celulares, computadores e notebooks.',
             'redes_sociais': {'facebook': '', 'instagram': '', 'whatsapp': '', 'youtube': ''},
-            'contato': {'telefone': '', 'email': '', 'endereco': ''},
+            'contato': {'telefone': '', 'email': '', 'endereco': '', 'horario': ''},
             'copyright': '© 2026 Clínica de Reparación. Todos los derechos reservados.',
             'whatsapp_float': ''
         }
@@ -1264,7 +1264,7 @@ def todos_reparos():
         footer_data = {
             'descricao': 'Sua assistência técnica de confiança para eletrodomésticos, celulares, computadores e notebooks.',
             'redes_sociais': {'facebook': '', 'instagram': '', 'whatsapp': '', 'youtube': ''},
-            'contato': {'telefone': '', 'email': '', 'endereco': ''},
+            'contato': {'telefone': '', 'email': '', 'endereco': '', 'horario': ''},
             'copyright': '© 2026 Clínica de Reparación. Todos los derechos reservados.',
             'whatsapp_float': ''
         }
@@ -1323,7 +1323,7 @@ def sobre():
         footer_data = {
             'descricao': 'Sua assistência técnica de confiança para eletrodomésticos, celulares, computadores e notebooks.',
             'redes_sociais': {'facebook': '', 'instagram': '', 'whatsapp': '', 'youtube': ''},
-            'contato': {'telefone': '', 'email': '', 'endereco': ''},
+            'contato': {'telefone': '', 'email': '', 'endereco': '', 'horario': ''},
             'copyright': '© 2026 Clínica de Reparación. Todos los derechos reservados.',
             'whatsapp_float': ''
         }
@@ -1391,7 +1391,7 @@ def pagina_servico(slug):
         footer_data = {
             'descricao': 'Sua assistência técnica de confiança para eletrodomésticos, celulares, computadores e notebooks.',
             'redes_sociais': {'facebook': '', 'instagram': '', 'whatsapp': '', 'youtube': ''},
-            'contato': {'telefone': '', 'email': '', 'endereco': ''},
+            'contato': {'telefone': '', 'email': '', 'endereco': '', 'horario': ''},
             'copyright': '© 2026 Clínica de Reparación. Todos los derechos reservados.',
             'whatsapp_float': ''
         }
@@ -1499,7 +1499,7 @@ def contato():
         footer_data = {
             'descricao': 'Sua assistência técnica de confiança para eletrodomésticos, celulares, computadores e notebooks.',
             'redes_sociais': {'facebook': '', 'instagram': '', 'whatsapp': '', 'youtube': ''},
-            'contato': {'telefone': '', 'email': '', 'endereco': ''},
+            'contato': {'telefone': '', 'email': '', 'endereco': '', 'horario': ''},
             'copyright': '© 2026 Clínica de Reparación. Todos los derechos reservados.',
             'whatsapp_float': ''
         }
@@ -5813,6 +5813,7 @@ def admin_footer():
         telefone = request.form.get('telefone', '').strip()
         email = request.form.get('email', '').strip()
         endereco = request.form.get('endereco', '').strip()
+        horario = request.form.get('horario', '').strip()
         copyright_text = request.form.get('copyright', '').strip()
         whatsapp_float = request.form.get('whatsapp_float', '').strip()
         
@@ -5834,13 +5835,14 @@ def admin_footer():
                 footer_obj.contato = {
                     'telefone': telefone,
                     'email': email,
-                    'endereco': endereco
+                    'endereco': endereco,
+                    'horario': horario
                 }
                 footer_obj.copyright = copyright_text
                 footer_obj.whatsapp_float = whatsapp_float
                 
                 db.session.commit()
-                flash('Rodapé atualizado com sucesso no banco de dados!', 'success')
+                flash('Pie de página actualizado con éxito en la base de datos!', 'success')
                 return redirect(url_for('admin_footer'))
             except Exception as e:
                 print(f"Erro ao salvar footer no banco: {e}")
@@ -5850,11 +5852,11 @@ def admin_footer():
                     db.session.rollback()
                 except:
                     pass
-                flash(f'Erro ao salvar rodapé no banco de dados: {str(e)}. Verifique a conexão.', 'error')
+                flash(f'Error al guardar pie de página en la base de datos: {str(e)}. Verifique la conexión.', 'error')
                 return redirect(url_for('admin_footer'))
         
         # Se não usar banco, mostrar erro
-        flash('Banco de dados não configurado. Configure DATABASE_URL no Render para salvar os dados permanentemente.', 'error')
+        flash('Base de datos no configurada. Configure DATABASE_URL en Render para guardar los datos permanentemente.', 'error')
         return redirect(url_for('admin_footer'))
     
     # GET - Carregar dados
@@ -5873,7 +5875,8 @@ def admin_footer():
                     'contato': footer_obj.contato or {
                         'telefone': '',
                         'email': '',
-                        'endereco': ''
+                        'endereco': '',
+                        'horario': ''
                     },
                     'copyright': footer_obj.copyright or '',
                     'whatsapp_float': footer_obj.whatsapp_float or ''
@@ -5881,18 +5884,19 @@ def admin_footer():
             else:
                 # Criar footer padrão se não existir
                 footer_data = {
-                    'descricao': 'Sua assistência técnica de confiança para eletrodomésticos, celulares, computadores e notebooks.',
-                    'redes_sociais': {
-                        'facebook': '',
-                        'instagram': '',
-                        'whatsapp': '',
-                        'youtube': ''
-                    },
-                    'contato': {
-                        'telefone': '',
-                        'email': '',
-                        'endereco': ''
-                    },
+            'descricao': 'Sua assistência técnica de confiança para eletrodomésticos, celulares, computadores e notebooks.',
+            'redes_sociais': {
+                'facebook': '',
+                'instagram': '',
+                'whatsapp': '',
+                'youtube': ''
+            },
+            'contato': {
+                'telefone': '',
+                'email': '',
+                'endereco': '',
+                'horario': ''
+            },
                     'copyright': '© 2026 Clínica de Reparación. Todos los derechos reservados.',
                     'whatsapp_float': ''
                 }
@@ -7074,7 +7078,7 @@ def todos_videos():
         footer_data = {
             'descricao': 'Sua assistência técnica de confiança para eletrodomésticos, celulares, computadores e notebooks.',
             'redes_sociais': {'facebook': '', 'instagram': '', 'whatsapp': '', 'youtube': ''},
-            'contato': {'telefone': '', 'email': '', 'endereco': ''},
+            'contato': {'telefone': '', 'email': '', 'endereco': '', 'horario': ''},
             'copyright': '© 2026 Clínica de Reparación. Todos los derechos reservados.',
             'whatsapp_float': ''
         }
@@ -7364,7 +7368,8 @@ def inject_footer():
                     'contato': footer_obj.contato or {
                         'telefone': '',
                         'email': '',
-                        'endereco': ''
+                        'endereco': '',
+                        'horario': ''
                     },
                     'copyright': footer_obj.copyright or '',
                     'whatsapp_float': footer_obj.whatsapp_float or ''

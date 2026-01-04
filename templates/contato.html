@@ -28,8 +28,11 @@
                         </div>
                         <div>
                             <h4>Teléfono</h4>
-                            <p>(86) 988959957</p>
-                            
+                            {% if footer and footer.contato.telefone %}
+                            <p>{{ footer.contato.telefone }}</p>
+                            {% else %}
+                            <p>+54 9 11 1234-5678</p>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="contact-method">
@@ -38,7 +41,11 @@
                         </div>
                         <div>
                             <h4>WhatsApp</h4>
-                            <p>(86) 988959957</p>
+                            {% if footer and footer.contato.telefone %}
+                            <p>{{ footer.contato.telefone }}</p>
+                            {% else %}
+                            <p>+54 9 11 1234-5678</p>
+                            {% endif %}
                             {% if footer and footer.redes_sociais.whatsapp %}
                             <a href="{{ footer.redes_sociais.whatsapp }}" target="_blank" class="btn btn-primary btn-small" style="margin-top: 0.5rem;">
                                 <i class="fab fa-whatsapp"></i>
@@ -58,8 +65,11 @@
                         </div>
                         <div>
                             <h4>E-mail</h4>
-                            <p>clinicadoreparo.sp@gmail.com</p>
-                            
+                            {% if footer and footer.contato.email %}
+                            <p>{{ footer.contato.email }}</p>
+                            {% else %}
+                            <p>contacto@clinicareparacion.com</p>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="contact-method">
@@ -68,26 +78,46 @@
                         </div>
                         <div>
                             <h4>Dirección</h4>
-                            <p>Rua Rosely, 79</p>
-                            <p>SBarueri, SP - 064.36-270</p>
+                            {% if footer and footer.contato.endereco %}
+                            <p>{{ footer.contato.endereco }}</p>
+                            {% else %}
+                            <p>Córdoba, Argentina</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
 
                 <div class="contact-hours">
                     <h3><i class="fas fa-clock"></i> Horario de Atención</h3>
+                    {% if footer and footer.contato.horario %}
+                    <ul>
+                        {% for linea in footer.contato.horario.split('\n') %}
+                        {% if linea.strip() %}
+                        <li>{{ linea.strip() }}</li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                    {% else %}
                     <ul>
                         <li>Lunes a Viernes: 8h a 18h</li>
                         <li>Sábado: 8h a 13h</li>
                         <li>Domingo: Cerrado</li>
                     </ul>
+                    {% endif %}
                 </div>
 
                 <div class="whatsapp-contact-button">
+                    {% if footer and footer.redes_sociais.whatsapp %}
+                    <a href="{{ footer.redes_sociais.whatsapp }}" target="_blank" class="btn btn-primary btn-large btn-block">
+                        <i class="fab fa-whatsapp"></i>
+                        Hablar por WhatsApp
+                    </a>
+                    {% else %}
                     <a href="https://wa.me/5586988959957" target="_blank" class="btn btn-primary btn-large btn-block">
                         <i class="fab fa-whatsapp"></i>
                         Hablar por WhatsApp
                     </a>
+                    {% endif %}
                 </div>
             </div>
 

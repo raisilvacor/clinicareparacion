@@ -4,27 +4,27 @@
 
 {% block content %}
 <div class="admin-header">
-    <h1><i class="fas fa-edit"></i> Gerenciar Rodapé</h1>
-    <p>Edite todas as informações exibidas no rodapé do site</p>
+    <h1><i class="fas fa-edit"></i> Gestionar Pie de Página</h1>
+    <p>Edite toda la información mostrada en el pie de página del sitio</p>
 </div>
 
 <div class="admin-form-card">
     <form method="POST" action="{{ url_for('admin_footer') }}" class="admin-form">
         <div class="section-divider">
-            <h3><i class="fas fa-info-circle"></i> Informações da Empresa</h3>
+            <h3><i class="fas fa-info-circle"></i> Información de la Empresa</h3>
         </div>
         
         <div class="form-group">
             <label for="descricao">
                 <i class="fas fa-align-left"></i>
-                Descrição da Empresa
+                Descripción de la Empresa
             </label>
-            <textarea id="descricao" name="descricao" rows="3" placeholder="Descrição que aparece abaixo do logo no rodapé">{{ footer.descricao }}</textarea>
-            <small class="form-help">Texto descritivo sobre a empresa que aparece no rodapé</small>
+            <textarea id="descricao" name="descricao" rows="3" placeholder="Descripción que aparece debajo del logo en el pie de página">{{ footer.descricao }}</textarea>
+            <small class="form-help">Texto descriptivo sobre la empresa que aparece en el pie de página</small>
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-share-alt"></i> Redes Sociais</h3>
+            <h3><i class="fas fa-share-alt"></i> Redes Sociales</h3>
         </div>
         
         <div class="form-row">
@@ -33,7 +33,7 @@
                     <i class="fab fa-facebook"></i>
                     Facebook
                 </label>
-                <input type="url" id="facebook" name="facebook" value="{{ footer.redes_sociais.facebook }}" placeholder="https://facebook.com/sua-pagina">
+                <input type="url" id="facebook" name="facebook" value="{{ footer.redes_sociais.facebook }}" placeholder="https://facebook.com/su-pagina">
             </div>
             
             <div class="form-group">
@@ -41,7 +41,7 @@
                     <i class="fab fa-instagram"></i>
                     Instagram
                 </label>
-                <input type="url" id="instagram" name="instagram" value="{{ footer.redes_sociais.instagram }}" placeholder="https://instagram.com/seu-perfil">
+                <input type="url" id="instagram" name="instagram" value="{{ footer.redes_sociais.instagram }}" placeholder="https://instagram.com/su-perfil">
             </div>
         </div>
         
@@ -52,7 +52,7 @@
                     WhatsApp
                 </label>
                 <input type="url" id="whatsapp" name="whatsapp" value="{{ footer.redes_sociais.whatsapp }}" placeholder="https://wa.me/5586988959957">
-                <small class="form-help">Link do WhatsApp (formato: https://wa.me/5586988959957)</small>
+                <small class="form-help">Enlace de WhatsApp (formato: https://wa.me/5586988959957)</small>
             </div>
             
             <div class="form-group">
@@ -61,21 +61,21 @@
                     YouTube
                 </label>
                 <input type="url" id="youtube" name="youtube" value="{{ footer.redes_sociais.youtube }}" placeholder="https://youtube.com/@seu-canal">
-                <small class="form-help">Link do canal do YouTube</small>
+                <small class="form-help">Enlace del canal de YouTube</small>
             </div>
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-address-card"></i> Informações de Contato</h3>
+            <h3><i class="fas fa-address-card"></i> Información de Contacto</h3>
         </div>
         
         <div class="form-row">
             <div class="form-group">
                 <label for="telefone">
                     <i class="fas fa-phone"></i>
-                    Telefone
+                    Teléfono
                 </label>
-                <input type="text" id="telefone" name="telefone" value="{{ footer.contato.telefone }}" placeholder="(11) 99999-9999">
+                <input type="text" id="telefone" name="telefone" value="{{ footer.contato.telefone }}" placeholder="+54 9 11 1234-5678">
             </div>
             
             <div class="form-group">
@@ -83,16 +83,25 @@
                     <i class="fas fa-envelope"></i>
                     E-mail
                 </label>
-                <input type="email" id="email" name="email" value="{{ footer.contato.email }}" placeholder="contato@exemplo.com.br">
+                <input type="email" id="email" name="email" value="{{ footer.contato.email }}" placeholder="contacto@ejemplo.com">
             </div>
         </div>
         
         <div class="form-group">
             <label for="endereco">
                 <i class="fas fa-map-marker-alt"></i>
-                Endereço
+                Dirección
             </label>
-            <input type="text" id="endereco" name="endereco" value="{{ footer.contato.endereco }}" placeholder="Cidade, Estado">
+            <input type="text" id="endereco" name="endereco" value="{{ footer.contato.endereco }}" placeholder="Calle, número, ciudad, provincia">
+        </div>
+        
+        <div class="form-group">
+            <label for="horario">
+                <i class="fas fa-clock"></i>
+                Horario de Atención
+            </label>
+            <textarea id="horario" name="horario" rows="4" placeholder="Lunes a Viernes: 8h a 18h&#10;Sábado: 8h a 13h&#10;Domingo: Cerrado">{{ footer.contato.horario if footer.contato.horario else '' }}</textarea>
+            <small class="form-help">Horario de atención (una línea por día o período)</small>
         </div>
         
         <div class="section-divider">
@@ -114,18 +123,18 @@
         <div class="form-group">
             <label for="whatsapp_float">
                 <i class="fab fa-whatsapp"></i>
-                Link do WhatsApp Flutuante
+                Enlace del WhatsApp Flotante
             </label>
             <input type="url" id="whatsapp_float" name="whatsapp_float" value="{{ footer.whatsapp_float }}" placeholder="https://wa.me/5586988959957">
-            <small class="form-help">Link do botão flutuante do WhatsApp que aparece no canto inferior direito</small>
+            <small class="form-help">Enlace del botón flotante de WhatsApp que aparece en la esquina inferior derecha</small>
         </div>
         
         <div class="form-actions">
             <a href="{{ url_for('index') }}" class="btn btn-secondary" target="_blank">
-                <i class="fas fa-eye"></i> Ver Rodapé no Site
+                <i class="fas fa-eye"></i> Ver Pie de Página en el Sitio
             </a>
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Salvar Alterações
+                <i class="fas fa-save"></i> Guardar Cambios
             </button>
         </div>
     </form>
