@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="admin-header">
-    <h1><i class="fas fa-edit"></i> Editar Usuário Admin</h1>
-    <p>Atualize os dados do usuário</p>
+    <h1><i class="fas fa-edit"></i> Editar Usuario Admin</h1>
+    <p>Actualice los datos del usuario</p>
 </div>
 
 <div class="admin-form-card">
@@ -13,27 +13,27 @@
         <div class="form-group">
             <label for="username">
                 <i class="fas fa-user"></i>
-                Nome de Usuário *
+                Nombre de Usuario *
             </label>
-            <input type="text" id="username" name="username" value="{{ usuario.username }}" required placeholder="Ex: joao.silva">
-            <small class="form-help">Nome de usuário usado para fazer login</small>
+            <input type="text" id="username" name="username" value="{{ usuario.username }}" required placeholder="Ej: juan.perez">
+            <small class="form-help">Nombre de usuario usado para hacer login</small>
         </div>
         
         <div class="form-group">
             <label for="password">
                 <i class="fas fa-lock"></i>
-                Nova Senha
+                Nueva Contraseña
             </label>
-            <input type="password" id="password" name="password" placeholder="Deixe em branco para manter a senha atual">
-            <small class="form-help">Deixe em branco se não quiser alterar a senha</small>
+            <input type="password" id="password" name="password" placeholder="Deje en blanco para mantener la contraseña actual">
+            <small class="form-help">Deje en blanco si no desea cambiar la contraseña</small>
         </div>
         
         <div class="form-group">
             <label for="nome">
                 <i class="fas fa-id-card"></i>
-                Nome Completo
+                Nombre Completo
             </label>
-            <input type="text" id="nome" name="nome" value="{{ usuario.nome or '' }}" placeholder="Ex: João Silva">
+            <input type="text" id="nome" name="nome" value="{{ usuario.nome or '' }}" placeholder="Ej: Juan Pérez">
         </div>
         
         <div class="form-group">
@@ -41,13 +41,13 @@
                 <i class="fas fa-envelope"></i>
                 E-mail
             </label>
-            <input type="email" id="email" name="email" value="{{ usuario.email or '' }}" placeholder="Ex: joao@clinicadoreparo.com">
+            <input type="email" id="email" name="email" value="{{ usuario.email or '' }}" placeholder="Ej: juan@clinicareparacion.com">
         </div>
         
         <div class="form-group">
             <label class="checkbox-label">
                 <input type="checkbox" id="ativo" name="ativo" {% if usuario.ativo %}checked{% endif %}>
-                <span>Usuário ativo (pode fazer login)</span>
+                <span>Usuario activo (puede hacer login)</span>
             </label>
         </div>
         
@@ -56,7 +56,7 @@
                 <i class="fas fa-times"></i> Cancelar
             </a>
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Salvar Alterações
+                <i class="fas fa-save"></i> Guardar Cambios
             </button>
         </div>
     </form>

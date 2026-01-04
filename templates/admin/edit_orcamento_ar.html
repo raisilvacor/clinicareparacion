@@ -63,7 +63,7 @@
                     Potência (BTU) *
                 </label>
                 <select id="potencia_btu" name="potencia_btu" required onchange="calcularPreco()">
-                    <option value="">Selecione a potência</option>
+                    <option value="">Seleccione la potencia</option>
                     <option value="9000" {% if orcamento.potencia_btu == 9000 %}selected{% endif %}>9000 BTU</option>
                     <option value="12000" {% if orcamento.potencia_btu == 12000 %}selected{% endif %}>12000 BTU</option>
                     <option value="18000" {% if orcamento.potencia_btu == 18000 %}selected{% endif %}>18000 BTU</option>
@@ -81,10 +81,10 @@
                 Tipo de Acesso *
             </label>
             <select id="tipo_acesso" name="tipo_acesso" required onchange="calcularPreco()">
-                <option value="">Selecione o tipo de acesso</option>
-                <option value="Fácil" {% if orcamento.tipo_acesso == 'Fácil' %}selected{% endif %}>Acesso Fácil - Acesso direto sem obstáculos, até 3 metros de altura, posição confortável de trabalho.</option>
-                <option value="Moderado" {% if orcamento.tipo_acesso == 'Moderado' %}selected{% endif %}>Acesso Moderado - Locais com interferência de mobília, altura entre 3 e 4 metros, posição de trabalho desconfortável.</option>
-                <option value="Difícil" {% if orcamento.tipo_acesso == 'Difícil' %}selected{% endif %}>Acesso Difícil - Altura superior a 4 metros, posição inadequada de trabalho, horário fora do comercial.</option>
+                <option value="">Seleccione el tipo de acceso</option>
+                <option value="Fácil" {% if orcamento.tipo_acesso == 'Fácil' %}selected{% endif %}>Acceso Fácil - Acceso directo sin obstáculos, hasta 3 metros de altura, posición cómoda de trabajo.</option>
+                <option value="Moderado" {% if orcamento.tipo_acesso == 'Moderado' %}selected{% endif %}>Acceso Moderado - Lugares con interferencia de mobiliario, altura entre 3 y 4 metros, posición de trabajo incómoda.</option>
+                <option value="Difícil" {% if orcamento.tipo_acesso == 'Difícil' %}selected{% endif %}>Acceso Difícil - Altura superior a 4 metros, posición inadecuada de trabajo, horario fuera del comercial.</option>
             </select>
         </div>
         
@@ -111,7 +111,7 @@
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-shopping-cart"></i> Materiais Adicionais</h3>
+            <h3><i class="fas fa-shopping-cart"></i> Materiales Adicionales</h3>
         </div>
         
         <div class="form-group">
@@ -136,7 +136,7 @@
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-list"></i> Custos Adicionais (Opcional)</h3>
+            <h3><i class="fas fa-list"></i> Costos Adicionales (Opcional)</h3>
         </div>
         
         <div id="custos_adicionais_container">
@@ -181,7 +181,7 @@
                                 <i class="fas fa-tag"></i>
                                 Item
                             </label>
-                            <input type="text" name="custo_adicional_item[]" class="custo-item-input" placeholder="Nome do item" onchange="calcularPreco()">
+                            <input type="text" name="custo_adicional_item[]" class="custo-item-input" placeholder="Nombre del elemento" onchange="calcularPreco()">
                         </div>
                         <div class="form-group" style="flex: 1;">
                             <label>
@@ -201,57 +201,57 @@
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-calculator"></i> Resumo do Orçamento</h3>
+            <h3><i class="fas fa-calculator"></i> Resumen del Presupuesto</h3>
         </div>
         
         <div id="resumo_orcamento" style="background: #f5f5f5; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
             <table style="width: 100%; border-collapse: collapse;">
                 <tr>
                     <td style="padding: 8px; font-weight: bold;">Valor Base:</td>
-                    <td style="padding: 8px; text-align: right;" id="valor_base_display">R$ 0,00</td>
+                    <td style="padding: 8px; text-align: right;" id="valor_base_display">ARS$ 0,00</td>
                 </tr>
                 <tr>
-                    <td style="padding: 8px; font-weight: bold;">Acréscimo por Acesso:</td>
-                    <td style="padding: 8px; text-align: right;" id="valor_acesso_display">R$ 0,00</td>
+                    <td style="padding: 8px; font-weight: bold;">Incremento por Acceso:</td>
+                    <td style="padding: 8px; text-align: right;" id="valor_acesso_display">ARS$ 0,00</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; font-weight: bold;">Material Adicional:</td>
-                    <td style="padding: 8px; text-align: right;" id="valor_material_display">R$ 0,00</td>
+                    <td style="padding: 8px; text-align: right;" id="valor_material_display">ARS$ 0,00</td>
                 </tr>
                 <tbody id="custos_adicionais_display"></tbody>
                 <tr>
-                    <td style="padding: 8px; font-weight: bold;">Subtotal Custos Adicionais:</td>
-                    <td style="padding: 8px; text-align: right;" id="valor_custos_adicionais_display">R$ 0,00</td>
+                    <td style="padding: 8px; font-weight: bold;">Subtotal Costos Adicionales:</td>
+                    <td style="padding: 8px; text-align: right;" id="valor_custos_adicionais_display">ARS$ 0,00</td>
                 </tr>
                 <tr style="border-top: 2px solid #215f97; font-size: 1.2em;">
                     <td style="padding: 12px 8px; font-weight: bold; color: #215f97;">TOTAL:</td>
-                    <td style="padding: 12px 8px; text-align: right; font-weight: bold; color: #215f97;" id="valor_total_display">R$ 0,00</td>
+                    <td style="padding: 12px 8px; text-align: right; font-weight: bold; color: #215f97;" id="valor_total_display">ARS$ 0,00</td>
                 </tr>
             </table>
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-info-circle"></i> Informações Adicionais</h3>
+            <h3><i class="fas fa-info-circle"></i> Información Adicional</h3>
         </div>
         
         <div class="form-row">
             <div class="form-group">
                 <label for="status">
                     <i class="fas fa-check-circle"></i>
-                    Status do Orçamento *
+                    Estado del Presupuesto *
                 </label>
                 <select id="status" name="status" required>
-                    <option value="pendente" {% if orcamento.status == 'pendente' %}selected{% endif %}>Pendente</option>
-                    <option value="aprovado" {% if orcamento.status == 'aprovado' %}selected{% endif %}>Aprovado</option>
-                    <option value="recusado" {% if orcamento.status == 'recusado' %}selected{% endif %}>Recusado</option>
-                    <option value="concluido" {% if orcamento.status == 'concluido' %}selected{% endif %}>Concluído</option>
+                    <option value="pendente" {% if orcamento.status == 'pendente' %}selected{% endif %}>Pendiente</option>
+                    <option value="aprovado" {% if orcamento.status == 'aprovado' %}selected{% endif %}>Aprobado</option>
+                    <option value="recusado" {% if orcamento.status == 'recusado' %}selected{% endif %}>Rechazado</option>
+                    <option value="concluido" {% if orcamento.status == 'concluido' %}selected{% endif %}>Concluido</option>
                 </select>
             </div>
             
             <div class="form-group">
                 <label for="prazo_estimado">
                     <i class="fas fa-calendar"></i>
-                    Prazo Estimado
+                    Plazo Estimado
                 </label>
                 <input type="text" id="prazo_estimado" name="prazo_estimado" value="{{ orcamento.prazo_estimado }}" placeholder="Ej: 5 días, 1 semana">
             </div>
@@ -287,12 +287,12 @@ function adicionarCustoAdicional() {
                     <i class="fas fa-tag"></i>
                     Item
                 </label>
-                <input type="text" name="custo_adicional_item[]" class="custo-item-input" placeholder="Nome do item" onchange="calcularPreco()">
+                <input type="text" name="custo_adicional_item[]" class="custo-item-input" placeholder="Nombre del elemento" onchange="calcularPreco()">
             </div>
             <div class="form-group" style="flex: 1;">
                 <label>
                     <i class="fas fa-dollar-sign"></i>
-                    Valor (R$)
+                    Valor (ARS$)
                 </label>
                 <input type="number" name="custo_adicional_valor[]" class="custo-valor-input" step="0.01" min="0" placeholder="0.00" onchange="calcularPreco()">
             </div>
@@ -325,7 +325,7 @@ function calcularPreco() {
     const materialAdicional = document.getElementById('material_adicional').value;
     const valorMaterialAdicional = parseFloat(document.getElementById('valor_material_adicional').value) || 0;
     
-    // Calcular custos adicionais
+    // Calcular costos adicionales
     const custosAdicionais = [];
     const itemsInputs = document.querySelectorAll('.custo-item-input');
     const valoresInputs = document.querySelectorAll('.custo-valor-input');
@@ -388,7 +388,7 @@ function calcularPreco() {
         }
     }
     
-    // Calcular acréscimo por acesso
+    // Calcular incremento por acceso
     let valorAcesso = 0.00;
     if (tipoServico === 'Instalação de Ar-Condicionado Split') {
         if (tipoAcesso === 'Moderado') {
@@ -440,7 +440,7 @@ function atualizarResumo(valorBase, valorAcesso, valorMaterial, valorTotal, cust
     document.getElementById('valor_acesso_display').textContent = formatarMoeda(valorAcesso);
     document.getElementById('valor_material_display').textContent = formatarMoeda(valorMaterial);
     
-    // Atualizar custos adicionais
+    // Actualizar costos adicionales
     const custosDisplay = document.getElementById('custos_adicionais_display');
     custosDisplay.innerHTML = '';
     
@@ -463,7 +463,7 @@ function formatarMoeda(valor) {
     return 'ARS$ ' + valor.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
-// Calcular ao carregar a página
+// Calcular al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
     calcularPreco();
 });

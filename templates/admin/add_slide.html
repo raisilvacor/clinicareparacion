@@ -147,14 +147,14 @@ inputImagem.addEventListener('input', function(e) {
         img.style.maxHeight = '100%';
         img.style.objectFit = 'contain';
         img.onerror = function() {
-            preview.innerHTML = '<p style="color: #dc3545;">Imagem não encontrada</p>';
+            preview.innerHTML = '<p style="color: #dc3545;">Imagen no encontrada</p>';
         };
         img.onload = function() {
             preview.innerHTML = '';
             preview.appendChild(img);
         };
     } else {
-        preview.innerHTML = '<p style="color: #999;">Preview aparecerá aqui</p>';
+        preview.innerHTML = '<p style="color: #999;">La vista previa aparecerá aquí</p>';
     }
 });
 </script>

@@ -73,7 +73,7 @@
                     <i class="fas fa-tag"></i>
                     Marca *
                 </label>
-                <input type="text" id="marca" name="marca" required placeholder="Ex: Samsung, LG, Brastemp" value="{{ ordem.marca or '' }}">
+                <input type="text" id="marca" name="marca" required placeholder="Ej: Samsung, LG, Brastemp" value="{{ ordem.marca or '' }}">
             </div>
         </div>
         
@@ -83,7 +83,7 @@
                     <i class="fas fa-cube"></i>
                     Modelo *
                 </label>
-                <input type="text" id="modelo" name="modelo" required placeholder="Ex: Galaxy S21, ABC123" value="{{ ordem.modelo or '' }}">
+                <input type="text" id="modelo" name="modelo" required placeholder="Ej: Galaxy S21, ABC123" value="{{ ordem.modelo or '' }}">
             </div>
             
             <div class="form-group">
@@ -122,42 +122,42 @@
         <div class="form-group">
             <label>
                 <i class="fas fa-cog"></i>
-                Peças a Serem Trocadas
+                Piezas a Ser Reemplazadas
             </label>
             <div class="pecas-list" id="pecas-list">
                 {% for i in range(10) %}
                 <div class="peca-item">
-                    <input type="text" name="peca_nome_{{ i }}" class="peca-nome" placeholder="Nome da peça (ex: Tela, Bateria, Conector)" data-index="{{ i }}" value="{% if ordem.pecas and i < ordem.pecas|length %}{{ ordem.pecas[i].nome }}{% endif %}">
+                    <input type="text" name="peca_nome_{{ i }}" class="peca-nome" placeholder="Nombre de la pieza (ej: Pantalla, Batería, Conector)" data-index="{{ i }}" value="{% if ordem.pecas and i < ordem.pecas|length %}{{ ordem.pecas[i].nome }}{% endif %}">
                     <input type="number" name="peca_custo_{{ i }}" class="peca-custo" step="0.01" min="0" value="{% if ordem.pecas and i < ordem.pecas|length %}{{ ordem.pecas[i].custo }}{% else %}0.00{% endif %}" placeholder="0.00" data-index="{{ i }}">
-                    <span class="peca-currency">R$</span>
+                    <span class="peca-currency">ARS$</span>
                 </div>
                 {% endfor %}
             </div>
             <div class="pecas-total">
-                <strong>Total de Peças: <span id="total_pecas">R$ 0.00</span></strong>
+                <strong>Total de Piezas: <span id="total_pecas">ARS$ 0.00</span></strong>
             </div>
         </div>
         
         <div class="form-group">
             <label for="custo_mao_obra">
                 <i class="fas fa-wrench"></i>
-                Custo de Mão de Obra (R$)
+                Costo de Mano de Obra (ARS$)
             </label>
             <input type="number" id="custo_mao_obra" name="custo_mao_obra" step="0.01" min="0" value="{{ ordem.custo_mao_obra or 0.00 }}" placeholder="0.00">
         </div>
         
         <div class="cost-summary">
             <div class="summary-item">
-                <span>Peças:</span>
-                <span id="display_pecas">R$ 0.00</span>
+                <span>Piezas:</span>
+                <span id="display_pecas">ARS$ 0.00</span>
             </div>
             <div class="summary-item">
                 <span>Mão de Obra:</span>
-                <span id="display_mao_obra">R$ 0.00</span>
+                <span id="display_mao_obra">ARS$ 0.00</span>
             </div>
             <div class="summary-item total">
                 <span><strong>Total:</strong></span>
-                <span id="display_total"><strong>R$ 0.00</strong></span>
+                <span id="display_total"><strong>ARS$ 0.00</strong></span>
             </div>
         </div>
         
@@ -180,7 +180,7 @@
                 <i class="fas fa-calendar-alt"></i>
                 Prazo Estimado
             </label>
-            <input type="text" id="prazo_estimado" name="prazo_estimado" value="{{ ordem.prazo_estimado or '' }}" placeholder="Ex: 5 dias úteis, 1 semana, 15 dias">
+            <input type="text" id="prazo_estimado" name="prazo_estimado" value="{{ ordem.prazo_estimado or '' }}" placeholder="Ej: 5 días hábiles, 1 semana, 15 días">
             <small class="form-help">Informe o prazo estimado para conclusão do serviço</small>
         </div>
         
@@ -196,7 +196,7 @@
 </div>
 
 <script>
-// Calcular total de peças
+// Calcular total de piezas
 function calcularTotalPecas() {
     const pecasInputs = document.querySelectorAll('.peca-custo');
     let totalPecas = 0;
@@ -206,13 +206,13 @@ function calcularTotalPecas() {
         totalPecas += valor;
     });
     
-    document.getElementById('total_pecas').textContent = 'R$ ' + totalPecas.toFixed(2);
-    document.getElementById('display_pecas').textContent = 'R$ ' + totalPecas.toFixed(2);
+    document.getElementById('total_pecas').textContent = 'ARS$ ' + totalPecas.toFixed(2);
+    document.getElementById('display_pecas').textContent = 'ARS$ ' + totalPecas.toFixed(2);
     
     calcularTotal();
 }
 
-// Calcular total geral
+// Calcular total general
 function calcularTotal() {
     const pecasInputs = document.querySelectorAll('.peca-custo');
     let totalPecas = 0;
@@ -225,11 +225,11 @@ function calcularTotal() {
     const custoMaoObra = parseFloat(document.getElementById('custo_mao_obra').value) || 0;
     const total = totalPecas + custoMaoObra;
     
-    document.getElementById('display_mao_obra').textContent = 'R$ ' + custoMaoObra.toFixed(2);
-    document.getElementById('display_total').innerHTML = '<strong>R$ ' + total.toFixed(2) + '</strong>';
+    document.getElementById('display_mao_obra').textContent = 'ARS$ ' + custoMaoObra.toFixed(2);
+    document.getElementById('display_total').innerHTML = '<strong>ARS$ ' + total.toFixed(2) + '</strong>';
 }
 
-// Adicionar event listeners para todos os campos de custo de peças
+// Agregar event listeners para todos los campos de costo de piezas
 document.querySelectorAll('.peca-custo').forEach(input => {
     input.addEventListener('input', calcularTotalPecas);
 });

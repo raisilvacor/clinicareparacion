@@ -132,8 +132,8 @@
                 <i class="fas fa-ladder"></i>
             </div>
             <div class="stat-content">
-                <h3>Acréscimo por Acesso</h3>
-                <p class="stat-value">R$ {{ "%.2f"|format(orcamento.valor_acesso) }}</p>
+                <h3>Incremento por Acceso</h3>
+                <p class="stat-value">ARS$ {{ "%.2f"|format(orcamento.valor_acesso) }}</p>
             </div>
         </div>
         {% if orcamento.valor_material_adicional > 0 %}
@@ -143,7 +143,7 @@
             </div>
             <div class="stat-content">
                 <h3>Material Adicional</h3>
-                <p class="stat-value">R$ {{ "%.2f"|format(orcamento.valor_material_adicional) }}</p>
+                <p class="stat-value">ARS$ {{ "%.2f"|format(orcamento.valor_material_adicional) }}</p>
             </div>
         </div>
         {% endif %}
@@ -153,7 +153,7 @@
             </div>
             <div class="stat-content">
                 <h3>TOTAL</h3>
-                <p class="stat-value" style="font-size: 1.8em; color: #215f97;">R$ {{ "%.2f"|format(orcamento.valor_total) }}</p>
+                <p class="stat-value" style="font-size: 1.8em; color: #215f97;">ARS$ {{ "%.2f"|format(orcamento.valor_total) }}</p>
             </div>
         </div>
     </div>

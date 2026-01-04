@@ -111,7 +111,7 @@
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-shopping-cart"></i> Materiais Adicionais</h3>
+            <h3><i class="fas fa-shopping-cart"></i> Materiales Adicionales</h3>
         </div>
         
         <div class="form-group">
@@ -122,7 +122,7 @@
             <select id="material_adicional" name="material_adicional" onchange="toggleMaterialAdicional()">
                 <option value="">Ningún material adicional</option>
                 <option value="Kit Convencional (3m de tubulação)">Kit Convencional (3m de tubulación) + ARS$ 250,00</option>
-                <option value="Tubulação extra acima de 3m">Tubulação extra acima de 3m</option>
+                <option value="Tubulação extra acima de 3m">Tubería extra por encima de 3m</option>
             </select>
         </div>
         
@@ -136,7 +136,7 @@
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-list"></i> Custos Adicionais (Opcional)</h3>
+            <h3><i class="fas fa-list"></i> Costos Adicionales (Opcional)</h3>
         </div>
         
         <div id="custos_adicionais_container">
@@ -147,7 +147,7 @@
                             <i class="fas fa-tag"></i>
                             Item
                         </label>
-                        <input type="text" name="custo_adicional_item[]" class="custo-item-input" placeholder="Nome do item" onchange="calcularPreco()">
+                        <input type="text" name="custo_adicional_item[]" class="custo-item-input" placeholder="Nombre del elemento" onchange="calcularPreco()">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>
@@ -166,50 +166,50 @@
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-calculator"></i> Resumo do Orçamento</h3>
+            <h3><i class="fas fa-calculator"></i> Resumen del Presupuesto</h3>
         </div>
         
         <div id="resumo_orcamento" style="background: #f5f5f5; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
             <table style="width: 100%; border-collapse: collapse;">
                 <tr>
                     <td style="padding: 8px; font-weight: bold;">Valor Base:</td>
-                    <td style="padding: 8px; text-align: right;" id="valor_base_display">R$ 0,00</td>
+                    <td style="padding: 8px; text-align: right;" id="valor_base_display">ARS$ 0,00</td>
                 </tr>
                 <tr>
-                    <td style="padding: 8px; font-weight: bold;">Acréscimo por Acesso:</td>
-                    <td style="padding: 8px; text-align: right;" id="valor_acesso_display">R$ 0,00</td>
+                    <td style="padding: 8px; font-weight: bold;">Incremento por Acceso:</td>
+                    <td style="padding: 8px; text-align: right;" id="valor_acesso_display">ARS$ 0,00</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; font-weight: bold;">Material Adicional:</td>
-                    <td style="padding: 8px; text-align: right;" id="valor_material_display">R$ 0,00</td>
+                    <td style="padding: 8px; text-align: right;" id="valor_material_display">ARS$ 0,00</td>
                 </tr>
                 <tbody id="custos_adicionais_display"></tbody>
                 <tr>
-                    <td style="padding: 8px; font-weight: bold;">Subtotal Custos Adicionais:</td>
-                    <td style="padding: 8px; text-align: right;" id="valor_custos_adicionais_display">R$ 0,00</td>
+                    <td style="padding: 8px; font-weight: bold;">Subtotal Costos Adicionales:</td>
+                    <td style="padding: 8px; text-align: right;" id="valor_custos_adicionais_display">ARS$ 0,00</td>
                 </tr>
                 <tr style="border-top: 2px solid #215f97; font-size: 1.2em;">
                     <td style="padding: 12px 8px; font-weight: bold; color: #215f97;">TOTAL:</td>
-                    <td style="padding: 12px 8px; text-align: right; font-weight: bold; color: #215f97;" id="valor_total_display">R$ 0,00</td>
+                    <td style="padding: 12px 8px; text-align: right; font-weight: bold; color: #215f97;" id="valor_total_display">ARS$ 0,00</td>
                 </tr>
             </table>
         </div>
         
         <div class="section-divider">
-            <h3><i class="fas fa-info-circle"></i> Informações Adicionais</h3>
+            <h3><i class="fas fa-info-circle"></i> Información Adicional</h3>
         </div>
         
         <div class="form-row">
             <div class="form-group">
                 <label for="status">
                     <i class="fas fa-check-circle"></i>
-                    Status do Orçamento *
+                    Estado del Presupuesto *
                 </label>
                 <select id="status" name="status" required>
-                    <option value="pendente">Pendente</option>
-                    <option value="aprovado">Aprovado</option>
-                    <option value="recusado">Recusado</option>
-                    <option value="concluido">Concluído</option>
+                    <option value="pendente">Pendiente</option>
+                    <option value="aprovado">Aprobado</option>
+                    <option value="recusado">Rechazado</option>
+                    <option value="concluido">Concluido</option>
                 </select>
             </div>
             
@@ -257,12 +257,12 @@ function adicionarCustoAdicional() {
             <div class="form-group" style="flex: 1;">
                 <label>
                     <i class="fas fa-dollar-sign"></i>
-                    Valor (R$)
+                    Valor (ARS$)
                 </label>
                 <input type="number" name="custo_adicional_valor[]" class="custo-valor-input" step="0.01" min="0" placeholder="0.00" onchange="calcularPreco()">
             </div>
             <div class="form-group" style="width: auto; margin-left: 1rem;">
-                <button type="button" class="btn btn-secondary" onclick="adicionarCustoAdicional()" title="Adicionar item">
+                            <button type="button" class="btn btn-secondary" onclick="adicionarCustoAdicional()" title="Agregar elemento">
                     <i class="fas fa-plus"></i>
                 </button>
             </div>
@@ -290,7 +290,7 @@ function calcularPreco() {
     const materialAdicional = document.getElementById('material_adicional').value;
     const valorMaterialAdicional = parseFloat(document.getElementById('valor_material_adicional').value) || 0;
     
-    // Calcular custos adicionais
+    // Calcular costos adicionales
     const custosAdicionais = [];
     const itemsInputs = document.querySelectorAll('.custo-item-input');
     const valoresInputs = document.querySelectorAll('.custo-valor-input');
@@ -310,7 +310,7 @@ function calcularPreco() {
         return;
     }
     
-    // Tabela de preços base
+    // Tabla de precios base
     const precosBase = {
         'Instalação de Ar-Condicionado Split': {
             9000: 650.00,
@@ -353,7 +353,7 @@ function calcularPreco() {
         }
     }
     
-    // Calcular acréscimo por acesso
+    // Calcular incremento por acceso
     let valorAcesso = 0.00;
     if (tipoServico === 'Instalação de Ar-Condicionado Split') {
         if (tipoAcesso === 'Moderado') {
@@ -403,7 +403,7 @@ function atualizarResumo(valorBase, valorAcesso, valorMaterial, valorTotal, cust
     document.getElementById('valor_acesso_display').textContent = formatarMoeda(valorAcesso);
     document.getElementById('valor_material_display').textContent = formatarMoeda(valorMaterial);
     
-    // Atualizar custos adicionais
+    // Actualizar costos adicionales
     const custosDisplay = document.getElementById('custos_adicionais_display');
     custosDisplay.innerHTML = '';
     
@@ -426,7 +426,7 @@ function formatarMoeda(valor) {
     return 'ARS$ ' + valor.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
-// Calcular ao carregar a página
+// Calcular al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
     calcularPreco();
 });
