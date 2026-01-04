@@ -98,9 +98,9 @@ inputFile.addEventListener('change', function(e) {
             inputImagem.value = data.path;
             uploadStatus.innerHTML = '<span style="color: green;"><i class="fas fa-check-circle"></i> ¡Imagen enviada con éxito!</span>';
             
-            // Atualizar preview
+            // Actualizar vista previa
             const img = document.createElement('img');
-            // Usar o path diretamente se começar com /, senão adicionar /static/
+            // Usar la ruta directamente si comienza con /, sino agregar /static/
             if (data.path.startsWith('/')) {
                 img.src = data.path;
             } else {
@@ -120,12 +120,12 @@ inputFile.addEventListener('change', function(e) {
     });
 });
 
-// Preview quando o campo de texto é alterado manualmente
+// Vista previa cuando el campo de texto es alterado manualmente
 inputImagem.addEventListener('input', function(e) {
     const caminho = e.target.value.trim();
     if (caminho) {
         const img = document.createElement('img');
-        // Usar o path diretamente se começar com /, senão adicionar /static/
+        // Usar la ruta directamente si comienza con /, sino agregar /static/
         if (caminho.startsWith('/')) {
             img.src = caminho;
         } else {

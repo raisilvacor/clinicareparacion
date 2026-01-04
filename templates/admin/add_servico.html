@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="admin-header">
-    <h1><i class="fas fa-plus-circle"></i> Adicionar Novo Serviço</h1>
-    <p>Preencha os dados do serviço</p>
+    <h1><i class="fas fa-plus-circle"></i> Agregar Nuevo Servicio</h1>
+    <p>Complete los datos del servicio</p>
 </div>
 
 <div class="admin-form-card">
@@ -13,42 +13,42 @@
         <div class="form-group">
             <label for="nome">
                 <i class="fas fa-tag"></i>
-                Nome do Serviço *
+                Nombre del Servicio *
             </label>
-            <input type="text" id="nome" name="nome" required placeholder="Ex: Reparo de Celulares">
+            <input type="text" id="nome" name="nome" required placeholder="Ej: Reparación de Celulares">
         </div>
         
         <div class="form-group">
             <label for="pagina_servico_id">
                 <i class="fas fa-file-alt"></i>
-                Página de Serviço *
+                Página de Servicio *
             </label>
             <select id="pagina_servico_id" name="pagina_servico_id" required style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; background: white; color: var(--text-primary);">
-                <option value="">Selecione uma página de serviço...</option>
+                <option value="">Seleccione una página de servicio...</option>
                 {% if paginas_servicos %}
                     {% for pagina in paginas_servicos %}
                     <option value="{{ pagina.id }}">{{ pagina.titulo }}</option>
                     {% endfor %}
                 {% endif %}
             </select>
-            <small class="form-help">Selecione a página de serviço para onde o usuário será redirecionado ao clicar neste serviço na página inicial</small>
+            <small class="form-help">Seleccione la página de servicio a la que el usuario será redirigido al hacer clic en este servicio en la página inicial</small>
         </div>
         
         <div class="form-group">
             <label for="imagem">
                 <i class="fas fa-image"></i>
-                Imagem do Serviço *
+                Imagen del Servicio *
             </label>
             <div style="margin-bottom: 10px;">
                 <label for="imagem_upload" style="display: inline-block; cursor: pointer; padding: 10px 20px; background: #007bff; color: white; border-radius: 5px; text-align: center; transition: background 0.3s;">
-                    <i class="fas fa-upload"></i> Escolher Imagem do Computador
+                    <i class="fas fa-upload"></i> Elegir Imagen del Computador
                 </label>
                 <input type="file" id="imagem_upload" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp" style="display: none;">
             </div>
             <div style="display: flex; gap: 10px; align-items: flex-start; margin-top: 10px;">
-                <input type="text" id="imagem" name="imagem" required placeholder="Caminho da imagem será preenchido automaticamente após o upload" style="flex: 1;" readonly>
+                <input type="text" id="imagem" name="imagem" required placeholder="La ruta de la imagen se completará automáticamente después de la carga" style="flex: 1;" readonly>
             </div>
-            <small class="form-help">Clique em "Escolher Imagem do Computador" para fazer upload de uma imagem do seu dispositivo (imagem deve ser quadrada, ex: 500x500px)</small>
+            <small class="form-help">Haga clic en "Elegir Imagen del Computador" para subir una imagen de su dispositivo (la imagen debe ser cuadrada, ej: 500x500px)</small>
             <div id="imagem_preview" style="margin-top: 10px; display: none;">
                 <img id="preview_img" src="" alt="Preview" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 5px;">
             </div>
@@ -58,16 +58,16 @@
         <div class="form-group">
             <label for="ordem">
                 <i class="fas fa-sort-numeric-down"></i>
-                Ordem de Exibição
+                Orden de Exhibición
             </label>
             <input type="number" id="ordem" name="ordem" min="1" value="999" placeholder="999">
-            <small class="form-help">Número menor aparece primeiro (padrão: 999)</small>
+            <small class="form-help">Número menor aparece primero (predeterminado: 999)</small>
         </div>
         
         <div class="form-group">
             <label class="checkbox-label">
                 <input type="checkbox" id="ativo" name="ativo" checked>
-                <span>Serviço ativo (exibir no site)</span>
+                <span>Servicio activo (mostrar en el sitio)</span>
             </label>
         </div>
         
@@ -76,7 +76,7 @@
                 <i class="fas fa-times"></i> Cancelar
             </a>
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Salvar Serviço
+                <i class="fas fa-save"></i> Guardar Servicio
             </button>
         </div>
     </form>
@@ -97,17 +97,17 @@ document.addEventListener('DOMContentLoaded', function() {
         // Validar tipo
         const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'];
         if (!allowedTypes.includes(file.type)) {
-            uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Tipo de arquivo não permitido. Use: PNG, JPG, JPEG, GIF ou WEBP</span>';
+            uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Tipo de archivo no permitido. Use: PNG, JPG, JPEG, GIF o WEBP</span>';
             return;
         }
         
-        // Validar tamanho (5MB)
+        // Validar tamaño (5MB)
         if (file.size > 5 * 1024 * 1024) {
-            uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Arquivo muito grande. Tamanho máximo: 5MB</span>';
+            uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Archivo muy grande. Tamaño máximo: 5MB</span>';
             return;
         }
         
-        // Mostrar preview local
+        // Mostrar vista previa local
         const reader = new FileReader();
         reader.onload = function(e) {
             previewImg.src = e.target.result;
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         reader.readAsDataURL(file);
         
-        // Upload
+        // Subir
         uploadStatus.innerHTML = '<span style="color: #666;"><i class="fas fa-spinner fa-spin"></i> Enviando...</span>';
         
         const formData = new FormData();
@@ -129,26 +129,26 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.success) {
                 inputImagem.value = data.path;
-                uploadStatus.innerHTML = '<span style="color: green;"><i class="fas fa-check-circle"></i> Imagem enviada com sucesso!</span>';
-                // Usar o path diretamente se começar com /, senão adicionar /static/
+                uploadStatus.innerHTML = '<span style="color: green;"><i class="fas fa-check-circle"></i> ¡Imagen enviada con éxito!</span>';
+                // Usar la ruta directamente si comienza con /, sino agregar /static/
                 if (data.path.startsWith('/')) {
                     previewImg.src = data.path;
                 } else {
                     previewImg.src = '/static/' + data.path;
                 }
             } else {
-                uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> ' + (data.error || 'Erro ao enviar imagem') + '</span>';
+                uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> ' + (data.error || 'Error al enviar imagen') + '</span>';
             }
         })
         .catch(error => {
-            uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Erro ao enviar imagem: ' + error.message + '</span>';
+            uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Error al enviar imagen: ' + error.message + '</span>';
         });
     });
     
-    // Preview quando digitar caminho manualmente
+    // Vista previa cuando se escriba la ruta manualmente
     inputImagem.addEventListener('change', function() {
         if (this.value) {
-            // Usar o path diretamente se começar com /, senão adicionar /static/
+            // Usar la ruta directamente si comienza con /, sino agregar /static/
             if (this.value.startsWith('/')) {
                 previewImg.src = this.value;
             } else {

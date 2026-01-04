@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="admin-header">
-    <h1><i class="fas fa-link"></i> Editar Link do Menu</h1>
-    <p>Edite os dados do link do menu</p>
+    <h1><i class="fas fa-link"></i> Editar Enlace del Menú</h1>
+    <p>Edite los datos del enlace del menú</p>
 </div>
 
 <div class="admin-form-card">
@@ -13,10 +13,10 @@
         <div class="form-group">
             <label for="texto">
                 <i class="fas fa-font"></i>
-                Texto do Link <span class="required">*</span>
+                Texto del Enlace <span class="required">*</span>
             </label>
-            <input type="text" id="texto" name="texto" required value="{{ link.texto }}" placeholder="Ex: Celulares">
-            <small class="form-help">Texto que será exibido no menu</small>
+            <input type="text" id="texto" name="texto" required value="{{ link.texto }}" placeholder="Ej: Celulares">
+            <small class="form-help">Texto que será mostrado en el menú</small>
         </div>
         
         <div class="form-group">
@@ -24,24 +24,24 @@
                 <i class="fas fa-link"></i>
                 URL <span class="required">*</span>
             </label>
-            <input type="text" id="url" name="url" required value="{{ link.url }}" placeholder="Ex: /celulares ou https://exemplo.com">
-            <small class="form-help">URL do link (pode ser relativa como /celulares ou absoluta como https://exemplo.com)</small>
+            <input type="text" id="url" name="url" required value="{{ link.url }}" placeholder="Ej: /celulares o https://ejemplo.com">
+            <small class="form-help">URL del enlace (puede ser relativa como /celulares o absoluta como https://ejemplo.com)</small>
         </div>
         
         <div class="form-row">
             <div class="form-group">
                 <label for="ordem">
                     <i class="fas fa-sort-numeric-down"></i>
-                    Ordem no Menu
+                    Orden en el Menú
                 </label>
                 <input type="number" id="ordem" name="ordem" value="{{ link.ordem }}" min="1">
-                <small class="form-help">Ordem de exibição no menu (menor aparece primeiro)</small>
+                <small class="form-help">Orden de exhibición en el menú (menor aparece primero)</small>
             </div>
             
             <div class="form-group">
                 <label class="checkbox-label">
                     <input type="checkbox" id="ativo" name="ativo" {% if link.ativo %}checked{% endif %}>
-                    <span>Link ativo (aparecerá no menu)</span>
+                    <span>Enlace activo (aparecerá en el menú)</span>
                 </label>
             </div>
         </div>
@@ -49,14 +49,14 @@
         <div class="form-group">
             <label class="checkbox-label">
                 <input type="checkbox" id="abrir_nova_aba" name="abrir_nova_aba" {% if link.abrir_nova_aba %}checked{% endif %}>
-                <span>Abrir em nova aba</span>
+                <span>Abrir en nueva pestaña</span>
             </label>
-            <small class="form-help">Marque esta opção se o link deve abrir em uma nova aba do navegador</small>
+            <small class="form-help">Marque esta opción si el enlace debe abrirse en una nueva pestaña del navegador</small>
         </div>
         
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Salvar Alterações
+                <i class="fas fa-save"></i> Guardar Cambios
             </button>
             <a href="{{ url_for('admin_links_menu') }}" class="btn btn-secondary">
                 <i class="fas fa-times"></i> Cancelar

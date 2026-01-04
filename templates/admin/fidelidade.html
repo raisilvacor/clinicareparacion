@@ -138,7 +138,7 @@
             <span class="modal-close" onclick="closeCupomModal()">&times;</span>
         </div>
         <div class="modal-body" id="cupomModalBody">
-            <!-- Conteúdo será preenchido via JavaScript -->
+            <!-- Contenido será completado vía JavaScript -->
         </div>
     </div>
 </div>
@@ -160,7 +160,7 @@ function viewCupom(cupomId) {
             modalBody.innerHTML = `
                 <div class="info-grid">
                     <div class="info-item">
-                        <strong><i class="fas fa-hashtag"></i> ID do Cupom:</strong>
+                        <strong><i class="fas fa-hashtag"></i> ID del Cupón:</strong>
                         <span>#${String(data.id).padStart(4, '0')}</span>
                     </div>
                     <div class="info-item">
@@ -196,8 +196,8 @@ function viewCupom(cupomId) {
             document.getElementById('cupomModal').style.display = 'block';
         })
         .catch(error => {
-            console.error('Erro ao buscar cupom:', error);
-            alert('Erro ao carregar detalhes do cupom');
+            console.error('Error al buscar cupón:', error);
+            alert('Error al cargar detalles del cupón');
         });
 }
 

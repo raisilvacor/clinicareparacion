@@ -119,7 +119,7 @@ inputFile.addEventListener('change', function(e) {
             inputImagemId.value = data.image_id;
             uploadStatus.innerHTML = '<span style="color: green;"><i class="fas fa-check-circle"></i> ¡Imagen enviada con éxito! Haga clic en "Guardar Cambios" para aplicar.</span>';
             
-            // Atualizar preview
+            // Actualizar vista previa
             const img = document.createElement('img');
             img.src = data.path;
             img.style.maxWidth = '100%';
