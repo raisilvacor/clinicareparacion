@@ -3916,12 +3916,21 @@ def gerar_pdf_ordem(cliente, ordem):
     else:
         telefone_formatado = telefone
     
-    # Formatear DNI/CPF
+    # Formatear DNI (formato argentino: XX.XXX.XXX)
     cpf = cliente.get('cpf', '')
-    if cpf and len(cpf) == 11:
-        cpf_formatado = f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
+    if cpf:
+        # Remover puntos y espacios existentes
+        cpf_limpio = cpf.replace('.', '').replace(' ', '')
+        if len(cpf_limpio) == 8:
+            # Formato DNI argentino: XX.XXX.XXX
+            cpf_formatado = f"{cpf_limpio[:2]}.{cpf_limpio[2:5]}.{cpf_limpio[5:]}"
+        elif len(cpf_limpio) == 11:
+            # Formato CPF brasileño antiguo: XXX.XXX.XXX-XX (mantener compatibilidad)
+            cpf_formatado = f"{cpf_limpio[:3]}.{cpf_limpio[3:6]}.{cpf_limpio[6:9]}-{cpf_limpio[9:]}"
+        else:
+            cpf_formatado = cpf
     else:
-        cpf_formatado = cpf
+        cpf_formatado = ''
     
     cliente_data = [
         ['Nombre:', cliente['nome']],

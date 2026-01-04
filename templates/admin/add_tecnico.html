@@ -5,7 +5,7 @@
 {% block content %}
 <div class="admin-header">
     <h1><i class="fas fa-user-plus"></i> Agregar Nuevo Técnico</h1>
-    <p>Preencha os dados do técnico</p>
+    <p>Complete los datos del técnico</p>
 </div>
 
 <div class="admin-form-card">
@@ -13,25 +13,25 @@
         <div class="form-group">
             <label for="nome">
                 <i class="fas fa-user"></i>
-                Nome Completo *
+                Nombre Completo *
             </label>
-            <input type="text" id="nome" name="nome" required placeholder="Ex: João Silva">
+            <input type="text" id="nome" name="nome" required placeholder="Ej: Juan Pérez">
         </div>
         
         <div class="form-group">
             <label for="cpf">
                 <i class="fas fa-id-card"></i>
-                CPF *
+                DNI *
             </label>
-            <input type="text" id="cpf" name="cpf" required placeholder="000.000.000-00" maxlength="14">
+            <input type="text" id="cpf" name="cpf" required placeholder="XX.XXX.XXX" maxlength="10">
         </div>
         
         <div class="form-group">
             <label for="telefone">
                 <i class="fas fa-phone"></i>
-                Telefone *
+                Teléfono *
             </label>
-            <input type="text" id="telefone" name="telefone" required placeholder="(00) 00000-0000">
+            <input type="text" id="telefone" name="telefone" required placeholder="+54 9 11 1234-5678">
         </div>
         
         <div class="form-group">
@@ -45,9 +45,9 @@
         <div class="form-group">
             <label for="especialidade">
                 <i class="fas fa-wrench"></i>
-                Especialidade *
+                Especialidad *
             </label>
-            <input type="text" id="especialidade" name="especialidade" required placeholder="Ex: Reparo de Celulares, Notebooks, etc.">
+            <input type="text" id="especialidade" name="especialidade" required placeholder="Ej: Reparación de Celulares, Notebooks, etc.">
         </div>
         
         <div class="form-actions">
@@ -62,27 +62,46 @@
 </div>
 
 <script>
-// Máscara para CPF
+// Máscara para DNI (formato argentino: XX.XXX.XXX)
 document.getElementById('cpf').addEventListener('input', function(e) {
     let value = e.target.value.replace(/\D/g, '');
-    if (value.length <= 11) {
-        value = value.replace(/(\d{3})(\d)/, '$1.$2');
-        value = value.replace(/(\d{3})(\d)/, '$1.$2');
-        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    if (value.length <= 8) {
+        if (value.length > 2) {
+            value = value.replace(/(\d{2})(\d)/, '$1.$2');
+        }
+        if (value.length > 6) {
+            value = value.replace(/(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+        }
         e.target.value = value;
     }
 });
 
-// Máscara para telefone
+// Máscara para teléfono argentino
 document.getElementById('telefone').addEventListener('input', function(e) {
     let value = e.target.value.replace(/\D/g, '');
-    if (value.length <= 11) {
-        if (value.length <= 10) {
-            value = value.replace(/(\d{2})(\d)/, '($1) $2');
-            value = value.replace(/(\d{4})(\d)/, '$1-$2');
+    if (value.length <= 13) {
+        if (value.startsWith('54')) {
+            value = value.replace(/(\d{2})(\d)/, '+$1 $2');
+            if (value.length > 5) {
+                value = value.replace(/(\+54 )(\d)/, '$1$2');
+                if (value.length > 7) {
+                    value = value.replace(/(\+54 \d)(\d)/, '$1 $2');
+                }
+                if (value.length > 10) {
+                    value = value.replace(/(\+54 \d \d{2})(\d)/, '$1 $2');
+                }
+                if (value.length > 13) {
+                    value = value.replace(/(\+54 \d \d{2} \d{4})(\d)/, '$1-$2');
+                }
+            }
         } else {
-            value = value.replace(/(\d{2})(\d)/, '($1) $2');
-            value = value.replace(/(\d{5})(\d)/, '$1-$2');
+            value = '+54 9 ' + value;
+            if (value.length > 10) {
+                value = value.replace(/(\+54 9 \d{2})(\d)/, '$1 $2');
+            }
+            if (value.length > 13) {
+                value = value.replace(/(\+54 9 \d{2} \d{4})(\d)/, '$1-$2');
+            }
         }
         e.target.value = value;
     }

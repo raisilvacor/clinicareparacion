@@ -5,11 +5,11 @@
 {% block content %}
 <div class="admin-header">
     <div>
-        <h1><i class="fas fa-file-alt"></i> Gerenciar Páginas de Serviços</h1>
-        <p>Gerencie as páginas individuais de serviços exibidas no menu</p>
+        <h1><i class="fas fa-file-alt"></i> Gestionar Páginas de Servicios</h1>
+        <p>Gestione las páginas individuales de servicios mostradas en el menú</p>
     </div>
     <a href="{{ url_for('add_pagina_servico') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Adicionar Página
+        <i class="fas fa-plus"></i> Agregar Página
     </a>
 </div>
 
@@ -19,12 +19,12 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Imagem</th>
+                <th>Imagen</th>
                 <th>Título</th>
                 <th>Slug</th>
-                <th>Ordem</th>
-                <th>Status</th>
-                <th>Ações</th>
+                <th>Orden</th>
+                <th>Estado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -37,7 +37,7 @@
                         <img src="{{ pagina.imagem }}" alt="Imagem {{ pagina.id }}" onerror="this.src='{{ url_for('static', filename='img/placeholder.png') }}'">
                     </div>
                     {% else %}
-                    <span class="text-muted">Sem imagem</span>
+                    <span class="text-muted">Sin imagen</span>
                     {% endif %}
                 </td>
                 <td><strong>{{ pagina.titulo }}</strong></td>
@@ -45,9 +45,9 @@
                 <td><strong>{{ pagina.ordem }}</strong></td>
                 <td>
                     {% if pagina.ativo %}
-                    <span class="badge badge-success" style="background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600;">Ativo</span>
+                    <span class="badge badge-success" style="background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600;">Activo</span>
                     {% else %}
-                    <span class="badge badge-secondary" style="background: #6b7280; color: white; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600;">Inativo</span>
+                    <span class="badge badge-secondary" style="background: #6b7280; color: white; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600;">Inactivo</span>
                     {% endif %}
                 </td>
                 <td>
@@ -58,8 +58,8 @@
                         <a href="{{ url_for('edit_pagina_servico', pagina_id=pagina.id) }}" class="btn btn-sm btn-warning" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form method="POST" action="{{ url_for('delete_pagina_servico', pagina_id=pagina.id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir esta página?');">
-                            <button type="submit" class="btn btn-sm btn-danger" title="Excluir">
+                        <form method="POST" action="{{ url_for('delete_pagina_servico', pagina_id=pagina.id) }}" style="display: inline;" onsubmit="return confirm('¿Está seguro que desea eliminar esta página?');">
+                            <button type="submit" class="btn btn-sm btn-danger" title="Eliminar">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -73,8 +73,8 @@
 {% else %}
 <div class="empty-state">
     <i class="fas fa-file-alt"></i>
-    <p>Nenhuma página de serviço cadastrada</p>
-    <a href="{{ url_for('add_pagina_servico') }}" class="btn btn-primary">Adicionar Primeira Página</a>
+    <p>Ninguna página de servicio registrada</p>
+    <a href="{{ url_for('add_pagina_servico') }}" class="btn btn-primary">Agregar Primera Página</a>
 </div>
 {% endif %}
 
