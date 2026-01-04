@@ -5,11 +5,11 @@
 {% block content %}
 <div class="admin-header">
     <div>
-        <h1><i class="fas fa-tools"></i> Gerenciar Reparos Realizados</h1>
-        <p>Gerencie a galeria de fotos de reparos realizados exibida na página inicial</p>
+        <h1><i class="fas fa-tools"></i> Gestionar Reparaciones Realizadas</h1>
+        <p>Gestione la galería de fotos de reparaciones realizadas mostrada en la página inicial</p>
     </div>
     <a href="{{ url_for('add_reparo') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Adicionar Reparo
+        <i class="fas fa-plus"></i> Agregar Reparación
     </a>
 </div>
 
@@ -19,12 +19,12 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Imagem</th>
+                <th>Imagen</th>
                 <th>Título</th>
-                <th>Descrição</th>
-                <th>Ordem</th>
-                <th>Status</th>
-                <th>Ações</th>
+                <th>Descripción</th>
+                <th>Orden</th>
+                <th>Estado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -41,9 +41,9 @@
                 <td><strong>{{ reparo.ordem }}</strong></td>
                 <td>
                     {% if reparo.ativo %}
-                    <span class="badge badge-success">Ativo</span>
+                    <span class="badge badge-success">Activo</span>
                     {% else %}
-                    <span class="badge badge-secondary">Inativo</span>
+                    <span class="badge badge-secondary">Inactivo</span>
                     {% endif %}
                 </td>
                 <td>
@@ -51,8 +51,8 @@
                         <a href="{{ url_for('edit_reparo', reparo_id=reparo.id) }}" class="btn-icon" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form method="POST" action="{{ url_for('delete_reparo', reparo_id=reparo.id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir este reparo?');">
-                            <button type="submit" class="btn-icon btn-danger" title="Excluir">
+                        <form method="POST" action="{{ url_for('delete_reparo', reparo_id=reparo.id) }}" style="display: inline;" onsubmit="return confirm('¿Está seguro que desea eliminar esta reparación?');">
+                            <button type="submit" class="btn-icon btn-danger" title="Eliminar">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -66,8 +66,8 @@
 {% else %}
 <div class="empty-state">
     <i class="fas fa-tools"></i>
-    <p>Nenhum reparo cadastrado</p>
-    <a href="{{ url_for('add_reparo') }}" class="btn btn-primary">Adicionar Primeiro Reparo</a>
+    <p>Ninguna reparación registrada</p>
+    <a href="{{ url_for('add_reparo') }}" class="btn btn-primary">Agregar Primera Reparación</a>
 </div>
 {% endif %}
 

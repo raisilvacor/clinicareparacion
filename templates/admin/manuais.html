@@ -5,11 +5,11 @@
 {% block content %}
 <div class="admin-header">
     <div>
-        <h1><i class="fas fa-book"></i> Gerenciar Manuais</h1>
-        <p>Gerencie os manuais em PDF cadastrados</p>
+        <h1><i class="fas fa-book"></i> Gestionar Manuales</h1>
+        <p>Gestione los manuales en PDF registrados</p>
     </div>
     <a href="{{ url_for('add_manual') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Adicionar Manual
+        <i class="fas fa-plus"></i> Agregar Manual
     </a>
 </div>
 
@@ -18,10 +18,10 @@
         <div class="form-group" style="flex: 1; margin-bottom: 0;">
             <label for="busca">
                 <i class="fas fa-search"></i>
-                Pesquisar Manuais
+                Buscar Manuales
             </label>
-            <input type="text" id="busca" name="busca" value="{{ busca or '' }}" placeholder="Digite o título do manual...">
-            <small class="form-help">Pesquise por título do manual</small>
+            <input type="text" id="busca" name="busca" value="{{ busca or '' }}" placeholder="Ingrese el título del manual...">
+            <small class="form-help">Busque por título del manual</small>
         </div>
         <div style="display: flex; gap: 0.5rem;">
             <button type="submit" class="btn btn-primary">
@@ -29,7 +29,7 @@
             </button>
             {% if busca %}
             <a href="{{ url_for('admin_manuais') }}" class="btn btn-secondary">
-                <i class="fas fa-times"></i> Limpar
+                <i class="fas fa-times"></i> Limpiar
             </a>
             {% endif %}
         </div>
@@ -43,10 +43,10 @@
             <tr>
                 <th>ID</th>
                 <th>Título</th>
-                <th>Arquivo</th>
-                <th>Tamanho</th>
-                <th>Data de Criação</th>
-                <th>Ações</th>
+                <th>Archivo</th>
+                <th>Tamaño</th>
+                <th>Fecha de Creación</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -67,11 +67,11 @@
                         <a href="{{ url_for('edit_manual', manual_id=manual.id) }}" class="btn btn-sm btn-warning" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a href="{{ url_for('download_manual', manual_id=manual.id) }}" class="btn btn-sm btn-primary" title="Baixar">
+                        <a href="{{ url_for('download_manual', manual_id=manual.id) }}" class="btn btn-sm btn-primary" title="Descargar">
                             <i class="fas fa-download"></i>
                         </a>
-                        <form method="POST" action="{{ url_for('delete_manual', manual_id=manual.id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir este manual?');">
-                            <button type="submit" class="btn btn-sm btn-danger" title="Excluir">
+                        <form method="POST" action="{{ url_for('delete_manual', manual_id=manual.id) }}" style="display: inline;" onsubmit="return confirm('¿Está seguro que desea eliminar este manual?');">
+                            <button type="submit" class="btn btn-sm btn-danger" title="Eliminar">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -86,16 +86,16 @@
 <div class="empty-state">
     <i class="fas fa-book"></i>
     {% if busca %}
-    <h3>Nenhum manual encontrado</h3>
-    <p>Nenhum manual corresponde à pesquisa "{{ busca }}"</p>
+    <h3>Ningún manual encontrado</h3>
+    <p>Ningún manual corresponde a la búsqueda "{{ busca }}"</p>
     <a href="{{ url_for('admin_manuais') }}" class="btn btn-secondary">
-        <i class="fas fa-times"></i> Limpar Pesquisa
+        <i class="fas fa-times"></i> Limpiar Búsqueda
     </a>
     {% else %}
-    <h3>Nenhum manual cadastrado</h3>
-    <p>Comece adicionando seu primeiro manual em PDF</p>
+    <h3>Ningún manual registrado</h3>
+    <p>Comience agregando su primer manual en PDF</p>
     <a href="{{ url_for('add_manual') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Adicionar Primeiro Manual
+        <i class="fas fa-plus"></i> Agregar Primer Manual
     </a>
     {% endif %}
 </div>

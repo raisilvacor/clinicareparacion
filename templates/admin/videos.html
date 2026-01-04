@@ -5,11 +5,11 @@
 {% block content %}
 <div class="admin-header">
     <div>
-        <h1><i class="fas fa-video"></i> Gerenciar Vídeos</h1>
-        <p>Gerencie os vídeos do YouTube cadastrados no sistema</p>
+        <h1><i class="fas fa-video"></i> Gestionar Vídeos</h1>
+        <p>Gestione los vídeos de YouTube registrados en el sistema</p>
     </div>
     <a href="{{ url_for('add_video') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Adicionar Vídeo
+        <i class="fas fa-plus"></i> Agregar Vídeo
     </a>
 </div>
 
@@ -21,9 +21,9 @@
                 <th>ID</th>
                 <th>Preview</th>
                 <th>Título</th>
-                <th>Ordem</th>
-                <th>Status</th>
-                <th>Ações</th>
+                <th>Orden</th>
+                <th>Estado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -45,9 +45,9 @@
                 <td><strong>{{ video.ordem }}</strong></td>
                 <td>
                     {% if video.ativo %}
-                    <span class="badge badge-success">Ativo</span>
+                    <span class="badge badge-success">Activo</span>
                     {% else %}
-                    <span class="badge badge-secondary">Inativo</span>
+                    <span class="badge badge-secondary">Inactivo</span>
                     {% endif %}
                 </td>
                 <td>
@@ -55,8 +55,8 @@
                         <a href="{{ url_for('edit_video', video_id=video.id) }}" class="btn btn-sm btn-warning" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form method="POST" action="{{ url_for('delete_video', video_id=video.id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir este vídeo?');">
-                            <button type="submit" class="btn btn-sm btn-danger" title="Excluir">
+                        <form method="POST" action="{{ url_for('delete_video', video_id=video.id) }}" style="display: inline;" onsubmit="return confirm('¿Está seguro que desea eliminar este vídeo?');">
+                            <button type="submit" class="btn btn-sm btn-danger" title="Eliminar">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -70,10 +70,10 @@
 {% else %}
 <div class="empty-state">
     <i class="fas fa-video"></i>
-    <h3>Nenhum vídeo cadastrado</h3>
-    <p>Comece adicionando seu primeiro vídeo do YouTube usando o código embed</p>
+    <h3>Ningún vídeo registrado</h3>
+    <p>Comience agregando su primer vídeo de YouTube usando el código embed</p>
     <a href="{{ url_for('add_video') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Adicionar Primeiro Vídeo
+        <i class="fas fa-plus"></i> Agregar Primer Vídeo
     </a>
 </div>
 {% endif %}

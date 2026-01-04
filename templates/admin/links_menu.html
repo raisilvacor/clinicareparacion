@@ -5,19 +5,19 @@
 {% block content %}
 <div class="admin-header">
     <div>
-        <h1><i class="fas fa-link"></i> Gerenciar Links do Menu</h1>
-        <p>Gerencie os links exibidos no menu principal do site</p>
+        <h1><i class="fas fa-link"></i> Gestionar Enlaces del Menú</h1>
+        <p>Gestione los enlaces mostrados en el menú principal del sitio</p>
     </div>
     <div style="display: flex; gap: 0.5rem;">
         {% if not links %}
         <form method="POST" action="{{ url_for('inicializar_links_padrao') }}" style="display: inline;">
-            <button type="submit" class="btn btn-secondary" title="Criar link padrão 'Celulares'">
-                <i class="fas fa-magic"></i> Criar Link Padrão
+            <button type="submit" class="btn btn-secondary" title="Crear enlace predeterminado 'Celulares'">
+                <i class="fas fa-magic"></i> Crear Enlace Predeterminado
             </button>
         </form>
         {% endif %}
         <a href="{{ url_for('add_link_menu') }}" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Adicionar Link
+            <i class="fas fa-plus"></i> Agregar Enlace
         </a>
     </div>
 </div>
@@ -30,10 +30,10 @@
                 <th>ID</th>
                 <th>Texto</th>
                 <th>URL</th>
-                <th>Ordem</th>
-                <th>Status</th>
-                <th>Nova Aba</th>
-                <th>Ações</th>
+                <th>Orden</th>
+                <th>Estado</th>
+                <th>Nueva Pestaña</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -45,28 +45,28 @@
                 <td><strong>{{ link.ordem }}</strong></td>
                 <td>
                     {% if link.ativo %}
-                    <span class="badge badge-success" style="background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600;">Ativo</span>
+                    <span class="badge badge-success" style="background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600;">Activo</span>
                     {% else %}
-                    <span class="badge badge-secondary" style="background: #6b7280; color: white; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600;">Inativo</span>
+                    <span class="badge badge-secondary" style="background: #6b7280; color: white; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600;">Inactivo</span>
                     {% endif %}
                 </td>
                 <td>
                     {% if link.abrir_nova_aba %}
-                    <span class="badge badge-info" style="background: #3b82f6; color: white; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600;">Sim</span>
+                    <span class="badge badge-info" style="background: #3b82f6; color: white; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600;">Sí</span>
                     {% else %}
-                    <span class="badge badge-secondary" style="background: #6b7280; color: white; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600;">Não</span>
+                    <span class="badge badge-secondary" style="background: #6b7280; color: white; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600;">No</span>
                     {% endif %}
                 </td>
                 <td>
                     <div class="action-buttons">
-                        <a href="{{ link.url }}" class="btn btn-sm btn-info" target="_blank" title="Ver link">
+                        <a href="{{ link.url }}" class="btn btn-sm btn-info" target="_blank" title="Ver enlace">
                             <i class="fas fa-eye"></i>
                         </a>
                         <a href="{{ url_for('edit_link_menu', link_id=link.id) }}" class="btn btn-sm btn-warning" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form method="POST" action="{{ url_for('delete_link_menu', link_id=link.id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir este link?');">
-                            <button type="submit" class="btn btn-sm btn-danger" title="Excluir">
+                        <form method="POST" action="{{ url_for('delete_link_menu', link_id=link.id) }}" style="display: inline;" onsubmit="return confirm('¿Está seguro que desea eliminar este enlace?');">
+                            <button type="submit" class="btn btn-sm btn-danger" title="Eliminar">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -80,8 +80,8 @@
 {% else %}
 <div class="empty-state">
     <i class="fas fa-link"></i>
-    <p>Nenhum link cadastrado</p>
-    <a href="{{ url_for('add_link_menu') }}" class="btn btn-primary">Adicionar Primeiro Link</a>
+    <p>Ningún enlace registrado</p>
+    <a href="{{ url_for('add_link_menu') }}" class="btn btn-primary">Agregar Primer Enlace</a>
 </div>
 {% endif %}
 {% endblock %}

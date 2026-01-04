@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="admin-header">
-    <h1><i class="fas fa-trophy"></i> Adicionar Novo Marco</h1>
-    <p>Configure um novo milestone para a seção de marcos</p>
+    <h1><i class="fas fa-trophy"></i> Agregar Nuevo Hito</h1>
+    <p>Configure un nuevo milestone para la sección de hitos</p>
 </div>
 
 <div class="admin-form-card">
@@ -13,42 +13,42 @@
         <div class="form-group">
             <label for="titulo">
                 <i class="fas fa-heading"></i>
-                Título do Marco *
+                Título del Hito *
             </label>
-            <input type="text" id="titulo" name="titulo" required placeholder="Ex: Diagnóstico Preciso, Reparo Especializado">
-            <small class="form-help">Título descritivo do milestone</small>
+            <input type="text" id="titulo" name="titulo" required placeholder="Ej: Diagnóstico Preciso, Reparación Especializada">
+            <small class="form-help">Título descriptivo del milestone</small>
         </div>
         
         <div class="form-group">
             <label for="imagem">
                 <i class="fas fa-image"></i>
-                Caminho da Imagem *
+                Ruta de la Imagen *
             </label>
             <input type="file" id="imagem_upload" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp" style="display: none;">
             <label for="imagem_upload" class="btn btn-primary" style="cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 10px;">
-                <i class="fas fa-upload"></i> Escolher Imagem do Computador
+                <i class="fas fa-upload"></i> Elegir Imagen del Computador
             </label>
-            <input type="text" id="imagem" name="imagem" required placeholder="Caminho da imagem será preenchido automaticamente após o upload" readonly>
-            <small class="form-help">O caminho da imagem será preenchido automaticamente após o upload.</small>
+            <input type="text" id="imagem" name="imagem" required placeholder="La ruta de la imagen se completará automáticamente después de la carga" readonly>
+            <small class="form-help">La ruta de la imagen se completará automáticamente después de la carga.</small>
             <div id="upload_status" style="margin-top: 5px;"></div>
         </div>
         
         <div class="form-group">
             <label for="preview">
                 <i class="fas fa-eye"></i>
-                Preview da Imagem
+                Vista Previa de la Imagen
             </label>
             <div id="image-preview" style="width: 100%; max-width: 300px; height: 300px; border: 2px dashed #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: #f8f9fa; margin-top: 0.5rem;">
-                <p style="color: #999;">Preview aparecerá aqui</p>
+                <p style="color: #999;">La vista previa aparecerá aquí</p>
             </div>
         </div>
         
         <div class="form-group">
             <label>
                 <input type="checkbox" id="ativo" name="ativo" checked>
-                <span style="margin-left: 0.5rem;">Milestone Ativo</span>
+                <span style="margin-left: 0.5rem;">Hito Activo</span>
             </label>
-            <small class="form-help">Milestones inativos não serão exibidos na seção de marcos</small>
+            <small class="form-help">Hitos inactivos no serán mostrados en la sección de hitos</small>
         </div>
         
         <div class="form-actions">
@@ -56,7 +56,7 @@
                 <i class="fas fa-times"></i> Cancelar
             </a>
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Salvar Milestone
+                <i class="fas fa-save"></i> Guardar Hito
             </button>
         </div>
     </form>
@@ -74,16 +74,16 @@ inputFile.addEventListener('change', function(e) {
     
     const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'];
     if (!allowedTypes.includes(file.type)) {
-        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Tipo de arquivo não permitido. Use: PNG, JPG, JPEG, GIF ou WEBP</span>';
+        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Tipo de archivo no permitido. Use: PNG, JPG, JPEG, GIF o WEBP</span>';
         return;
     }
     
     if (file.size > 5 * 1024 * 1024) {
-        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Arquivo muito grande. Tamanho máximo: 5MB</span>';
+        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Archivo muy grande. Tamaño máximo: 5MB</span>';
         return;
     }
     
-    uploadStatus.innerHTML = '<span style="color: #007bff;"><i class="fas fa-spinner fa-spin"></i> Enviando imagem...</span>';
+    uploadStatus.innerHTML = '<span style="color: #007bff;"><i class="fas fa-spinner fa-spin"></i> Enviando imagen...</span>';
     
     const formData = new FormData();
     formData.append('imagem', file);
@@ -96,7 +96,7 @@ inputFile.addEventListener('change', function(e) {
     .then(data => {
         if (data.success) {
             inputImagem.value = data.path;
-            uploadStatus.innerHTML = '<span style="color: green;"><i class="fas fa-check-circle"></i> Imagem enviada com sucesso!</span>';
+            uploadStatus.innerHTML = '<span style="color: green;"><i class="fas fa-check-circle"></i> ¡Imagen enviada con éxito!</span>';
             
             // Atualizar preview
             const img = document.createElement('img');
@@ -112,11 +112,11 @@ inputFile.addEventListener('change', function(e) {
             preview.innerHTML = '';
             preview.appendChild(img);
         } else {
-            uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> ' + (data.error || 'Erro ao enviar imagem') + '</span>';
+            uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> ' + (data.error || 'Error al enviar imagen') + '</span>';
         }
     })
     .catch(error => {
-        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Erro ao enviar imagem: ' + error.message + '</span>';
+        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Error al enviar imagen: ' + error.message + '</span>';
     });
 });
 
@@ -135,14 +135,14 @@ inputImagem.addEventListener('input', function(e) {
         img.style.maxHeight = '100%';
         img.style.objectFit = 'contain';
         img.onerror = function() {
-            preview.innerHTML = '<p style="color: #dc3545;">Imagem não encontrada</p>';
+            preview.innerHTML = '<p style="color: #dc3545;">Imagen no encontrada</p>';
         };
         img.onload = function() {
             preview.innerHTML = '';
             preview.appendChild(img);
         };
     } else {
-        preview.innerHTML = '<p style="color: #999;">Preview aparecerá aqui</p>';
+        preview.innerHTML = '<p style="color: #999;">La vista previa aparecerá aquí</p>';
     }
 });
 </script>

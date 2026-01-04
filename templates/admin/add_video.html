@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="admin-header">
-    <h1><i class="fas fa-video"></i> Adicionar Vídeo do YouTube</h1>
-    <p>Cadastre um novo vídeo usando o código embed do YouTube</p>
+    <h1><i class="fas fa-video"></i> Agregar Vídeo de YouTube</h1>
+    <p>Registre un nuevo vídeo usando el código embed de YouTube</p>
 </div>
 
 <div class="admin-form-card">
@@ -13,20 +13,20 @@
         <div class="form-group">
             <label for="titulo">
                 <i class="fas fa-heading"></i>
-                Título do Vídeo <span class="required">*</span>
+                Título del Vídeo <span class="required">*</span>
             </label>
-            <input type="text" id="titulo" name="titulo" required placeholder="Ex: Como consertar celular">
-            <small class="form-help">Título que será exibido junto com o vídeo</small>
+            <input type="text" id="titulo" name="titulo" required placeholder="Ej: Cómo reparar celular">
+            <small class="form-help">Título que será mostrado junto con el vídeo</small>
         </div>
         
         <div class="form-group">
             <label for="embed_code">
                 <i class="fab fa-youtube"></i>
-                Código Embed do YouTube <span class="required">*</span>
+                Código Embed de YouTube <span class="required">*</span>
             </label>
-            <textarea id="embed_code" name="embed_code" required rows="5" placeholder='Cole aqui o código embed do YouTube, por exemplo:&#10;&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;'></textarea>
+            <textarea id="embed_code" name="embed_code" required rows="5" placeholder='Pegue aquí el código embed de YouTube, por ejemplo:&#10;&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;'></textarea>
             <small class="form-help">
-                Para obter o código embed: No YouTube, clique em "Compartilhar" → "Incorporar" → Copie o código iframe fornecido
+                Para obtener el código embed: En YouTube, haga clic en "Compartir" → "Insertar" → Copie el código iframe proporcionado
             </small>
             <div id="embed-preview" style="margin-top: 1rem; display: none;">
                 <strong>Preview:</strong>
@@ -38,23 +38,23 @@
             <div class="form-group">
                 <label for="ordem">
                     <i class="fas fa-sort-numeric-down"></i>
-                    Ordem de Exibição
+                    Orden de Exhibición
                 </label>
                 <input type="number" id="ordem" name="ordem" value="1" min="1">
-                <small class="form-help">Número que define a ordem de exibição (menor aparece primeiro)</small>
+                <small class="form-help">Número que define el orden de exhibición (menor aparece primero)</small>
             </div>
             
             <div class="form-group">
                 <label class="checkbox-label">
                     <input type="checkbox" id="ativo" name="ativo" checked>
-                    <span>Vídeo ativo (será exibido na página inicial)</span>
+                    <span>Vídeo activo (será mostrado en la página inicial)</span>
                 </label>
             </div>
         </div>
         
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Salvar Vídeo
+                <i class="fas fa-save"></i> Guardar Vídeo
             </button>
             <a href="{{ url_for('admin_videos') }}" class="btn btn-secondary">
                 <i class="fas fa-times"></i> Cancelar

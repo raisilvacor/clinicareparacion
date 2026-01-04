@@ -5,11 +5,11 @@
 {% block content %}
 <div class="admin-header">
     <div>
-        <h1><i class="fas fa-trophy"></i> Gerenciar Marcos (Milestones)</h1>
-        <p>Gerencie os marcos exibidos na seção de milestones</p>
+        <h1><i class="fas fa-trophy"></i> Gestionar Hitos (Milestones)</h1>
+        <p>Gestione los hitos mostrados en la sección de milestones</p>
     </div>
     <a href="{{ url_for('add_milestone') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Adicionar Marco
+        <i class="fas fa-plus"></i> Agregar Hito
     </a>
 </div>
 
@@ -21,10 +21,10 @@
                 <th>ID</th>
                 <th>Imagem</th>
                 <th>Título</th>
-                <th>Caminho da Imagem</th>
-                <th>Ordem</th>
-                <th>Status</th>
-                <th>Ações</th>
+                <th>Ruta de la Imagen</th>
+                <th>Orden</th>
+                <th>Estado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -41,9 +41,9 @@
                 <td><strong>{{ milestone.ordem }}</strong></td>
                 <td>
                     {% if milestone.ativo %}
-                    <span class="badge badge-success">Ativo</span>
+                    <span class="badge badge-success">Activo</span>
                     {% else %}
-                    <span class="badge badge-secondary">Inativo</span>
+                    <span class="badge badge-secondary">Inactivo</span>
                     {% endif %}
                 </td>
                 <td>
@@ -51,8 +51,8 @@
                         <a href="{{ url_for('edit_milestone', milestone_id=milestone.id) }}" class="btn-icon" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form method="POST" action="{{ url_for('delete_milestone', milestone_id=milestone.id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir este milestone?');">
-                            <button type="submit" class="btn-icon btn-danger" title="Excluir">
+                        <form method="POST" action="{{ url_for('delete_milestone', milestone_id=milestone.id) }}" style="display: inline;" onsubmit="return confirm('¿Está seguro que desea eliminar este hito?');">
+                            <button type="submit" class="btn-icon btn-danger" title="Eliminar">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -66,8 +66,8 @@
 {% else %}
 <div class="empty-state">
     <i class="fas fa-trophy"></i>
-    <p>Nenhum milestone cadastrado</p>
-    <a href="{{ url_for('add_milestone') }}" class="btn btn-primary">Adicionar Primeiro Milestone</a>
+    <p>Ningún hito registrado</p>
+    <a href="{{ url_for('add_milestone') }}" class="btn btn-primary">Agregar Primer Hito</a>
 </div>
 {% endif %}
 

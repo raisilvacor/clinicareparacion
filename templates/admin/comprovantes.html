@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="admin-header">
-    <h1><i class="fas fa-file-invoice"></i> Comprovantes Emitidos</h1>
-    <p>Visualize todos os comprovantes de pagamento emitidos</p>
+    <h1><i class="fas fa-file-invoice"></i> Comprobantes Emitidos</h1>
+    <p>Visualice todos los comprobantes de pago emitidos</p>
 </div>
 
 {% if comprovantes %}
@@ -15,12 +15,12 @@
             <tr>
                 <th>Número</th>
                 <th>Cliente</th>
-                <th>Ordem</th>
-                <th>Valor Pago</th>
-                <th>Forma de Pagamento</th>
-                <th>Data</th>
+                <th>Orden</th>
+                <th>Valor Pagado</th>
+                <th>Forma de Pago</th>
+                <th>Fecha</th>
                 <th>PDF</th>
-                <th>Ações</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -29,15 +29,15 @@
                 <td><strong>#{{ "%04d"|format(comprovante.id) }}</strong></td>
                 <td>{{ comprovante.cliente_nome }}</td>
                 <td>{{ comprovante.numero_ordem }}</td>
-                <td><strong>R$ {{ "%.2f"|format(comprovante.valor_pago) }}</strong></td>
+                <td><strong>ARS$ {{ "%.2f"|format(comprovante.valor_pago) }}</strong></td>
                 <td>
                     {% if comprovante.forma_pagamento == 'dinheiro' %}
-                        <span class="badge"><i class="fas fa-money-bill"></i> Dinheiro</span>
+                        <span class="badge"><i class="fas fa-money-bill"></i> Efectivo</span>
                     {% elif comprovante.forma_pagamento == 'cartao_debito' %}
-                        <span class="badge"><i class="fas fa-credit-card"></i> Cartão de Débito</span>
+                        <span class="badge"><i class="fas fa-credit-card"></i> Tarjeta de Débito</span>
                     {% elif comprovante.forma_pagamento == 'cartao_credito' %}
                         <span class="badge">
-                            <i class="fas fa-credit-card"></i> Cartão de Crédito
+                            <i class="fas fa-credit-card"></i> Tarjeta de Crédito
                             {% if comprovante.parcelas > 1 %}
                             ({{ comprovante.parcelas }}x)
                             {% endif %}
@@ -51,7 +51,7 @@
                 <td>{{ comprovante.data }}</td>
                 <td>
                     {% if comprovante.pdf_filename %}
-                    <a href="{{ url_for('download_comprovante_pdf', filename=comprovante.pdf_filename) }}" class="btn btn-primary btn-small" title="Baixar PDF">
+                    <a href="{{ url_for('download_comprovante_pdf', filename=comprovante.pdf_filename) }}" class="btn btn-primary btn-small" title="Descargar PDF">
                         <i class="fas fa-file-pdf"></i> PDF
                     </a>
                     {% else %}
@@ -60,14 +60,14 @@
                 </td>
                 <td>
                     <div class="action-buttons">
-                        <button class="btn-icon" onclick="viewComprovante({{ comprovante.id }})" title="Ver detalhes">
+                        <button class="btn-icon" onclick="viewComprovante({{ comprovante.id }})" title="Ver detalles">
                             <i class="fas fa-eye"></i>
                         </button>
                         <a href="{{ url_for('edit_comprovante', comprovante_id=comprovante.id) }}" class="btn-icon" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form method="POST" action="{{ url_for('delete_comprovante', comprovante_id=comprovante.id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir este comprovante?');">
-                            <button type="submit" class="btn-icon btn-danger" title="Excluir">
+                        <form method="POST" action="{{ url_for('delete_comprovante', comprovante_id=comprovante.id) }}" style="display: inline;" onsubmit="return confirm('¿Está seguro que desea eliminar este comprobante?');">
+                            <button type="submit" class="btn-icon btn-danger" title="Eliminar">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -81,8 +81,8 @@
 {% else %}
 <div class="empty-state">
     <i class="fas fa-file-invoice"></i>
-    <p>Nenhum comprovante emitido ainda</p>
-    <a href="{{ url_for('emitir_comprovante') }}" class="btn btn-primary">Emitir Primeiro Comprovante</a>
+    <p>Ningún comprobante emitido aún</p>
+    <a href="{{ url_for('emitir_comprovante') }}" class="btn btn-primary">Emitir Primer Comprobante</a>
 </div>
 {% endif %}
 
@@ -90,7 +90,7 @@
 <div id="comprovanteModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeComprovanteModal()">&times;</span>
-        <h2>Detalhes do Comprovante</h2>
+        <h2>Detalles del Comprobante</h2>
         <div id="comprovanteDetails"></div>
     </div>
 </div>
@@ -103,9 +103,9 @@ function viewComprovante(comprovanteId) {
         .then(response => response.json())
         .then(data => {
             const formas = {
-                'dinheiro': 'Dinheiro',
-                'cartao_debito': 'Cartão de Débito',
-                'cartao_credito': 'Cartão de Crédito',
+                'dinheiro': 'Efectivo',
+                'cartao_debito': 'Tarjeta de Débito',
+                'cartao_credito': 'Tarjeta de Crédito',
                 'pix': 'PIX'
             };
             
@@ -117,22 +117,22 @@ function viewComprovante(comprovanteId) {
             const details = `
                 <div class="comprovante-details-view">
                     <div class="detail-section">
-                        <h3><i class="fas fa-info-circle"></i> Informações do Comprovante</h3>
+                        <h3><i class="fas fa-info-circle"></i> Información del Comprobante</h3>
                         <p><strong>Número:</strong> #${String(data.id).padStart(4, '0')}</p>
-                        <p><strong>Data:</strong> ${data.data}</p>
-                        <p><strong>Número da Ordem:</strong> ${data.numero_ordem}</p>
+                        <p><strong>Fecha:</strong> ${data.data}</p>
+                        <p><strong>Número de la Orden:</strong> ${data.numero_ordem}</p>
                     </div>
                     <div class="detail-section">
                         <h3><i class="fas fa-user"></i> Cliente</h3>
-                        <p><strong>Nome:</strong> ${data.cliente_nome}</p>
+                        <p><strong>Nombre:</strong> ${data.cliente_nome}</p>
                     </div>
                     <div class="detail-section">
-                        <h3><i class="fas fa-dollar-sign"></i> Pagamento</h3>
-                        <p><strong>Valor Total da Ordem:</strong> R$ ${data.valor_total.toFixed(2).replace('.', ',')}</p>
-                        <p><strong>Valor Pago:</strong> R$ ${data.valor_pago.toFixed(2).replace('.', ',')}</p>
-                        <p><strong>Forma de Pagamento:</strong> ${formaText}</p>
+                        <h3><i class="fas fa-dollar-sign"></i> Pago</h3>
+                        <p><strong>Valor Total de la Orden:</strong> ARS$ ${data.valor_total.toFixed(2).replace('.', ',')}</p>
+                        <p><strong>Valor Pagado:</strong> ARS$ ${data.valor_pago.toFixed(2).replace('.', ',')}</p>
+                        <p><strong>Forma de Pago:</strong> ${formaText}</p>
                         ${data.forma_pagamento === 'cartao_credito' && data.parcelas > 1 ? 
-                            `<p><strong>Valor por Parcela:</strong> R$ ${(data.valor_pago / data.parcelas).toFixed(2).replace('.', ',')}</p>` : ''}
+                            `<p><strong>Valor por Cuota:</strong> ARS$ ${(data.valor_pago / data.parcelas).toFixed(2).replace('.', ',')}</p>` : ''}
                     </div>
                 </div>
             `;
@@ -140,7 +140,7 @@ function viewComprovante(comprovanteId) {
             document.getElementById('comprovanteModal').style.display = 'block';
         })
         .catch(error => {
-            alert('Erro ao carregar detalhes do comprovante');
+            alert('Error al cargar detalles del comprobante');
             console.error(error);
         });
 }

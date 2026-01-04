@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="admin-header">
-    <h1><i class="fas fa-edit"></i> Editar Reparo Realizado</h1>
-    <p>Edite as informações do reparo realizado</p>
+    <h1><i class="fas fa-edit"></i> Editar Reparación Realizada</h1>
+    <p>Edite la información de la reparación realizada</p>
 </div>
 
 <div class="admin-form-card">
@@ -13,27 +13,27 @@
         <div class="form-group">
             <label for="imagem_upload">
                 <i class="fas fa-image"></i>
-                Imagem do Reparo
+                Imagen de la Reparación
             </label>
             <div style="margin-bottom: 10px;">
-                <img src="{{ reparo.imagem_url }}" alt="Preview" style="max-width: 300px; max-height: 200px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px;">
+                <img src="{{ reparo.imagem_url }}" alt="Vista Previa" style="max-width: 300px; max-height: 200px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px;">
             </div>
             <input type="file" id="imagem_upload" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp" style="display: none;">
             <label for="imagem_upload" class="btn btn-secondary" style="cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 10px;">
-                <i class="fas fa-upload"></i> Trocar Imagem
+                <i class="fas fa-upload"></i> Cambiar Imagen
             </label>
             <input type="hidden" id="imagem_id" name="imagem_id" value="{{ reparo.imagem_id }}">
             <div id="upload_status" style="margin-top: 5px;"></div>
-            <small class="form-help">Faça upload de uma nova imagem para substituir a atual</small>
+            <small class="form-help">Suba una nueva imagen para reemplazar la actual</small>
         </div>
         
         <div class="form-group">
             <label for="preview">
                 <i class="fas fa-eye"></i>
-                Preview da Nova Imagem
+                Vista Previa de la Nueva Imagen
             </label>
             <div id="image-preview" style="width: 100%; max-width: 600px; height: 300px; border: 2px dashed #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: #f8f9fa; margin-top: 0.5rem;">
-                <p style="color: #999;">Preview da nova imagem aparecerá aqui</p>
+                <p style="color: #999;">La vista previa de la nueva imagen aparecerá aquí</p>
             </div>
         </div>
         
@@ -42,34 +42,34 @@
                 <i class="fas fa-heading"></i>
                 Título (opcional)
             </label>
-            <input type="text" id="titulo" name="titulo" value="{{ reparo.titulo or '' }}" placeholder="Ex: Reparo de iPhone 12">
-            <small class="form-help">Título opcional para identificar o reparo</small>
+            <input type="text" id="titulo" name="titulo" value="{{ reparo.titulo or '' }}" placeholder="Ej: Reparación de iPhone 12">
+            <small class="form-help">Título opcional para identificar la reparación</small>
         </div>
         
         <div class="form-group">
             <label for="descricao">
                 <i class="fas fa-align-left"></i>
-                Descrição (opcional)
+                Descripción (opcional)
             </label>
-            <textarea id="descricao" name="descricao" rows="3" placeholder="Descrição opcional do reparo realizado">{{ reparo.descricao or '' }}</textarea>
-            <small class="form-help">Descrição opcional do reparo</small>
+            <textarea id="descricao" name="descricao" rows="3" placeholder="Descripción opcional de la reparación realizada">{{ reparo.descricao or '' }}</textarea>
+            <small class="form-help">Descripción opcional de la reparación</small>
         </div>
         
         <div class="form-group">
             <label for="ordem">
                 <i class="fas fa-sort-numeric-down"></i>
-                Ordem de Exibição
+                Orden de Exhibición
             </label>
             <input type="number" id="ordem" name="ordem" value="{{ reparo.ordem }}" min="1">
-            <small class="form-help">Ordem em que a imagem aparecerá na galeria (menor número aparece primeiro)</small>
+            <small class="form-help">Orden en que la imagen aparecerá en la galería (menor número aparece primero)</small>
         </div>
         
         <div class="form-group">
             <label>
                 <input type="checkbox" id="ativo" name="ativo" {% if reparo.ativo %}checked{% endif %}>
-                <span style="margin-left: 0.5rem;">Reparo Ativo</span>
+                <span style="margin-left: 0.5rem;">Reparación Activa</span>
             </label>
-            <small class="form-help">Reparos inativos não serão exibidos na página inicial</small>
+            <small class="form-help">Reparaciones inactivas no serán mostradas en la página inicial</small>
         </div>
         
         <div class="form-actions">
@@ -77,7 +77,7 @@
                 <i class="fas fa-times"></i> Cancelar
             </a>
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Salvar Alterações
+                <i class="fas fa-save"></i> Guardar Cambios
             </button>
         </div>
     </form>
@@ -95,16 +95,16 @@ inputFile.addEventListener('change', function(e) {
     
     const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'];
     if (!allowedTypes.includes(file.type)) {
-        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Tipo de arquivo não permitido. Use: PNG, JPG, JPEG, GIF ou WEBP</span>';
+        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Tipo de archivo no permitido. Use: PNG, JPG, JPEG, GIF o WEBP</span>';
         return;
     }
     
     if (file.size > 5 * 1024 * 1024) {
-        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Arquivo muito grande. Tamanho máximo: 5MB</span>';
+        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Archivo muy grande. Tamaño máximo: 5MB</span>';
         return;
     }
     
-    uploadStatus.innerHTML = '<span style="color: #007bff;"><i class="fas fa-spinner fa-spin"></i> Enviando imagem...</span>';
+    uploadStatus.innerHTML = '<span style="color: #007bff;"><i class="fas fa-spinner fa-spin"></i> Enviando imagen...</span>';
     
     const formData = new FormData();
     formData.append('imagem', file);
@@ -117,7 +117,7 @@ inputFile.addEventListener('change', function(e) {
     .then(data => {
         if (data.success) {
             inputImagemId.value = data.image_id;
-            uploadStatus.innerHTML = '<span style="color: green;"><i class="fas fa-check-circle"></i> Imagem enviada com sucesso! Clique em "Salvar Alterações" para aplicar.</span>';
+            uploadStatus.innerHTML = '<span style="color: green;"><i class="fas fa-check-circle"></i> ¡Imagen enviada con éxito! Haga clic en "Guardar Cambios" para aplicar.</span>';
             
             // Atualizar preview
             const img = document.createElement('img');
@@ -128,11 +128,11 @@ inputFile.addEventListener('change', function(e) {
             preview.innerHTML = '';
             preview.appendChild(img);
         } else {
-            uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> ' + (data.error || 'Erro ao enviar imagem') + '</span>';
+            uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> ' + (data.error || 'Error al enviar imagen') + '</span>';
         }
     })
     .catch(error => {
-        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Erro ao enviar imagem: ' + error.message + '</span>';
+        uploadStatus.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Error al enviar imagen: ' + error.message + '</span>';
     });
 });
 </script>

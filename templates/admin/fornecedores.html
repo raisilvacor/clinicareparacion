@@ -5,11 +5,11 @@
 {% block content %}
 <div class="admin-header">
     <div>
-        <h1><i class="fas fa-truck"></i> Gerenciar Fornecedores</h1>
-        <p>Gerencie os fornecedores cadastrados</p>
+        <h1><i class="fas fa-truck"></i> Gestionar Proveedores</h1>
+        <p>Gestione los proveedores registrados</p>
     </div>
     <a href="{{ url_for('add_fornecedor') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Adicionar Fornecedor
+        <i class="fas fa-plus"></i> Agregar Proveedor
     </a>
 </div>
 
@@ -18,10 +18,10 @@
         <div class="form-group" style="flex: 1; margin-bottom: 0;">
             <label for="busca">
                 <i class="fas fa-search"></i>
-                Pesquisar Fornecedores
+                Buscar Proveedores
             </label>
-            <input type="text" id="busca" name="busca" value="{{ request.args.get('busca', '') }}" placeholder="Digite o nome ou tipo de serviço...">
-            <small class="form-help">Pesquise por nome do fornecedor ou tipo de serviço</small>
+            <input type="text" id="busca" name="busca" value="{{ request.args.get('busca', '') }}" placeholder="Ingrese el nombre o tipo de servicio...">
+            <small class="form-help">Busque por nombre del proveedor o tipo de servicio</small>
         </div>
         <div style="display: flex; gap: 0.5rem;">
             <button type="submit" class="btn btn-primary">
@@ -29,7 +29,7 @@
             </button>
             {% if request.args.get('busca') %}
             <a href="{{ url_for('admin_fornecedores') }}" class="btn btn-secondary">
-                <i class="fas fa-times"></i> Limpar
+                <i class="fas fa-times"></i> Limpiar
             </a>
             {% endif %}
         </div>
@@ -42,13 +42,13 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nome</th>
-                <th>Contato</th>
-                <th>Telefone</th>
+                <th>Nombre</th>
+                <th>Contacto</th>
+                <th>Teléfono</th>
                 <th>E-mail</th>
-                <th>Tipo de Serviço</th>
-                <th>Status</th>
-                <th>Ações</th>
+                <th>Tipo de Servicio</th>
+                <th>Estado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -62,9 +62,9 @@
                 <td>{{ fornecedor.tipo_servico or '-' }}</td>
                 <td>
                     {% if fornecedor.ativo %}
-                    <span class="badge badge-success">Ativo</span>
+                    <span class="badge badge-success">Activo</span>
                     {% else %}
-                    <span class="badge badge-secondary">Inativo</span>
+                    <span class="badge badge-secondary">Inactivo</span>
                     {% endif %}
                 </td>
                 <td>
@@ -72,8 +72,8 @@
                         <a href="{{ url_for('edit_fornecedor', fornecedor_id=fornecedor.id) }}" class="btn-icon" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form method="POST" action="{{ url_for('delete_fornecedor', fornecedor_id=fornecedor.id) }}" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir este fornecedor?');">
-                            <button type="submit" class="btn-icon btn-danger" title="Excluir">
+                        <form method="POST" action="{{ url_for('delete_fornecedor', fornecedor_id=fornecedor.id) }}" style="display: inline;" onsubmit="return confirm('¿Está seguro que desea eliminar este proveedor?');">
+                            <button type="submit" class="btn-icon btn-danger" title="Eliminar">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -88,15 +88,15 @@
 <div class="empty-state">
     <i class="fas fa-truck"></i>
     {% if request.args.get('busca') %}
-    <p>Nenhum fornecedor encontrado para "{{ request.args.get('busca') }}"</p>
-    <a href="{{ url_for('admin_fornecedores') }}" class="btn btn-secondary">Ver Todos os Fornecedores</a>
+    <p>Ningún proveedor encontrado para "{{ request.args.get('busca') }}"</p>
+    <a href="{{ url_for('admin_fornecedores') }}" class="btn btn-secondary">Ver Todos los Proveedores</a>
     {% else %}
-    <p>Nenhum fornecedor cadastrado</p>
+    <p>Ningún proveedor registrado</p>
     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="{{ url_for('add_fornecedor') }}" class="btn btn-primary">Adicionar Primeiro Fornecedor</a>
+        <a href="{{ url_for('add_fornecedor') }}" class="btn btn-primary">Agregar Primer Proveedor</a>
         <form method="POST" action="{{ url_for('create_fornecedores_table') }}" style="display: inline;">
-            <button type="submit" class="btn btn-secondary" onclick="return confirm('Isso criará a tabela de fornecedores no banco de dados. Continuar?');">
-                <i class="fas fa-database"></i> Criar Tabela no Banco
+            <button type="submit" class="btn btn-secondary" onclick="return confirm('Esto creará la tabla de proveedores en la base de datos. ¿Continuar?');">
+                <i class="fas fa-database"></i> Crear Tabla en la Base
             </button>
         </form>
     </div>
