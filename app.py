@@ -954,8 +954,8 @@ init_slides_file()
 
 @app.before_request
 def count_visit():
-    # Ignorar requisições estáticas e administrativas
-    if request.path.startswith('/static') or request.path.startswith('/admin') or request.path.startswith('/favicon.ico'):
+    # Contar apenas a página inicial do site
+    if request.path != '/':
         return
     
     if use_database():
