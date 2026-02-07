@@ -346,6 +346,13 @@ class Manual(db.Model):
     pdf_size = db.Column(db.Integer, nullable=False)  # Tamanho em bytes
     data_criacao = db.Column(db.DateTime, default=datetime.now)
     data_atualizacao = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
+
+# ==================== VISIT COUNTER ====================
+class VisitCounter(db.Model):
+    __tablename__ = 'visit_counter'
+    id = db.Column(db.Integer, primary_key=True)
+    count = db.Column(db.Integer, default=0)
+    last_updated = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
     
     def get_pdf_url(self):
         """Retorna a URL para servir o PDF"""

@@ -14,7 +14,7 @@ from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
-from models import db, Cliente, Servico, Tecnico, OrdemServico, Comprovante, Cupom, Slide, Footer, Marca, Milestone, AdminUser, Agendamento, Contato, Imagem, PDFDocument, Fornecedor, ReparoRealizado, Video, PaginaServico, OrcamentoArCondicionado, Manual, LinkMenu
+from models import db, Cliente, Servico, Tecnico, OrdemServico, Comprovante, Cupom, Slide, Footer, Marca, Milestone, AdminUser, Agendamento, Contato, Imagem, PDFDocument, Fornecedor, ReparoRealizado, Video, PaginaServico, OrcamentoArCondicionado, Manual, LinkMenu, VisitCounter
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'sua_chave_secreta_aqui_altere_em_producao')
@@ -952,6 +952,44 @@ def init_slides_file():
 
 init_slides_file()
 
+@app.before_request
+def count_visit():
+    # Ignorar requisições estáticas e administrativas
+    if request.path.startswith('/static') or request.path.startswith('/admin') or request.path.startswith('/favicon.ico'):
+        return
+    
+    if use_database():
+        try:
+            # Tenta buscar o contador
+            counter = VisitCounter.query.get(1)
+            if not counter:
+                # Se não existe, cria
+                counter = VisitCounter(id=1, count=1)
+                db.session.add(counter)
+                db.session.commit()
+            else:
+                # Se existe, incrementa
+                # Usar SQL direto para evitar race conditions simples e ser mais eficiente
+                db.session.execute(db.text("UPDATE visit_counter SET count = count + 1 WHERE id = 1"))
+                db.session.commit()
+        except Exception as e:
+            # Se der erro (ex: tabela não existe), silenciar ou tentar criar
+            # print(f"Erro no contador: {e}")
+            try:
+                db.session.rollback()
+                # Tentar criar a tabela se o erro for de relação não existente
+                if 'relation' in str(e).lower() and 'does not exist' in str(e).lower():
+                    try:
+                        VisitCounter.__table__.create(db.engine)
+                        # Tentar novamente
+                        counter = VisitCounter(id=1, count=1)
+                        db.session.add(counter)
+                        db.session.commit()
+                    except:
+                        pass
+            except:
+                pass
+
 @app.route('/favicon.ico')
 def favicon():
     """Serve o favicon do site"""
@@ -1763,6 +1801,15 @@ def admin_dashboard():
             # Serviços do banco
             total_servicos = Servico.query.count()
             
+            # Contador de visitas
+            visit_count = 0
+            try:
+                counter = VisitCounter.query.get(1)
+                if counter:
+                    visit_count = counter.count
+            except:
+                pass
+            
             # Agendamentos recentes (últimos 10, ordenados por data de criação)
             agendamentos_recentes_db = Agendamento.query.order_by(Agendamento.data_criacao.desc()).limit(10).all()
             agendamentos_recentes = []
@@ -1782,6 +1829,7 @@ def admin_dashboard():
             print(f"Erro ao buscar estatísticas do banco: {e}")
             total_contatos = 0
             total_servicos = 0
+            visit_count = 0
             contatos_recentes = []
             agendamentos_recentes = []
     else:
@@ -1792,6 +1840,7 @@ def admin_dashboard():
         
         total_contatos = len(data.get('contacts', []))
         total_servicos = len(data.get('services', []))
+        visit_count = 0
         contatos_recentes = sorted(data.get('contacts', []), key=lambda x: x.get('data', ''), reverse=True)[:5]
         
         # Agendamentos do JSON
@@ -1810,7 +1859,8 @@ def admin_dashboard():
         'total_contatos': total_contatos,
         'total_servicos': total_servicos,
         'contatos_recentes': contatos_recentes,
-        'agendamentos_recentes': agendamentos_recentes
+        'agendamentos_recentes': agendamentos_recentes,
+        'visit_count': visit_count
     }
     
     return render_template('admin/dashboard.html', stats=stats)
