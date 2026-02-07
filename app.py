@@ -958,6 +958,15 @@ def count_visit():
     if request.path != '/':
         return
     
+    # Verificar se o usuário já visitou nesta sessão
+    if session.get('has_visited'):
+        return
+        
+    # Marcar como visitado na sessão
+    session['has_visited'] = True
+    # Define a sessão como permanente para durar o tempo configurado (padrão 31 dias)
+    session.permanent = True
+    
     if use_database():
         try:
             # Tenta buscar o contador
