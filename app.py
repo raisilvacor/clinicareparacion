@@ -3541,35 +3541,40 @@ def add_ordem_servico():
         flash('Ordem de serviço emitida com sucesso!', 'success')
         return redirect(url_for('admin_ordens'))
     
-    init_tecnicos_file()
-    
-    with open(DATA_FILE, 'r', encoding='utf-8') as f:
-        services_data = json.load(f)
-    
-    with open(CLIENTS_FILE, 'r', encoding='utf-8') as f:
-        clients_data = json.load(f)
-    
-    with open(TECNICOS_FILE, 'r', encoding='utf-8') as f:
-        tecnicos_data = json.load(f)
-    
-    # Buscar cupons disponíveis para cada cliente
-    cupons_por_cliente = {}
-    if os.path.exists(FIDELIDADE_FILE):
-        with open(FIDELIDADE_FILE, 'r', encoding='utf-8') as f:
-            fidelidade_data = json.load(f)
-        
-        for cupom in fidelidade_data['cupons']:
-            if not cupom.get('usado', False):
-                cliente_id = cupom.get('cliente_id')
-                if cliente_id not in cupons_por_cliente:
-                    cupons_por_cliente[cliente_id] = []
-                cupons_por_cliente[cliente_id].append(cupom)
-    
-    return render_template('admin/add_ordem.html', 
-                         clientes=clients_data['clients'], 
-                         servicos=services_data['services'],
-                         tecnicos=tecnicos_data.get('tecnicos', []),
-                         cupons_por_cliente=cupons_por_cliente)
+    if use_database():
+        try:
+            clientes = Cliente.query.order_by(Cliente.nome).all()
+        except Exception as e:
+            print(f"Erro ao carregar clientes: {e}")
+            clientes = []
+        try:
+            servicos_db = Servico.query.filter_by(ativo=True).order_by(Servico.ordem).all()
+            tipos_servico = [s.nome for s in servicos_db]
+        except Exception as e:
+            print(f"Erro ao carregar serviços: {e}")
+            tipos_servico = []
+        try:
+            tecnicos = Tecnico.query.filter_by(ativo=True).order_by(Tecnico.nome).all()
+        except Exception as e:
+            print(f"Erro ao carregar técnicos: {e}")
+            tecnicos = []
+        return render_template('admin/add_ordem.html',
+                               clientes=clientes,
+                               tipos_servico=tipos_servico,
+                               tecnicos=tecnicos)
+    else:
+        init_tecnicos_file()
+        with open(DATA_FILE, 'r', encoding='utf-8') as f:
+            services_data = json.load(f)
+        with open(CLIENTS_FILE, 'r', encoding='utf-8') as f:
+            clients_data = json.load(f)
+        with open(TECNICOS_FILE, 'r', encoding='utf-8') as f:
+            tecnicos_data = json.load(f)
+        tipos_servico = [s.get('nome') for s in services_data.get('services', [])]
+        return render_template('admin/add_ordem.html',
+                               clientes=clients_data.get('clients', []),
+                               tipos_servico=tipos_servico,
+                               tecnicos=tecnicos_data.get('tecnicos', []))
 
 @app.route('/admin/clientes/<int:cliente_id>/ordens/<int:ordem_id>')
 @login_required
