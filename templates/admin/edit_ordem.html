@@ -22,7 +22,7 @@
                 <i class="fas fa-tools"></i>
                 Serviço *
             </label>
-            <select id="servico" name="servico" required>
+            <select id="servico" name="servico">
                 <option value="">Selecione um serviço</option>
                 {% for tipo in tipos_servico %}
                 <option value="{{ tipo }}" {% if ordem.servico == tipo %}selected{% endif %}>{{ tipo }}</option>
@@ -54,7 +54,7 @@
                     <i class="fas fa-mobile-alt"></i>
                     Tipo de Aparelho *
                 </label>
-                <select id="tipo_aparelho" name="tipo_aparelho" required>
+                <select id="tipo_aparelho" name="tipo_aparelho">
                     <option value="">Selecione o tipo</option>
                     <option value="Celular" {% if ordem.tipo_aparelho == 'Celular' %}selected{% endif %}>Celular</option>
                     <option value="Notebook" {% if ordem.tipo_aparelho == 'Notebook' %}selected{% endif %}>Notebook</option>
@@ -73,7 +73,7 @@
                     <i class="fas fa-tag"></i>
                     Marca *
                 </label>
-                <input type="text" id="marca" name="marca" required placeholder="Ej: Samsung, LG, Brastemp" value="{{ ordem.marca or '' }}">
+                <input type="text" id="marca" name="marca" placeholder="Ej: Samsung, LG, Brastemp" value="{{ ordem.marca or '' }}">
             </div>
         </div>
         
@@ -83,7 +83,7 @@
                     <i class="fas fa-cube"></i>
                     Modelo *
                 </label>
-                <input type="text" id="modelo" name="modelo" required placeholder="Ej: Galaxy S21, ABC123" value="{{ ordem.modelo or '' }}">
+                <input type="text" id="modelo" name="modelo" placeholder="Ej: Galaxy S21, ABC123" value="{{ ordem.modelo or '' }}">
             </div>
             
             <div class="form-group">
@@ -104,7 +104,7 @@
                 <i class="fas fa-comment-dots"></i>
                 Defeitos Reportados pelo Cliente *
             </label>
-            <textarea id="defeitos_cliente" name="defeitos_cliente" rows="4" required placeholder="Descreva os defeitos relatados pelo cliente...">{{ ordem.defeitos_cliente or '' }}</textarea>
+            <textarea id="defeitos_cliente" name="defeitos_cliente" rows="4" placeholder="Descreva os defeitos relatados pelo cliente...">{{ ordem.defeitos_cliente or '' }}</textarea>
         </div>
         
         <div class="form-group">
@@ -112,7 +112,7 @@
                 <i class="fas fa-stethoscope"></i>
                 Diagnóstico Técnico *
             </label>
-            <textarea id="diagnostico_tecnico" name="diagnostico_tecnico" rows="4" required placeholder="Descreva o diagnóstico técnico realizado...">{{ ordem.diagnostico_tecnico or '' }}</textarea>
+            <textarea id="diagnostico_tecnico" name="diagnostico_tecnico" rows="4" placeholder="Descreva o diagnóstico técnico realizado...">{{ ordem.diagnostico_tecnico or '' }}</textarea>
         </div>
         
         <div class="section-divider">

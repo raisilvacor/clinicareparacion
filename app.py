@@ -3647,15 +3647,15 @@ def edit_ordem_servico(cliente_id, ordem_id):
                 return redirect(url_for('admin_ordens'))
             
             if request.method == 'POST':
-                servico = request.form.get('servico')
-                tipo_aparelho = request.form.get('tipo_aparelho')
-                marca = request.form.get('marca')
-                modelo = request.form.get('modelo')
-                numero_serie = request.form.get('numero_serie')
-                defeitos_cliente = request.form.get('defeitos_cliente')
-                diagnostico_tecnico = request.form.get('diagnostico_tecnico')
-                custo_mao_obra = request.form.get('custo_mao_obra', '0.00')
-                status = request.form.get('status', 'pendente')
+                servico = (request.form.get('servico') or ordem.servico)
+                tipo_aparelho = (request.form.get('tipo_aparelho') or ordem.tipo_aparelho)
+                marca = (request.form.get('marca') or ordem.marca)
+                modelo = (request.form.get('modelo') or ordem.modelo)
+                numero_serie = (request.form.get('numero_serie') or ordem.numero_serie)
+                defeitos_cliente = (request.form.get('defeitos_cliente') or ordem.defeitos_cliente)
+                diagnostico_tecnico = (request.form.get('diagnostico_tecnico') or ordem.diagnostico_tecnico)
+                custo_mao_obra = request.form.get('custo_mao_obra')
+                status = request.form.get('status', ordem.status)
                 prazo_estimado = request.form.get('prazo_estimado', '').strip()
                 tecnico_id = request.form.get('tecnico_id')
                 
@@ -3671,13 +3671,19 @@ def edit_ordem_servico(cliente_id, ordem_id):
                             pecas.append({'nome': nome_peca, 'custo': custo_valor})
                         except:
                             pass
+                if not pecas:
+                    pecas = ordem.pecas or []
+                    try:
+                        total_pecas = sum(float(p.get('custo', 0) or 0) for p in pecas)
+                    except:
+                        total_pecas = 0.00
                 
                 try:
-                    custo_mao_obra_valor = float(custo_mao_obra) if custo_mao_obra else 0.00
+                    custo_mao_obra_valor = float(custo_mao_obra) if custo_mao_obra not in (None, '') else float(ordem.custo_mao_obra or 0.00)
                     subtotal = total_pecas + custo_mao_obra_valor
                 except:
                     custo_mao_obra_valor = 0.00
-                    subtotal = total_pecas
+                    subtotal = total_pecas or float(ordem.subtotal or 0.00)
                 
                 ordem.servico = servico
                 ordem.tipo_aparelho = tipo_aparelho
