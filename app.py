@@ -3579,160 +3579,318 @@ def add_ordem_servico():
 @app.route('/admin/clientes/<int:cliente_id>/ordens/<int:ordem_id>')
 @login_required
 def view_ordem_detalhes(cliente_id, ordem_id):
-    with open(CLIENTS_FILE, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    
-    cliente = next((c for c in data['clients'] if c.get('id') == cliente_id), None)
-    if not cliente:
-        return jsonify({'error': 'Cliente não encontrado'}), 404
-    
-    ordem = next((o for o in cliente.get('ordens', []) if o.get('id') == ordem_id), None)
-    if not ordem:
-        return jsonify({'error': 'Ordem não encontrada'}), 404
-    
-    ordem_completa = ordem.copy()
-    ordem_completa['cliente_nome'] = cliente['nome']
-    ordem_completa['cliente_id'] = cliente['id']
-    
-    return jsonify(ordem_completa)
+    if use_database():
+        try:
+            ordem = OrdemServico.query.filter_by(id=ordem_id, cliente_id=cliente_id).first()
+            if not ordem:
+                return jsonify({'error': 'Ordem não encontrada'}), 404
+            cliente = Cliente.query.get(cliente_id)
+            if not cliente:
+                return jsonify({'error': 'Cliente não encontrado'}), 404
+            ordem_completa = {
+                'id': ordem.id,
+                'numero_ordem': ordem.numero_ordem,
+                'servico': ordem.servico,
+                'tipo_aparelho': ordem.tipo_aparelho,
+                'marca': ordem.marca,
+                'modelo': ordem.modelo,
+                'numero_serie': ordem.numero_serie,
+                'defeitos_cliente': ordem.defeitos_cliente,
+                'diagnostico_tecnico': ordem.diagnostico_tecnico,
+                'pecas': ordem.pecas or [],
+                'custo_pecas': float(ordem.custo_pecas) if ordem.custo_pecas else 0.00,
+                'custo_mao_obra': float(ordem.custo_mao_obra) if ordem.custo_mao_obra else 0.00,
+                'subtotal': float(ordem.subtotal) if ordem.subtotal else 0.00,
+                'desconto_percentual': float(ordem.desconto_percentual) if ordem.desconto_percentual else 0.00,
+                'valor_desconto': float(ordem.valor_desconto) if ordem.valor_desconto else 0.00,
+                'total': float(ordem.total) if ordem.total else 0.00,
+                'status': ordem.status,
+                'prazo_estimado': ordem.prazo_estimado,
+                'cliente_nome': cliente.nome,
+                'cliente_id': cliente.id,
+            }
+            return jsonify(ordem_completa)
+        except Exception as e:
+            print(f"Erro ao buscar detalhes da ordem (banco): {e}")
+            return jsonify({'error': 'Erro ao buscar ordem'}), 500
+    else:
+        with open(CLIENTS_FILE, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        cliente = next((c for c in data['clients'] if c.get('id') == cliente_id), None)
+        if not cliente:
+            return jsonify({'error': 'Cliente não encontrado'}), 404
+        
+        ordem = next((o for o in cliente.get('ordens', []) if o.get('id') == ordem_id), None)
+        if not ordem:
+            return jsonify({'error': 'Ordem não encontrada'}), 404
+        
+        ordem_completa = ordem.copy()
+        ordem_completa['cliente_nome'] = cliente['nome']
+        ordem_completa['cliente_id'] = cliente['id']
+        
+        return jsonify(ordem_completa)
 
 @app.route('/admin/clientes/<int:cliente_id>/ordens/<int:ordem_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_ordem_servico(cliente_id, ordem_id):
-    with open(CLIENTS_FILE, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    
-    cliente = next((c for c in data['clients'] if c.get('id') == cliente_id), None)
-    if not cliente:
-        flash('Cliente não encontrado!', 'error')
-        return redirect(url_for('admin_ordens'))
-    
-    ordem = next((o for o in cliente.get('ordens', []) if o.get('id') == ordem_id), None)
-    if not ordem:
-        flash('Ordem não encontrada!', 'error')
-        return redirect(url_for('admin_ordens'))
-    
-    if request.method == 'POST':
-        servico = request.form.get('servico')
-        tipo_aparelho = request.form.get('tipo_aparelho')
-        marca = request.form.get('marca')
-        modelo = request.form.get('modelo')
-        numero_serie = request.form.get('numero_serie')
-        defeitos_cliente = request.form.get('defeitos_cliente')
-        diagnostico_tecnico = request.form.get('diagnostico_tecnico')
-        custo_mao_obra = request.form.get('custo_mao_obra', '0.00')
-        status = request.form.get('status', 'pendente')
-        prazo_estimado = request.form.get('prazo_estimado', '').strip()
-        tecnico_id = request.form.get('tecnico_id')
-        
-        # Coletar peças
-        pecas = []
-        total_pecas = 0.00
-        for i in range(10):
-            nome_peca = request.form.get(f'peca_nome_{i}', '').strip()
-            custo_peca = request.form.get(f'peca_custo_{i}', '0.00')
-            
-            if nome_peca:  # Só adicionar se tiver nome
-                try:
-                    custo_valor = float(custo_peca) if custo_peca else 0.00
-                    total_pecas += custo_valor
-                    pecas.append({
-                        'nome': nome_peca,
-                        'custo': custo_valor
-                    })
-                except:
-                    pass
-        
-        # Calcular total
+    if use_database():
         try:
-            custo_mao_obra_valor = float(custo_mao_obra) if custo_mao_obra else 0.00
-            total = total_pecas + custo_mao_obra_valor
-        except:
-            total = 0.00
+            cliente = Cliente.query.get(cliente_id)
+            if not cliente:
+                flash('Cliente não encontrado!', 'error')
+                return redirect(url_for('admin_ordens'))
+            
+            ordem = OrdemServico.query.filter_by(id=ordem_id, cliente_id=cliente_id).first()
+            if not ordem:
+                flash('Ordem não encontrada!', 'error')
+                return redirect(url_for('admin_ordens'))
+            
+            if request.method == 'POST':
+                servico = request.form.get('servico')
+                tipo_aparelho = request.form.get('tipo_aparelho')
+                marca = request.form.get('marca')
+                modelo = request.form.get('modelo')
+                numero_serie = request.form.get('numero_serie')
+                defeitos_cliente = request.form.get('defeitos_cliente')
+                diagnostico_tecnico = request.form.get('diagnostico_tecnico')
+                custo_mao_obra = request.form.get('custo_mao_obra', '0.00')
+                status = request.form.get('status', 'pendente')
+                prazo_estimado = request.form.get('prazo_estimado', '').strip()
+                tecnico_id = request.form.get('tecnico_id')
+                
+                pecas = []
+                total_pecas = 0.00
+                for i in range(10):
+                    nome_peca = request.form.get(f'peca_nome_{i}', '').strip()
+                    custo_peca = request.form.get(f'peca_custo_{i}', '0.00')
+                    if nome_peca:
+                        try:
+                            custo_valor = float(custo_peca) if custo_peca else 0.00
+                            total_pecas += custo_valor
+                            pecas.append({'nome': nome_peca, 'custo': custo_valor})
+                        except:
+                            pass
+                
+                try:
+                    custo_mao_obra_valor = float(custo_mao_obra) if custo_mao_obra else 0.00
+                    subtotal = total_pecas + custo_mao_obra_valor
+                except:
+                    custo_mao_obra_valor = 0.00
+                    subtotal = total_pecas
+                
+                ordem.servico = servico
+                ordem.tipo_aparelho = tipo_aparelho
+                ordem.marca = marca
+                ordem.modelo = modelo
+                ordem.numero_serie = numero_serie
+                ordem.defeitos_cliente = defeitos_cliente
+                ordem.diagnostico_tecnico = diagnostico_tecnico
+                ordem.pecas = pecas
+                ordem.custo_pecas = total_pecas
+                ordem.custo_mao_obra = custo_mao_obra_valor
+                ordem.subtotal = subtotal
+                desconto_percentual = float(ordem.desconto_percentual) if ordem.desconto_percentual else 0.00
+                valor_desconto = float(ordem.valor_desconto) if ordem.valor_desconto else 0.00
+                ordem.total = subtotal - valor_desconto
+                ordem.status = status
+                ordem.prazo_estimado = prazo_estimado if prazo_estimado else ordem.prazo_estimado
+                
+                if tecnico_id and tecnico_id != '':
+                    try:
+                        tecnico_id_int = int(tecnico_id)
+                        tecnico_db = Tecnico.query.get(tecnico_id_int)
+                        if tecnico_db:
+                            ordem.tecnico_id = tecnico_id_int
+                    except Exception as e:
+                        print(f"Erro ao validar técnico na edição: {e}")
+                else:
+                    ordem.tecnico_id = None
+                
+                db.session.commit()
+                
+                cliente_dict = {
+                    'id': cliente.id,
+                    'nome': cliente.nome,
+                    'email': cliente.email,
+                    'telefone': cliente.telefone,
+                    'cpf': cliente.cpf,
+                    'endereco': cliente.endereco
+                }
+                ordem_dict = {
+                    'id': ordem.id,
+                    'numero_ordem': ordem.numero_ordem,
+                    'servico': ordem.servico,
+                    'marca': ordem.marca,
+                    'modelo': ordem.modelo,
+                    'numero_serie': ordem.numero_serie,
+                    'defeitos_cliente': ordem.defeitos_cliente,
+                    'diagnostico_tecnico': ordem.diagnostico_tecnico,
+                    'pecas': ordem.pecas or [],
+                    'custo_pecas': float(ordem.custo_pecas) if ordem.custo_pecas else 0.00,
+                    'custo_mao_obra': float(ordem.custo_mao_obra) if ordem.custo_mao_obra else 0.00,
+                    'subtotal': float(ordem.subtotal) if ordem.subtotal else 0.00,
+                    'desconto_percentual': float(ordem.desconto_percentual) if ordem.desconto_percentual else 0.00,
+                    'valor_desconto': float(ordem.valor_desconto) if ordem.valor_desconto else 0.00,
+                    'total': float(ordem.total) if ordem.total else 0.00,
+                    'status': ordem.status,
+                    'prazo_estimado': ordem.prazo_estimado,
+                    'data': ordem.data.strftime('%Y-%m-%d %H:%M:%S') if ordem.data else datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                }
+                pdf_result = gerar_pdf_ordem(cliente_dict, ordem_dict)
+                if isinstance(pdf_result, dict):
+                    ordem.pdf_filename = pdf_result.get('pdf_filename', '')
+                    ordem.pdf_id = pdf_result.get('pdf_id')
+                    db.session.commit()
+                
+                flash('Ordem de serviço atualizada com sucesso!', 'success')
+                return redirect(url_for('admin_ordens'))
+            
+            try:
+                servicos_db = Servico.query.filter_by(ativo=True).order_by(Servico.ordem).all()
+                tipos_servico = [s.nome for s in servicos_db]
+            except Exception as e:
+                print(f"Erro ao carregar serviços para edição: {e}")
+                tipos_servico = []
+            try:
+                tecnicos = Tecnico.query.filter_by(ativo=True).order_by(Tecnico.nome).all()
+            except Exception as e:
+                print(f"Erro ao carregar técnicos para edição: {e}")
+                tecnicos = []
+            return render_template('admin/edit_ordem.html',
+                                   cliente=cliente,
+                                   ordem=ordem,
+                                   tipos_servico=tipos_servico,
+                                   tecnicos=tecnicos)
+        except Exception as e:
+            print(f"Erro na edição de ordem (banco): {e}")
+            import traceback
+            traceback.print_exc()
+            flash('Erro ao carregar ordem de serviço.', 'error')
+            return redirect(url_for('admin_ordens'))
+    else:
+        with open(CLIENTS_FILE, 'r', encoding='utf-8') as f:
+            data = json.load(f)
         
-        # Atualizar ordem (manter número da ordem original e campos de desconto)
-        ordem_atualizada = {
-            'id': ordem_id,
-            'numero_ordem': ordem.get('numero_ordem', get_proximo_numero_ordem()),
-            'servico': servico,
-            'tipo_aparelho': tipo_aparelho,
-            'marca': marca,
-            'modelo': modelo,
-            'numero_serie': numero_serie,
-            'defeitos_cliente': defeitos_cliente,
-            'diagnostico_tecnico': diagnostico_tecnico,
-            'pecas': pecas,
-            'custo_pecas': total_pecas,
-            'custo_mao_obra': float(custo_mao_obra) if custo_mao_obra else 0.00,
-            'subtotal': ordem.get('subtotal', total),
-            'desconto_percentual': ordem.get('desconto_percentual', 0.00),
-            'valor_desconto': ordem.get('valor_desconto', 0.00),
-            'cupom_id': ordem.get('cupom_id'),
-            'total': total,
-            'status': status,
-            'prazo_estimado': prazo_estimado if prazo_estimado else ordem.get('prazo_estimado'),
-            'tecnico_id': int(tecnico_id) if tecnico_id and tecnico_id != '' else ordem.get('tecnico_id'),
-            'data': ordem.get('data', datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
-            'pdf_filename': ordem.get('pdf_filename')
-        }
+        cliente = next((c for c in data['clients'] if c.get('id') == cliente_id), None)
+        if not cliente:
+            flash('Cliente não encontrado!', 'error')
+            return redirect(url_for('admin_ordens'))
         
-        # Atualizar ordem no cliente
-        for i, o in enumerate(cliente['ordens']):
-            if o.get('id') == ordem_id:
-                cliente['ordens'][i] = ordem_atualizada
-                break
+        ordem = next((o for o in cliente.get('ordens', []) if o.get('id') == ordem_id), None)
+        if not ordem:
+            flash('Ordem não encontrada!', 'error')
+            return redirect(url_for('admin_ordens'))
         
-        # Atualizar cliente na lista
-        for i, c in enumerate(data['clients']):
-            if c.get('id') == cliente_id:
-                data['clients'][i] = cliente
-                break
+        if request.method == 'POST':
+            servico = request.form.get('servico')
+            tipo_aparelho = request.form.get('tipo_aparelho')
+            marca = request.form.get('marca')
+            modelo = request.form.get('modelo')
+            numero_serie = request.form.get('numero_serie')
+            defeitos_cliente = request.form.get('defeitos_cliente')
+            diagnostico_tecnico = request.form.get('diagnostico_tecnico')
+            custo_mao_obra = request.form.get('custo_mao_obra', '0.00')
+            status = request.form.get('status', 'pendente')
+            prazo_estimado = request.form.get('prazo_estimado', '').strip()
+            tecnico_id = request.form.get('tecnico_id')
+            
+            pecas = []
+            total_pecas = 0.00
+            for i in range(10):
+                nome_peca = request.form.get(f'peca_nome_{i}', '').strip()
+                custo_peca = request.form.get(f'peca_custo_{i}', '0.00')
+                if nome_peca:
+                    try:
+                        custo_valor = float(custo_peca) if custo_peca else 0.00
+                        total_pecas += custo_valor
+                        pecas.append({
+                            'nome': nome_peca,
+                            'custo': custo_valor
+                        })
+                    except:
+                        pass
+            
+            try:
+                custo_mao_obra_valor = float(custo_mao_obra) if custo_mao_obra else 0.00
+                total = total_pecas + custo_mao_obra_valor
+            except:
+                total = 0.00
+            
+            ordem_atualizada = {
+                'id': ordem_id,
+                'numero_ordem': ordem.get('numero_ordem', get_proximo_numero_ordem()),
+                'servico': servico,
+                'tipo_aparelho': tipo_aparelho,
+                'marca': marca,
+                'modelo': modelo,
+                'numero_serie': numero_serie,
+                'defeitos_cliente': defeitos_cliente,
+                'diagnostico_tecnico': diagnostico_tecnico,
+                'pecas': pecas,
+                'custo_pecas': total_pecas,
+                'custo_mao_obra': float(custo_mao_obra) if custo_mao_obra else 0.00,
+                'subtotal': ordem.get('subtotal', total),
+                'desconto_percentual': ordem.get('desconto_percentual', 0.00),
+                'valor_desconto': ordem.get('valor_desconto', 0.00),
+                'cupom_id': ordem.get('cupom_id'),
+                'total': total,
+                'status': status,
+                'prazo_estimado': prazo_estimado if prazo_estimado else ordem.get('prazo_estimado'),
+                'tecnico_id': int(tecnico_id) if tecnico_id and tecnico_id != '' else ordem.get('tecnico_id'),
+                'data': ordem.get('data', datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
+                'pdf_filename': ordem.get('pdf_filename')
+            }
+            
+            for i, o in enumerate(cliente['ordens']):
+                if o.get('id') == ordem_id:
+                    cliente['ordens'][i] = ordem_atualizada
+                    break
+            
+            for i, c in enumerate(data['clients']):
+                if c.get('id') == cliente_id:
+                    data['clients'][i] = cliente
+                    break
+            
+            with open(CLIENTS_FILE, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            
+            pdf_result = gerar_pdf_ordem(cliente, ordem_atualizada)
+            if isinstance(pdf_result, dict):
+                ordem_atualizada['pdf_filename'] = pdf_result.get('pdf_filename', '')
+                ordem_atualizada['pdf_id'] = pdf_result.get('pdf_id')
+            else:
+                ordem_atualizada['pdf_filename'] = str(pdf_result) if pdf_result else ''
+            
+            for i, o in enumerate(cliente['ordens']):
+                if o.get('id') == ordem_id:
+                    cliente['ordens'][i] = ordem_atualizada
+                    break
+            
+            for i, c in enumerate(data['clients']):
+                if c.get('id') == cliente_id:
+                    data['clients'][i] = cliente
+                    break
+            
+            with open(CLIENTS_FILE, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            
+            flash('Ordem de serviço atualizada com sucesso!', 'success')
+            return redirect(url_for('admin_ordens'))
         
-        with open(CLIENTS_FILE, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
+        with open(DATA_FILE, 'r', encoding='utf-8') as f:
+            services_data = json.load(f)
         
-        # Regenerar PDF da ordem atualizada
-        # Gerar novo PDF
-        pdf_result = gerar_pdf_ordem(cliente, ordem_atualizada)
-        if isinstance(pdf_result, dict):
-            # Salvar apenas o nome do arquivo, não o dicionário inteiro
-            ordem_atualizada['pdf_filename'] = pdf_result.get('pdf_filename', '')
-            ordem_atualizada['pdf_id'] = pdf_result.get('pdf_id')
-        else:
-            # Fallback para compatibilidade
-            ordem_atualizada['pdf_filename'] = str(pdf_result) if pdf_result else ''
+        init_tecnicos_file()
+        with open(TECNICOS_FILE, 'r', encoding='utf-8') as f:
+            tecnicos_data = json.load(f)
         
-        # Atualizar ordem com novo PDF
-        for i, o in enumerate(cliente['ordens']):
-            if o.get('id') == ordem_id:
-                cliente['ordens'][i] = ordem_atualizada
-                break
-        
-        # Atualizar cliente na lista novamente
-        for i, c in enumerate(data['clients']):
-            if c.get('id') == cliente_id:
-                data['clients'][i] = cliente
-                break
-        
-        with open(CLIENTS_FILE, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
-        
-        flash('Ordem de serviço atualizada com sucesso!', 'success')
-        return redirect(url_for('admin_ordens'))
-    
-    # GET - Exibir formulário de edição
-    with open(DATA_FILE, 'r', encoding='utf-8') as f:
-        services_data = json.load(f)
-    
-    init_tecnicos_file()
-    with open(TECNICOS_FILE, 'r', encoding='utf-8') as f:
-        tecnicos_data = json.load(f)
-    
-    return render_template('admin/edit_ordem.html', 
-                         cliente=cliente, 
-                         ordem=ordem, 
-                         servicos=services_data['services'],
-                         tecnicos=tecnicos_data.get('tecnicos', []))
+        tipos_servico = [s.get('nome') for s in services_data.get('services', [])]
+        return render_template('admin/edit_ordem.html',
+                               cliente=cliente,
+                               ordem=ordem,
+                               tipos_servico=tipos_servico,
+                               tecnicos=tecnicos_data.get('tecnicos', []))
 
 @app.route('/admin/clientes/<int:cliente_id>/ordens/<int:ordem_id>/delete', methods=['POST'])
 @login_required
